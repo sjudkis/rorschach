@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+
+# remove builds folder
+/rorschach_synth/Builds/
