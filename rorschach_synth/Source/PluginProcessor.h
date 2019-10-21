@@ -11,11 +11,16 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "SynthSound.h"
+#include "SynthVoice.h"
+//#include "MidiKeyboard.h"
+
 
 //==============================================================================
 /**
 */
-class Rorschach_synthAudioProcessor  : public AudioProcessor
+class Rorschach_synthAudioProcessor  :  public AudioProcessor,
+                                        private MidiInputCallback
 {
 public:
     //==============================================================================
@@ -55,7 +60,22 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    // keeps current state of UI keyboard component
+    MidiKeyboardState keyboardState;
+
+    // functions called by keyboard state listener
+    void keyboardNoteOn(int midiChannel, int midiNoteNumber, float velocity);
+    void keyboardNoteOff(int midiChannel, int midiNoteNumber, float velocity);
+    
 private:
+    Synthesiser synth;
+    SynthVoice voice;
+    
+    double lastSampleRate;
+    
+    // virtual function for UI keyboard state
+    void handleIncomingMidiMessage(MidiInput* source, const MidiMessage& message) override;
+    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Rorschach_synthAudioProcessor)
 };
