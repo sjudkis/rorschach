@@ -13,14 +13,13 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "SynthSound.h"
 #include "SynthVoice.h"
-//#include "MidiKeyboard.h"
 
 
 //==============================================================================
 /**
 */
-class Rorschach_synthAudioProcessor  :  public AudioProcessor,
-                                        private MidiInputCallback
+class Rorschach_synthAudioProcessor  :  public AudioProcessor
+
 {
 public:
     //==============================================================================
@@ -73,8 +72,6 @@ private:
     
     double lastSampleRate;
     
-    // virtual function for UI keyboard state
-    void handleIncomingMidiMessage(MidiInput* source, const MidiMessage& message) override;
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Rorschach_synthAudioProcessor)

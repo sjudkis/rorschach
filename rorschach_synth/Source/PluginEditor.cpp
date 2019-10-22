@@ -15,7 +15,6 @@
 Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorschach_synthAudioProcessor& p)
     :   AudioProcessorEditor (&p),
         processor (p),
-//        keyboard(p)
         keyboard(p.keyboardState, MidiKeyboardComponent::horizontalKeyboard)
 {
     // Make sure that before the constructor has finished, you've set the
@@ -25,8 +24,10 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     addAndMakeVisible(keyboard);
     processor.keyboardState.addListener(this);
     keyboard.setWantsKeyboardFocus (false);
+    // timer, callback sets focus on keyboard to allow immediate midi input
+    
+    startTimer(300);
 }
-
 Rorschach_synthAudioProcessorEditor::~Rorschach_synthAudioProcessorEditor()
 {
     processor.keyboardState.removeListener(this);
@@ -47,7 +48,8 @@ void Rorschach_synthAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-    keyboard.setBounds(5, 200, getWidth() - 10, 100);
+    int keyboardHeight = 100;
+    keyboard.setBounds(5, getHeight() - keyboardHeight, getWidth() - 10, keyboardHeight);
 }
 
 
@@ -60,4 +62,10 @@ void Rorschach_synthAudioProcessorEditor::handleNoteOn(MidiKeyboardState *, int 
 void Rorschach_synthAudioProcessorEditor::handleNoteOff(MidiKeyboardState *, int midiChannel, int midiNoteNumber, float velocity)
 {
     processor.keyboardNoteOff(midiChannel, midiNoteNumber, velocity);
+}
+
+void Rorschach_synthAudioProcessorEditor::timerCallback()
+{
+    keyboard.grabKeyboardFocus();
+    stopTimer();
 }

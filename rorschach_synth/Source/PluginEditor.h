@@ -13,12 +13,12 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 #include "maximilian.h"
-//#include "MidiKeyboard.h"
+
 //==============================================================================
 /**
 */
-class Rorschach_synthAudioProcessorEditor  : public AudioProcessorEditor,
-//                                                private MidiInputCallback,
+class Rorschach_synthAudioProcessorEditor  :    public AudioProcessorEditor,
+                                                public Timer,
                                                 private MidiKeyboardStateListener
 {
 public:
@@ -34,11 +34,16 @@ private:
     // access the processor object that created it.
     Rorschach_synthAudioProcessor& processor;
 
+    // built in keyboard UI
     MidiKeyboardComponent keyboard;
         
+    
     // virtual functions
     void handleNoteOn(MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity) override;
     void handleNoteOff(MidiKeyboardState*, int midiChannel, int midiNoteNumber, float /*velocity*/) override;
-//    void handleIncomingMidiMessage(MidiInput* source, const MidiMessage& message) override;
+
+    // timer to grab focus for keyboard
+    void timerCallback() override;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Rorschach_synthAudioProcessorEditor)
 };

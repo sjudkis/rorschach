@@ -5,7 +5,6 @@
               companyName="anderson-judkis-lee" headerPath="/Users/samjudkis/Documents/OSU/CS467/Maximilian">
   <MAINGROUP id="dYYPxU" name="rorschach_synth">
     <GROUP id="{54299D7D-8F12-6D72-15A9-ECC3E0EF2FEE}" name="Source">
-      <FILE id="Fe4Jrm" name="MidiKeyboard.h" compile="0" resource="0" file="Source/MidiKeyboard.h"/>
       <GROUP id="{F85DF1F4-3D14-8112-E8D6-D6173002060C}" name="Maximilian">
         <GROUP id="{99E8FA96-D9B1-76C0-AACF-A17BEC7C1F94}" name="libs">
           <FILE id="KKBzDz" name="fft.cpp" compile="1" resource="0" file="../../Maximilian/libs/fft.cpp"/>
