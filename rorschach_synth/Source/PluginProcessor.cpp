@@ -14,14 +14,15 @@
 //==============================================================================
 Rorschach_synthAudioProcessor::Rorschach_synthAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
-     : AudioProcessor (BusesProperties()
+     :  AudioProcessor (BusesProperties()
                      #if ! JucePlugin_IsMidiEffect
                       #if ! JucePlugin_IsSynth
                        .withInput  ("Input",  AudioChannelSet::stereo(), true)
                       #endif
                        .withOutput ("Output", AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ),
+        parameterState(*this, nullptr, "PARAMETERS", createParameterLayout())
 #endif
 {
     synth.clearVoices();
@@ -38,6 +39,28 @@ Rorschach_synthAudioProcessor::Rorschach_synthAudioProcessor()
 Rorschach_synthAudioProcessor::~Rorschach_synthAudioProcessor()
 {
 }
+
+AudioProcessorValueTreeState::ParameterLayout Rorschach_synthAudioProcessor::createParameterLayout()
+{
+    // create vector to hold parameters
+    std::vector<std::unique_ptr<AudioParameterFloat>> parameters;
+    
+    // osc1 parameters
+    auto osc1Vol = std::make_unique<AudioParameterFloat>(OSC1_VOL_ID, OSC1_VOL_NAME, 0.0f, 1.0, .5f);
+    parameters.push_back(std::move(osc1Vol));
+    
+    // osc2 parameters
+    auto osc2Vol = std::make_unique<AudioParameterFloat>(OSC2_VOL_ID, OSC2_VOL_NAME, 0.0f, 1.0, .5f);
+    parameters.push_back(std::move(osc2Vol));
+    
+    // osc3 parameters
+    auto osc3Vol = std::make_unique<AudioParameterFloat>(OSC3_VOL_ID, OSC3_VOL_NAME, 0.0f, 1.0, .5f);
+    parameters.push_back(std::move(osc3Vol));
+    
+    
+    return { parameters.begin(), parameters.end() };
+}
+
 
 //==============================================================================
 const String Rorschach_synthAudioProcessor::getName() const
@@ -144,6 +167,21 @@ void Rorschach_synthAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
     ScopedNoDenormals noDenormals;
     
     buffer.clear();
+    
+    for (int i = 0; i < synth.getNumVoices(); i++)
+    {
+        if ((voice = dynamic_cast<SynthVoice*>(synth.getVoice(i))))
+        {
+            float *volParams[3];
+            // create float* array containing vol state for each osc
+            volParams[0] = parameterState.getRawParameterValue(OSC1_VOL_ID);
+            volParams[1] = parameterState.getRawParameterValue(OSC2_VOL_ID);
+            volParams[2] = parameterState.getRawParameterValue(OSC3_VOL_ID);
+            
+            voice->getOscVolParams(volParams);
+        }
+    }
+    
     synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
     
     

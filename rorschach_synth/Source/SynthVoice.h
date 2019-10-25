@@ -11,7 +11,10 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "SynthSound.h"
-#include "maximilian.h"
+#include "../Maximilian/maximilian.h"
+
+
+#define NUM_OSCILLATORS 3
 
 class SynthVoice : public SynthesiserVoice
 {
@@ -47,16 +50,28 @@ public:
         
     }
     
+    void getOscVolParams(float *oscVolState[])
+    {
+        for (int i = 0; i < NUM_OSCILLATORS; i++)
+        {
+            oscVols[i] = *oscVolState[i];
+        }
+    }
+    
+    
     void renderNextBlock (AudioBuffer <float> & outputBuffer, int startSample, int numSamples) override
     {
-        env1.setAttack(.1);
-        env1.setDecay(500);
+        env1.setAttack(.2);
+        env1.setDecay(5000);
         env1.setSustain(0.9);
-        env1.setRelease(10);
+        env1.setRelease(1000);
         
         for (int sample = 0; sample < numSamples; ++sample)
         {
-            double wave = osc1.sinewave(frequency);
+            double wave = osc1.sinewave(frequency) * oscVols[0];
+            wave += osc2.square(frequency) * oscVols[1];
+            wave += osc3.saw(frequency) * oscVols[2];
+            
             double sound = env1.adsr(wave, env1.trigger) * level;
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
@@ -70,7 +85,12 @@ private:
     double frequency;
     double level;
     
+    float oscVols[3];
+    
     maxiOsc osc1;
+    maxiOsc osc2;
+    maxiOsc osc3;
+    
     maxiEnv env1;
 };
 

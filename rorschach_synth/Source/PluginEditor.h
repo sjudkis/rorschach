@@ -12,7 +12,9 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
-#include "maximilian.h"
+#include "Oscillator.h"
+#include "OscillatorGroup.h"
+#include "SideBar.h"
 
 //==============================================================================
 /**
@@ -37,10 +39,13 @@ private:
     // built in keyboard UI
     MidiKeyboardComponent keyboard;
         
+
+//    OscillatorGroup oscillators;
+    SideBar sidebar;
     
     // virtual functions
     void handleNoteOn(MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity) override;
-    void handleNoteOff(MidiKeyboardState*, int midiChannel, int midiNoteNumber, float /*velocity*/) override;
+    void handleNoteOff(MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity) override;
 
     // timer to grab focus for keyboard
     void timerCallback() override;

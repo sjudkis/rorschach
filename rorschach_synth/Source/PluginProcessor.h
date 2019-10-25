@@ -15,6 +15,12 @@
 #include "SynthVoice.h"
 
 
+#define OSC1_VOL_ID "osc1_vol"
+#define OSC1_VOL_NAME "Osc1_vol"
+#define OSC2_VOL_ID "osc2_vol"
+#define OSC2_VOL_NAME "Osc2_vol"
+#define OSC3_VOL_ID "osc3_vol"
+#define OSC3_VOL_NAME "Osc3_vol"
 //==============================================================================
 /**
 */
@@ -66,9 +72,17 @@ public:
     void keyboardNoteOn(int midiChannel, int midiNoteNumber, float velocity);
     void keyboardNoteOff(int midiChannel, int midiNoteNumber, float velocity);
     
+    
+    // tree state holds values from UI controls
+    AudioProcessorValueTreeState parameterState;
+    AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
+    
+    
 private:
     Synthesiser synth;
-    SynthVoice voice;
+    SynthVoice *voice;
+    
+    
     
     double lastSampleRate;
     
