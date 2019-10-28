@@ -48,7 +48,7 @@ void Rorschach_synthAudioProcessorEditor::paint (Graphics& g)
 void Rorschach_synthAudioProcessorEditor::resized()
 {
     
-    Rectangle<int> area = getLocalBounds();
+    juce::Rectangle<int> area = getLocalBounds();
     
     
     int sidebarWidth = 200;    

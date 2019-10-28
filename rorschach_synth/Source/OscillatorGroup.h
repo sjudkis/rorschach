@@ -35,7 +35,7 @@ public:
 
     void paint (Graphics& g) override
     {
-        Rectangle<int> title(0, 0, getWidth(), 30);
+        juce::Rectangle<int> title(0, 0, getWidth(), 30);
         g.setColour(Colours::black);
         g.setFont(20);
         g.drawText("Oscillators", title, Justification::centred);
@@ -44,7 +44,7 @@ public:
 
     void resized() override
     {
-        Rectangle<int> area = getLocalBounds();
+		juce::Rectangle<int> area = getLocalBounds();
         area.removeFromTop(30); // remove title area
         
         int oscWidth = getWidth() / 3;
