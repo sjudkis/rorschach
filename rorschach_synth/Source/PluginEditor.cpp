@@ -10,6 +10,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "Constants.h"
 
 //==============================================================================
 Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorschach_synthAudioProcessor& p)
@@ -41,7 +42,8 @@ Rorschach_synthAudioProcessorEditor::~Rorschach_synthAudioProcessorEditor()
 //==============================================================================
 void Rorschach_synthAudioProcessorEditor::paint (Graphics& g)
 {
-    g.fillAll(Colours::grey);
+	// Set base background colour
+    g.fillAll(Constants::tan);
 
 	// visualizer static placeholder image
 	Image visualizer = ImageCache::getFromMemory(BinaryData::static_blot_jpg, BinaryData::static_blot_jpgSize);
