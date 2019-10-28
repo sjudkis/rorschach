@@ -52,7 +52,7 @@ public:
 
     void paint (Graphics& g) override
     {
-        Rectangle<int> title(0, 0, getWidth(), 15);
+        juce::Rectangle<int> title(0, 0, getWidth(), 15);
         g.setColour(Colours::black);
         g.drawText(oscType, title, Justification::centred);
         
@@ -61,7 +61,7 @@ public:
     void resized() override
     {
         
-        Rectangle<int> sliderArea = getLocalBounds();
+        juce::Rectangle<int> sliderArea = getLocalBounds();
         sliderArea.removeFromTop(15);
         volSlider.setBounds(sliderArea);
 

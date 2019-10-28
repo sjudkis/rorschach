@@ -42,7 +42,7 @@ public:
 
     void resized() override
     {
-        Rectangle<int> area = getLocalBounds();
+        juce::Rectangle<int> area = getLocalBounds();
         
         int oscillatorGroupHeight = 250;
         oscillators.setBounds(area.removeFromTop(oscillatorGroupHeight));
