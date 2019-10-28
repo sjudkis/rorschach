@@ -5,6 +5,7 @@
               companyName="anderson-judkis-lee">
   <MAINGROUP id="dYYPxU" name="rorschach_synth">
     <GROUP id="{54299D7D-8F12-6D72-15A9-ECC3E0EF2FEE}" name="Source">
+      <FILE id="jaAiT6" name="Constants.h" compile="0" resource="0" file="imgs/Constants.h"/>
       <FILE id="W86rYp" name="static_blot.jpg" compile="0" resource="1" file="imgs/static_blot.jpg"/>
       <FILE id="vmzVjh" name="SideBarRotaryLookAndFeel.cpp" compile="1" resource="0"
             file="Source/SideBarRotaryLookAndFeel.cpp"/>
