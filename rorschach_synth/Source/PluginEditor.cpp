@@ -17,7 +17,6 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     :   AudioProcessorEditor (&p),
         processor (p),
         keyboard(p.keyboardState, MidiKeyboardComponent::horizontalKeyboard),
-//        osc1(p, 1), osc2(p, 2), osc3(p, 3)
         sidebar(p)
 {
     // Make sure that before the constructor has finished, you've set the
@@ -32,10 +31,16 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     
     // add sidebar
     addAndMakeVisible(&sidebar);
-    
+
+	// set main dial position
+	mainDial.setSliderStyle(Slider::Rotary);
+	mainDial.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+	mainDial.setLookAndFeel(&largeRotaryLookAndFeel);
+	addAndMakeVisible(&mainDial);
 }
 Rorschach_synthAudioProcessorEditor::~Rorschach_synthAudioProcessorEditor()
 {
+	mainDial.setLookAndFeel(nullptr);
     processor.keyboardState.removeListener(this);
 }
 
@@ -58,6 +63,9 @@ void Rorschach_synthAudioProcessorEditor::resized()
     sidebar.setBounds(area.removeFromRight(sidebarWidth));
 
     keyboard.setBounds(area.removeFromBottom(keyboardHeight));
+
+	// set main dial position
+	mainDial.setBounds(115, 115, 200, 200);
 }
 
 

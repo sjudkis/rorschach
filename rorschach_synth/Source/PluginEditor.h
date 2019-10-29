@@ -15,6 +15,7 @@
 #include "Oscillator.h"
 #include "OscillatorGroup.h"
 #include "SideBar.h"
+#include "LargeRotaryLookAndFeel.h"
 
 //==============================================================================
 /**
@@ -39,6 +40,10 @@ private:
     // built in keyboard UI
     MidiKeyboardComponent keyboard;
 	const int keyboardHeight = 100;
+
+	// Main Rotary
+	Slider mainDial;
+	LargeRotaryLookAndFeel largeRotaryLookAndFeel;
 
 	// OscillatorGroup oscillators;
     SideBar sidebar;
