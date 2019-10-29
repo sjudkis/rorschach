@@ -33,6 +33,6 @@ void RotaryLookAndFeel::drawRotarySlider(Graphics& g, int x, int y, int width, i
 	p.applyTransform(AffineTransform::rotation(angle).translated(centreX, centreY));
 
 	// pointer
-	g.setColour(Colour((uint8)234, (uint8)213, (uint8)201, (uint8)255));
+	g.setColour(Constants::tan);
 	g.fillPath(p);
 }
