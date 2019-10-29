@@ -11,10 +11,10 @@
             file="Source/VertSliderLookAndFeel.h"/>
       <FILE id="p7ib8y" name="Constants.h" compile="0" resource="0" file="Source/Constants.h"/>
       <FILE id="W86rYp" name="static_blot.jpg" compile="0" resource="1" file="imgs/static_blot.jpg"/>
-      <FILE id="vmzVjh" name="SideBarRotaryLookAndFeel.cpp" compile="1" resource="0"
-            file="Source/SideBarRotaryLookAndFeel.cpp"/>
-      <FILE id="IHv6Zh" name="SideBarRotaryLookAndFeel.h" compile="0" resource="0"
-            file="Source/SideBarRotaryLookAndFeel.h"/>
+      <FILE id="vmzVjh" name="RotaryLookAndFeel.cpp" compile="1" resource="0"
+            file="Source/RotaryLookAndFeel.cpp"/>
+      <FILE id="IHv6Zh" name="RotaryLookAndFeel.h" compile="0" resource="0"
+            file="Source/RotaryLookAndFeel.h"/>
       <GROUP id="{65BF1AD4-E04E-C012-914B-42BF2386A7A1}" name="Maximilian">
         <GROUP id="{AA5115A4-044C-D6BF-8607-010C61A74E7B}" name="libs">
           <FILE id="b6pLOj" name="fft.cpp" compile="1" resource="0" file="Maximilian/libs/fft.cpp"/>
