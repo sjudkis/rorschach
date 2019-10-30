@@ -15,6 +15,7 @@
 #include "Oscillator.h"
 #include "OscillatorGroup.h"
 #include "SideBar.h"
+#include "LargeRotaryLookAndFeel.h"
 
 //==============================================================================
 /**
@@ -38,11 +39,19 @@ private:
 
     // built in keyboard UI
     MidiKeyboardComponent keyboard;
-        
+	const int keyboardHeight = 100;
 
-//    OscillatorGroup oscillators;
+	// Main Rotary
+	Slider mainDial;
+	LargeRotaryLookAndFeel largeRotaryLookAndFeel;
+
+	// OscillatorGroup oscillators;
     SideBar sidebar;
-    
+	const int sidebarWidth = 200;
+	// Width of visualizer. Right now, it is static.
+	const int visualizerWidth = 736;
+	const int visualizerHeight = 479;
+	
     // virtual functions
     void handleNoteOn(MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity) override;
     void handleNoteOff(MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity) override;

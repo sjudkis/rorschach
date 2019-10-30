@@ -26,7 +26,6 @@ public:
             
     {
         addAndMakeVisible(&oscillators);
-
     }
 
     ~SideBar()
@@ -34,10 +33,7 @@ public:
     }
 
     void paint (Graphics& g) override
-    {
-        g.setColour(Colours::darkgrey);
-        g.drawRect(getLocalBounds(), 1);
-        
+    {    
     }
 
     void resized() override

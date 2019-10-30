@@ -10,19 +10,18 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "Constants.h"
 
 //==============================================================================
 Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorschach_synthAudioProcessor& p)
     :   AudioProcessorEditor (&p),
         processor (p),
         keyboard(p.keyboardState, MidiKeyboardComponent::horizontalKeyboard),
-//        osc1(p, 1), osc2(p, 2), osc3(p, 3)
         sidebar(p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    setSize (800, 600);
-    
+	setSize(sidebarWidth+visualizerWidth, keyboardHeight+visualizerHeight);
     addAndMakeVisible(&keyboard);
     processor.keyboardState.addListener(this);
     keyboard.setWantsKeyboardFocus (false);
@@ -32,30 +31,41 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     
     // add sidebar
     addAndMakeVisible(&sidebar);
-    
+
+	// set main dial position
+	mainDial.setSliderStyle(Slider::Rotary);
+	mainDial.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+	mainDial.setLookAndFeel(&largeRotaryLookAndFeel);
+	addAndMakeVisible(&mainDial);
 }
 Rorschach_synthAudioProcessorEditor::~Rorschach_synthAudioProcessorEditor()
 {
+	mainDial.setLookAndFeel(nullptr);
     processor.keyboardState.removeListener(this);
 }
 
 //==============================================================================
 void Rorschach_synthAudioProcessorEditor::paint (Graphics& g)
 {
-    g.fillAll(Colours::grey);
+	// Set base background colour
+    g.fillAll(Constants::tan);
+
+	// visualizer static placeholder image
+	Image visualizer = ImageCache::getFromMemory(BinaryData::static_blot_jpg, BinaryData::static_blot_jpgSize);
+	g.drawImageAt(visualizer, 0, 0);
 }
 
 void Rorschach_synthAudioProcessorEditor::resized()
 {
     
     juce::Rectangle<int> area = getLocalBounds();
-    
-    
-    int sidebarWidth = 200;    
+
     sidebar.setBounds(area.removeFromRight(sidebarWidth));
 
-    int keyboardHeight = 100;
     keyboard.setBounds(area.removeFromBottom(keyboardHeight));
+
+	// set main dial position
+	mainDial.setBounds(115, 115, 200, 200);
 }
 
 

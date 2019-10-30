@@ -13,6 +13,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 #include "Oscillator.h"
+#include "VertSliderLookAndFeel.h"
 //==============================================================================
 /*
 */
@@ -23,14 +24,20 @@ public:
                 osc1(p, 1, "Sine"), osc2(p, 2, "Square"), osc3(p, 3, "Saw"),
                 processor(p)
     {
+		osc1.setLookAndFeel(&vertSliderLookAndFeel);
+		osc2.setLookAndFeel(&vertSliderLookAndFeel);
+		osc3.setLookAndFeel(&vertSliderLookAndFeel);
+
         addAndMakeVisible(&osc1);
         addAndMakeVisible(&osc2);
         addAndMakeVisible(&osc3);
-
     }
 
     ~OscillatorGroup()
     {
+		osc1.setLookAndFeel(nullptr);
+		osc2.setLookAndFeel(nullptr);
+		osc3.setLookAndFeel(nullptr);
     }
 
     void paint (Graphics& g) override
@@ -39,7 +46,6 @@ public:
         g.setColour(Colours::black);
         g.setFont(20);
         g.drawText("Oscillators", title, Justification::centred);
-        
     }
 
     void resized() override
@@ -58,8 +64,10 @@ private:
     Oscillator osc1; // sine
     Oscillator osc2; // square
     Oscillator osc3; // saw
-    
+
     Rorschach_synthAudioProcessor& processor;
     
+	VertSliderLookAndFeel vertSliderLookAndFeel;
+
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OscillatorGroup)
 };
