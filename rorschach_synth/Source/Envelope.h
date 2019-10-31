@@ -13,6 +13,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 #include "RotaryLookAndFeel.h"
+#include "Constants.h"
 
 //==============================================================================
 /*
@@ -69,7 +70,7 @@ public:
     }
     void paint (Graphics& g) override
     {
-        g.setColour(Colour((uint8)94, (uint8)74, (uint8)62, (uint8)255));
+        g.setColour(Constants::brown);
         g.setFont(18);
         
         int labelWidth = 20;
