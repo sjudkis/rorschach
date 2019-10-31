@@ -53,7 +53,7 @@ public:
     void paint (Graphics& g) override
     {
         juce::Rectangle<int> title(0, 0, getWidth(), 15);
-        g.setColour(Colours::black);
+        g.setColour(Colour((uint8)94, (uint8)74, (uint8)62, (uint8)255));
         g.drawText(oscType, title, Justification::centred);
         
     }

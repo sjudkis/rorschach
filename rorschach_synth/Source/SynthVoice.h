@@ -26,16 +26,16 @@ public:
     
     void startNote (int midiNoteNumber,float velocity, SynthesiserSound * sound, int currentPitchWheelPosition) override
     {
-        env1.trigger = 1;
+        envelope.noteOn();
         level = velocity;
         frequency = MidiMessage::getMidiNoteInHertz(midiNoteNumber);
     }
     
     void stopNote (float velocity, bool allowTailOff) override
     {
+        envelope.noteOff();
         allowTailOff = true;
 //        level = 0;
-        env1.trigger = 0;
         if (velocity == 0)
             clearCurrentNote();
     }
@@ -58,24 +58,35 @@ public:
         }
     }
     
+    void getEnvelopeParams(float *att, float *dec, float *sus, float *rel)
+    {
+        envelopeParams.attack = *att;
+        envelopeParams.decay = *dec;
+        envelopeParams.sustain = *sus;
+        envelopeParams.release = *rel;
+        
+        envelope.setParameters(envelopeParams);
+    }
+    
+    void setEnvelopeSampleRate(double sampleRate)
+    {
+        envelope.setSampleRate(sampleRate);
+    }
     
     void renderNextBlock (AudioBuffer <float> & outputBuffer, int startSample, int numSamples) override
     {
-        env1.setAttack(.2);
-        env1.setDecay(5000);
-        env1.setSustain(0.9);
-        env1.setRelease(1000);
+        envelope.setParameters(envelopeParams);
         
         for (int sample = 0; sample < numSamples; ++sample)
         {
             double wave = osc1.sinewave(frequency) * oscVols[0];
             wave += osc2.square(frequency) * oscVols[1];
             wave += osc3.saw(frequency) * oscVols[2];
-            
-            double sound = env1.adsr(wave, env1.trigger) * level;
+            wave *= level;
+//            double sound = env1.adsr(wave, env1.trigger) * level;
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
-                outputBuffer.addSample(channel, startSample, sound);
+                outputBuffer.addSample(channel, startSample, envelope.getNextSample() * wave);
             }
             ++startSample;
         }
@@ -91,7 +102,8 @@ private:
     maxiOsc osc2;
     maxiOsc osc3;
     
-    maxiEnv env1;
+    ADSR envelope;
+    ADSR::Parameters envelopeParams;
 };
 
 
