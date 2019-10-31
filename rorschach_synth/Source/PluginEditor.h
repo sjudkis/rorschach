@@ -45,7 +45,7 @@ private:
 	Slider mainDial;
 	LargeRotaryLookAndFeel largeRotaryLookAndFeel;
 
-	// OscillatorGroup oscillators;
+	// Sidebar with synth controls
     SideBar sidebar;
 	const int sidebarWidth = 200;
 	// Width of visualizer. Right now, it is static.

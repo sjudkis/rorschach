@@ -15,7 +15,7 @@ namespace BinaryData
     const int            static_blot_jpgSize = 201276;
 
     extern const char*   README;
-    const int            READMESize = 3115;
+    const int            READMESize = 3042;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 3;

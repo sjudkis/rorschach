@@ -57,6 +57,15 @@ AudioProcessorValueTreeState::ParameterLayout Rorschach_synthAudioProcessor::cre
     auto osc3Vol = std::make_unique<AudioParameterFloat>(OSC3_VOL_ID, OSC3_VOL_NAME, 0.0f, 1.0, .5f);
     parameters.push_back(std::move(osc3Vol));
     
+    // envelope parameters
+    auto attack = std::make_unique<AudioParameterFloat>(ATTACK_ID, ATTACK_NAME, 0.001f, 5.0f, 0.001f);
+    parameters.push_back(std::move(attack));
+    auto decay = std::make_unique<AudioParameterFloat>(DECAY_ID, DECAY_NAME, 0.001f, 2.0f, 0.001f);
+    parameters.push_back(std::move(decay));
+    auto sustain = std::make_unique<AudioParameterFloat>(SUSTAIN_ID, SUSTAIN_NAME, 0.0f, 1.0f, 0.9f);
+    parameters.push_back(std::move(sustain));
+    auto release = std::make_unique<AudioParameterFloat>(RELEASE_ID, RELEASE_NAME, 0.001f, 5.0f, 0.1f);
+    parameters.push_back(std::move(release));
     
     return { parameters.begin(), parameters.end() };
 }
@@ -172,6 +181,9 @@ void Rorschach_synthAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
     {
         if ((voice = dynamic_cast<SynthVoice*>(synth.getVoice(i))))
         {
+            // set envelope sample rate for each voice
+            voice->setEnvelopeSampleRate(lastSampleRate); //
+            
             float *volParams[3];
             // create float* array containing vol state for each osc
             volParams[0] = parameterState.getRawParameterValue(OSC1_VOL_ID);
@@ -179,6 +191,12 @@ void Rorschach_synthAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
             volParams[2] = parameterState.getRawParameterValue(OSC3_VOL_ID);
             
             voice->getOscVolParams(volParams);
+            
+            voice->getEnvelopeParams(parameterState.getRawParameterValue(ATTACK_ID),
+                                     parameterState.getRawParameterValue(DECAY_ID),
+                                     parameterState.getRawParameterValue(SUSTAIN_ID),
+                                     parameterState.getRawParameterValue(RELEASE_ID));
+            
         }
     }
     
