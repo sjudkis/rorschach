@@ -35,7 +35,7 @@ public:
     }
 
     void paint (Graphics& g) override
-    {    
+	{
     }
 
     void resized() override
@@ -44,7 +44,7 @@ public:
         
         int oscillatorGroupHeight = 250;
         oscillators.setBounds(area.removeFromTop(oscillatorGroupHeight));
-        envelope.setBounds(area.removeFromTop(getWidth()));
+		envelope.setBounds(area);
     }
 
 private:

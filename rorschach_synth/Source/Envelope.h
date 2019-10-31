@@ -72,10 +72,10 @@ public:
     {
         g.setColour(Constants::brown);
         g.setFont(18);
-        
+
         int labelWidth = 20;
         int labelHeight = 20;
-        
+
         juce::Rectangle<int> labelA(0, 0, labelWidth, labelHeight);
         g.drawText("A", labelA, Justification::centred);
         
@@ -87,28 +87,47 @@ public:
         
         juce::Rectangle<int> labelR(getWidth() - labelWidth, getHeight() - labelHeight, labelWidth, labelHeight);
         g.drawText("R", labelR, Justification::centred);
+
+		auto widthStart = getWidth() / 2 - 80;
+		auto widthEnd = getWidth() / 2 + 80;
+		auto heightStart = getHeight() - 100;
+		auto heightEnd = getHeight() - 20;
+
+		juce::Rectangle<float> envelopeArea(Point<float>(widthStart, heightStart), Point<float>(widthEnd, heightEnd));
+		g.setColour(Constants::brown);
+		g.fillRoundedRectangle(envelopeArea, 5.5f);
+
+		Path adsrPath;
+		// Start and end are pulled out a bit
+		adsrPath.startNewSubPath(Point<float>(widthStart - 5, heightEnd - 10));
+		adsrPath.lineTo(Point<float>(widthStart, heightEnd - 10)); // Line before attack
+		adsrPath.lineTo(Point<float>(widthStart + 40, heightStart + 10));	// Attack line
+		adsrPath.lineTo(Point<float>(widthStart + 60, heightStart + 40));	// Delay line
+		adsrPath.lineTo(Point<float>(widthStart + 140, heightStart + 40));	// Sustain line
+		adsrPath.lineTo(Point<float>(widthStart + 160, heightEnd - 10));	// Release line
+		adsrPath.lineTo(Point<float>(widthEnd + 5, heightEnd - 10)); // Line after release
+		g.setColour(Constants::tan);
+		g.strokePath(adsrPath, PathStrokeType(5.0f, PathStrokeType::JointStyle::curved));
     }
 
     void resized() override
     {
-        juce::Rectangle<int> area = getLocalBounds();
-        int envWidth = getWidth() / 2;
-        int envHeight = getHeight() / 2;
+        juce::Rectangle<int> area = getLocalBounds().removeFromTop(2*getHeight()/3);
+        int envWidth = area.getWidth() / 2;
+        int envHeight = area.getHeight() / 2;
         
         
         juce::Rectangle<int> topArea = area.removeFromTop(envHeight);
         juce::Rectangle<int> topLeft = topArea.removeFromLeft(envWidth);
         
-        
-        
+     
         attack.setBounds(topLeft);
         
         decay.setBounds(topArea);
         
         juce::Rectangle<int> bottomLeft = area.removeFromLeft(envWidth);
         sustain.setBounds(bottomLeft);
-        release.setBounds(area);
-                          
+        release.setBounds(area);                    
     }
 
 private:
