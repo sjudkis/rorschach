@@ -13,6 +13,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 #include "RotaryLookAndFeel.h"
+#include "EnvelopeGraph.h"
 #include "Constants.h"
 
 //==============================================================================
@@ -25,21 +26,37 @@ public:
     {
         setRotaryStyle(attack);
         attack.setRange(0.001f, 5.0f);
+		attack.onValueChange = [this] {
+			envelopeGraph.onAttackChange(sliderPos(attack));
+			envelopeGraph.repaint();
+		};
         
-        setRotaryStyle(decay);
+		setRotaryStyle(decay);
         decay.setRange(0.001f, 2.0f);
-        
+		decay.onValueChange = [this] {
+			envelopeGraph.onDecayChange(sliderPos(decay));
+			envelopeGraph.repaint();
+		};
+
         setRotaryStyle(sustain);
         sustain.setRange(0.0f, 1.0f);
-        
+		sustain.onValueChange = [this] {
+			envelopeGraph.onSustainChange(sliderPos(sustain));
+			envelopeGraph.repaint();
+		};
+
         setRotaryStyle(release);
         release.setRange(0.001f, 5.0f);
-        
+		release.onValueChange = [this] {
+			envelopeGraph.onReleaseChange(sliderPos(release)); 
+			envelopeGraph.repaint();
+		};
+
         addAndMakeVisible(&attack);
         addAndMakeVisible(&decay);
         addAndMakeVisible(&sustain);
         addAndMakeVisible(&release);
-
+		addAndMakeVisible(&envelopeGraph);
         
         attackState = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
         (processor.parameterState, ATTACK_ID, attack);
@@ -50,7 +67,7 @@ public:
         releaseState = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
         (processor.parameterState, RELEASE_ID, release);
         
-    
+		
     }
 
     ~Envelope()
@@ -60,6 +77,13 @@ public:
         sustain.setLookAndFeel(nullptr);
         release.setLookAndFeel(nullptr);
     }
+
+	// slider position in percentage
+	// assumes that all sliders start around zero
+	double sliderPos(Slider &s) {
+
+		return s.getValue() / (s.getRange().getEnd() - s.getRange().getStart());
+	}
 
     void setRotaryStyle(Slider &s)
     {
@@ -90,26 +114,7 @@ public:
         juce::Rectangle<int> labelR(getWidth() - labelWidth, area.getHeight() - labelHeight, labelWidth, labelHeight);
         g.drawText("R", labelR, Justification::centred);
 
-		auto widthStart = getWidth() / 2 - 80;
-		auto widthEnd = getWidth() / 2 + 80;
-		auto heightStart = getHeight() - 100;
-		auto heightEnd = getHeight() - 20;
-
-		juce::Rectangle<float> envelopeArea(Point<float>(widthStart, heightStart), Point<float>(widthEnd, heightEnd));
-		g.setColour(Constants::brown);
-		g.fillRoundedRectangle(envelopeArea, 5.5f);
-
-		Path adsrPath;
-		// Start and end are pulled out a bit
-		adsrPath.startNewSubPath(Point<float>(widthStart - 5, heightEnd - 10));
-		adsrPath.lineTo(Point<float>(widthStart, heightEnd - 10)); // Line before attack
-		adsrPath.lineTo(Point<float>(widthStart + 40, heightStart + 10));	// Attack line
-		adsrPath.lineTo(Point<float>(widthStart + 60, heightStart + 40));	// Delay line
-		adsrPath.lineTo(Point<float>(widthStart + 140, heightStart + 40));	// Sustain line
-		adsrPath.lineTo(Point<float>(widthStart + 160, heightEnd - 10));	// Release line
-		adsrPath.lineTo(Point<float>(widthEnd + 5, heightEnd - 10)); // Line after release
-		g.setColour(Constants::tan);
-		g.strokePath(adsrPath, PathStrokeType(5.0f, PathStrokeType::JointStyle::curved));
+		
     }
 
     void resized() override
@@ -129,7 +134,9 @@ public:
         
         juce::Rectangle<int> bottomLeft = area.removeFromLeft(envWidth);
         sustain.setBounds(bottomLeft);
-        release.setBounds(area);                    
+        release.setBounds(area);
+
+		envelopeGraph.setBounds(getWidth() / 2 - 80, getHeight() - 100, 160, 80);
     }
 
 private:
@@ -139,7 +146,7 @@ private:
     Slider decay;
     Slider sustain;
     Slider release;
-    
+	EnvelopeGraph envelopeGraph;
 //    juce::Rectangle<int> topLeft;
 //    juce::Rectangle<int> topRight;
 //    juce::Rectangle<int> bottomLeft;
