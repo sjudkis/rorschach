@@ -24,7 +24,7 @@ public:
         delayBufferR.createCircularBuffer(88200);
         delayBufferR.flushBuffer();
         
-        delaySamples = 22050;
+        delaySamples = 0;
     }
     
     void effect (AudioBuffer<float> &outputBuffer, int sample)
