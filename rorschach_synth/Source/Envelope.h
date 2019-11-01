@@ -76,16 +76,18 @@ public:
         int labelWidth = 20;
         int labelHeight = 20;
 
+		juce::Rectangle<int> area = getLocalBounds().removeFromTop(2 * getHeight() / 3);
+
         juce::Rectangle<int> labelA(0, 0, labelWidth, labelHeight);
         g.drawText("A", labelA, Justification::centred);
         
         juce::Rectangle<int> labelD(getWidth() - labelWidth, 0, labelWidth, labelHeight);
         g.drawText("D", labelD, Justification::centred);
         
-        juce::Rectangle<int> labelS(0, getHeight() - labelHeight, labelWidth, labelHeight);
+        juce::Rectangle<int> labelS(0, area.getHeight() - labelHeight, labelWidth, labelHeight);
         g.drawText("S", labelS, Justification::centred);
         
-        juce::Rectangle<int> labelR(getWidth() - labelWidth, getHeight() - labelHeight, labelWidth, labelHeight);
+        juce::Rectangle<int> labelR(getWidth() - labelWidth, area.getHeight() - labelHeight, labelWidth, labelHeight);
         g.drawText("R", labelR, Justification::centred);
 
 		auto widthStart = getWidth() / 2 - 80;
