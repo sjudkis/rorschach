@@ -29,6 +29,8 @@
 #define SUSTAIN_NAME "Sustain"
 #define RELEASE_ID "release"
 #define RELEASE_NAME "Release"
+#define DELAY_TIME "delay_time"
+#define DELAY_NAME "delay_time"
 
 //==============================================================================
 /**
@@ -81,6 +83,9 @@ public:
     void keyboardNoteOn(int midiChannel, int midiNoteNumber, float velocity);
     void keyboardNoteOff(int midiChannel, int midiNoteNumber, float velocity);
     
+    //==============================================================================
+    double getDelayInMilis();
+    void setDelayInMilis(double);
     
     // tree state holds values from UI controls
     AudioProcessorValueTreeState parameterState;
@@ -91,7 +96,7 @@ private:
     Synthesiser synth;
     SynthVoice *voice;
     
-    
+    double delayInMilis;
     
     double lastSampleRate;
     
