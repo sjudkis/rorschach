@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="PB4Q2N" name="rorschach_synth" projectType="audioplug" jucerVersion="5.4.5"
+<JUCERPROJECT id="PB4Q2N" name="rorschach_synth" projectType="audioplug" jucerVersion="5.4.4"
               pluginFormats="buildAU,buildStandalone,buildVST3" pluginCharacteristicsValue="pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
               companyName="anderson-judkis-lee">
   <MAINGROUP id="dYYPxU" name="rorschach_synth">
