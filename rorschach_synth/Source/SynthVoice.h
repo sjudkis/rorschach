@@ -12,6 +12,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "SynthSound.h"
 #include "../Maximilian/maximilian.h"
+#include "DelayFx.h"
 
 
 #define NUM_OSCILLATORS 3
@@ -88,8 +89,16 @@ public:
             {
                 outputBuffer.addSample(channel, startSample, envelope.getNextSample() * wave);
             }
+            
+            delayFx.effect(outputBuffer, startSample);
+            
             ++startSample;
         }
+    }
+    
+    void setDelaySamples(int delaySamples)
+    {
+        delayFx.setDelaySamples(delaySamples);
     }
     
 private:
@@ -101,6 +110,8 @@ private:
     maxiOsc osc1;
     maxiOsc osc2;
     maxiOsc osc3;
+    
+    DelayFx delayFx;
     
     ADSR envelope;
     ADSR::Parameters envelopeParams;

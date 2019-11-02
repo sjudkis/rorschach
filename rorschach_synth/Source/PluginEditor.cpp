@@ -36,7 +36,14 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
 	mainDial.setSliderStyle(Slider::Rotary);
 	mainDial.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
 	mainDial.setLookAndFeel(&largeRotaryLookAndFeel);
-	addAndMakeVisible(&mainDial);
+    mainDial.setRange(0.0, 2000.0);
+    mainDial.setValue(0.0);
+    mainDial.addListener(this);
+    addAndMakeVisible(&mainDial);
+    
+    rotaryDelay = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.parameterState,
+                                                                                       "delay_time",
+                                                                                       mainDial);
 }
 Rorschach_synthAudioProcessorEditor::~Rorschach_synthAudioProcessorEditor()
 {
@@ -84,4 +91,12 @@ void Rorschach_synthAudioProcessorEditor::timerCallback()
 {
     keyboard.grabKeyboardFocus();
     stopTimer();
+}
+
+void Rorschach_synthAudioProcessorEditor::sliderValueChanged(Slider* slider)
+{
+    if (slider == &mainDial)
+    {
+        processor.setDelayInMilis(mainDial.getValue());
+    }
 }

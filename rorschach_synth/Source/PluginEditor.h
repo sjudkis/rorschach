@@ -22,7 +22,8 @@
 */
 class Rorschach_synthAudioProcessorEditor  :    public AudioProcessorEditor,
                                                 public Timer,
-                                                private MidiKeyboardStateListener
+                                                private MidiKeyboardStateListener,
+                                                public Slider::Listener
 {
 public:
     Rorschach_synthAudioProcessorEditor (Rorschach_synthAudioProcessor& p);
@@ -31,6 +32,7 @@ public:
     //==============================================================================
     void paint (Graphics&) override;
     void resized() override;
+    void sliderValueChanged (Slider* slider) override;
 
 private:
     // This reference is provided as a quick way for your editor to
@@ -44,6 +46,7 @@ private:
 	// Main Rotary
 	Slider mainDial;
 	LargeRotaryLookAndFeel largeRotaryLookAndFeel;
+    unique_ptr<AudioProcessorValueTreeState::SliderAttachment> rotaryDelay;
 
 	// Sidebar with synth controls
     SideBar sidebar;
