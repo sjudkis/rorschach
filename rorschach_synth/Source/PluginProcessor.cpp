@@ -67,6 +67,9 @@ AudioProcessorValueTreeState::ParameterLayout Rorschach_synthAudioProcessor::cre
     auto release = std::make_unique<AudioParameterFloat>(RELEASE_ID, RELEASE_NAME, 0.001f, 5.0f, 0.1f);
     parameters.push_back(std::move(release));
     
+    auto delayTime = std::make_unique<AudioParameterFloat>(DELAY_TIME, DELAY_NAME, NormalisableRange<float>(0.0, 2000.0), 0.0);
+    parameters.push_back(std::move(delayTime));
+    
     return { parameters.begin(), parameters.end() };
 }
 
@@ -197,6 +200,9 @@ void Rorschach_synthAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
                                      parameterState.getRawParameterValue(SUSTAIN_ID),
                                      parameterState.getRawParameterValue(RELEASE_ID));
             
+            int samplesToDelay = *parameterState.getRawParameterValue(DELAY_TIME) * lastSampleRate * 0.001;
+            voice->setDelaySamples(samplesToDelay);
+            
         }
     }
     
@@ -251,4 +257,15 @@ void Rorschach_synthAudioProcessor::keyboardNoteOn(int midiChannel, int midiNote
 void Rorschach_synthAudioProcessor::keyboardNoteOff(int midiChannel, int midiNoteNumber, float velocity)
 {
     synth.noteOff(midiChannel, midiNoteNumber, velocity, true);
+}
+
+//==============================================================================
+double Rorschach_synthAudioProcessor::getDelayInMilis ()
+{
+    return this->delayInMilis;
+}
+
+void Rorschach_synthAudioProcessor::setDelayInMilis (double delayInMilis)
+{
+    this->delayInMilis = delayInMilis;
 }
