@@ -93,7 +93,7 @@ public:
             
             delayFx.effect(outputBuffer, startSample);
             
-            if (reverbAmt > 0.0) reverbFx.effect(outputBuffer, startSample);
+            if (reverbAmt > 0.5) reverbFx.effect(outputBuffer, startSample);
             
             ++startSample;
         }
@@ -107,6 +107,7 @@ public:
     void setReverbAmt(double reverbAmt)
     {
         this->reverbAmt = reverbAmt;
+        reverbFx.setWetMix(reverbAmt);
     }
     
 private:

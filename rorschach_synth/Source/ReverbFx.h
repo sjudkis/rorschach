@@ -39,8 +39,8 @@ public:
         delaySamples2 = (int) 233.0*44.1;
         delaySamples3 = (int) 127.0*44.1;
         delaySamples4 = (int) 43.0*44.1;
-        delaySamples5 = (int) 3.0*44.1;
-        delaySamples6 = (int) 1.0*44.1;
+        delaySamples5 = (int) 43.0*44.1;
+        delaySamples6 = (int) 89.0*44.1;
         
         g1 = 0.3;
         g2 = -0.4;
@@ -49,7 +49,7 @@ public:
         
         yn1 = 0.0;
         yn2 = 0.0;
-        
+        wet = 0.0;
         
     }
     
@@ -76,19 +76,23 @@ public:
         
         allBuffer1.writeBuffer(combMix);
         
-        yn1 = (-0.5*combMix) + vn1 + (0.5*yn1);
+        yn1 = (-0.5*combMix) + vn1 + (wet*yn1);
         
         
         float vn2 = allBuffer2.readBuffer(delaySamples6);
         
         allBuffer2.writeBuffer(yn1);
 
-        yn2 = (-0.5*yn1) + vn2 + (0.5*yn2);
+        yn2 = (-0.5*yn1) + vn2 + (wet*yn2);
         
-        outputBuffer.addSample(0, sample, yn2 * 0.0625);
-        outputBuffer.addSample(1, sample, yn2 * 0.0625);
+        outputBuffer.addSample(0, sample, yn2 * 0.05);
+        outputBuffer.addSample(1, sample, yn2 * 0.05);
     }
     
+    void setWetMix (float wet)
+    {
+        this->wet = wet;
+    }
     
     
 private:
@@ -110,5 +114,6 @@ private:
     float g2;
     float g3;
     float g4;
+    float wet;
     maxiFilter filter;
 };

@@ -45,7 +45,7 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     reverbDial.setSliderStyle(Slider::Rotary);
     reverbDial.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
     reverbDial.setLookAndFeel(&smallRotaryLookAndFeel);
-    reverbDial.setRange(0.0, 1.0);
+    reverbDial.setRange(0.5, 0.8);
     reverbDial.setValue(0.0);
     reverbDial.addListener(this);
     addAndMakeVisible(&reverbDial);

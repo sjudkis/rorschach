@@ -70,7 +70,7 @@ AudioProcessorValueTreeState::ParameterLayout Rorschach_synthAudioProcessor::cre
     auto delayTime = std::make_unique<AudioParameterFloat>(DELAY_TIME, DELAY_NAME, NormalisableRange<float>(0.0, 2000.0), 0.0);
     parameters.push_back(std::move(delayTime));
     
-    auto reverbAmt = std::make_unique<AudioParameterFloat>(REVERB_AMT, REVERB_NAME, NormalisableRange<float>(0.0, 1.0), 0.0);
+    auto reverbAmt = std::make_unique<AudioParameterFloat>(REVERB_AMT, REVERB_NAME, NormalisableRange<float>(0.5, 0.8), 0.0);
     parameters.push_back(std::move(reverbAmt));
     
     return { parameters.begin(), parameters.end() };
