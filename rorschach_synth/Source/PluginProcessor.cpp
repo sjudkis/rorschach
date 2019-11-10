@@ -67,8 +67,13 @@ AudioProcessorValueTreeState::ParameterLayout Rorschach_synthAudioProcessor::cre
     auto release = std::make_unique<AudioParameterFloat>(RELEASE_ID, RELEASE_NAME, 0.001f, 5.0f, 0.1f);
     parameters.push_back(std::move(release));
     
+    // delay parameter
     auto delayTime = std::make_unique<AudioParameterFloat>(DELAY_TIME, DELAY_NAME, NormalisableRange<float>(0.0, 2000.0), 0.0);
     parameters.push_back(std::move(delayTime));
+    
+    // gain parameter
+    auto gain = std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, 0.0f, 1.0f, 0.8f);//-48.0f, 0.0f, -1.0f);
+    parameters.push_back(std::move(gain));
     
     return { parameters.begin(), parameters.end() };
 }
@@ -199,6 +204,8 @@ void Rorschach_synthAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
                                      parameterState.getRawParameterValue(DECAY_ID),
                                      parameterState.getRawParameterValue(SUSTAIN_ID),
                                      parameterState.getRawParameterValue(RELEASE_ID));
+            
+            voice->getGainParam(parameterState.getRawParameterValue(GAIN_ID));
             
             int samplesToDelay = *parameterState.getRawParameterValue(DELAY_TIME) * lastSampleRate * 0.001;
             voice->setDelaySamples(samplesToDelay);

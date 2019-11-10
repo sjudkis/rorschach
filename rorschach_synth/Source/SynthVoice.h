@@ -74,6 +74,12 @@ public:
         envelope.setSampleRate(sampleRate);
     }
     
+    void getGainParam(float *g)
+    {
+//        gain = pow(10, (*g / 20.0));
+        gain = *g;
+    }
+    
     void renderNextBlock (AudioBuffer <float> & outputBuffer, int startSample, int numSamples) override
     {
         envelope.setParameters(envelopeParams);
@@ -84,7 +90,7 @@ public:
             wave += osc2.square(frequency) * oscVols[1];
             wave += osc3.saw(frequency) * oscVols[2];
             wave *= level;
-//            double sound = env1.adsr(wave, env1.trigger) * level;
+            wave *= gain;
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
                 outputBuffer.addSample(channel, startSample, envelope.getNextSample() * wave);
@@ -106,6 +112,7 @@ private:
     double level;
     
     float oscVols[3];
+    float gain;
     
     maxiOsc osc1;
     maxiOsc osc2;

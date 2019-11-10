@@ -31,6 +31,8 @@
 #define RELEASE_NAME "Release"
 #define DELAY_TIME "delay_time"
 #define DELAY_NAME "delay_time"
+#define GAIN_ID "gain"
+#define GAIN_NAME "Gain"
 
 //==============================================================================
 /**
