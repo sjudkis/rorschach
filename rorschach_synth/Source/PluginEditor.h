@@ -16,6 +16,7 @@
 #include "OscillatorGroup.h"
 #include "SideBar.h"
 #include "LargeRotaryLookAndFeel.h"
+#include "SmallRotaryLookAndFeel.h"
 
 //==============================================================================
 /**
@@ -47,6 +48,12 @@ private:
 	Slider mainDial;
 	LargeRotaryLookAndFeel largeRotaryLookAndFeel;
     unique_ptr<AudioProcessorValueTreeState::SliderAttachment> rotaryDelay;
+    
+    //Reverb Rotary
+    Slider reverbDial;
+    SmallRotaryLookAndFeel smallRotaryLookAndFeel;
+    unique_ptr<AudioProcessorValueTreeState::SliderAttachment> rotaryReverb;
+    
 
 	// Sidebar with synth controls
     SideBar sidebar;
