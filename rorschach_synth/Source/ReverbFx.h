@@ -115,5 +115,4 @@ private:
     float g3;
     float g4;
     float wet;
-    maxiFilter filter;
 };
