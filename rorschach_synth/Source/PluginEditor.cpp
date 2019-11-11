@@ -41,13 +41,26 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     mainDial.addListener(this);
     addAndMakeVisible(&mainDial);
     
+    //reverb button
+    reverbDial.setSliderStyle(Slider::Rotary);
+    reverbDial.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+    reverbDial.setLookAndFeel(&smallRotaryLookAndFeel);
+    reverbDial.setRange(0.5, 0.8);
+    reverbDial.setValue(0.0);
+    reverbDial.addListener(this);
+    addAndMakeVisible(&reverbDial);
+    
     rotaryDelay = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.parameterState,
                                                                                        "delay_time",
                                                                                        mainDial);
+    rotaryReverb = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.parameterState,
+                                                                                    "reverb_amt",
+                                                                                    reverbDial);
 }
 Rorschach_synthAudioProcessorEditor::~Rorschach_synthAudioProcessorEditor()
 {
 	mainDial.setLookAndFeel(nullptr);
+    reverbDial.setLookAndFeel(nullptr);
     processor.keyboardState.removeListener(this);
 }
 
@@ -73,6 +86,8 @@ void Rorschach_synthAudioProcessorEditor::resized()
 
 	// set main dial position
 	mainDial.setBounds(115, 115, 200, 200);
+    
+    reverbDial.setBounds(600, 325, 100, 100);
 }
 
 
@@ -98,5 +113,10 @@ void Rorschach_synthAudioProcessorEditor::sliderValueChanged(Slider* slider)
     if (slider == &mainDial)
     {
         processor.setDelayInMilis(mainDial.getValue());
+    }
+    else if (slider == &reverbDial)
+    {
+        processor.setReverbAmt(reverbDial.getValue());
+        
     }
 }

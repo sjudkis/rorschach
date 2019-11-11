@@ -31,6 +31,8 @@
 #define RELEASE_NAME "Release"
 #define DELAY_TIME "delay_time"
 #define DELAY_NAME "delay_time"
+#define REVERB_AMT "reverb_amt"
+#define REVERB_NAME "reverb_amt"
 
 //==============================================================================
 /**
@@ -87,6 +89,9 @@ public:
     double getDelayInMilis();
     void setDelayInMilis(double);
     
+    double getReverbAmt();
+    void setReverbAmt(double);
+    
     // tree state holds values from UI controls
     AudioProcessorValueTreeState parameterState;
     AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
@@ -97,6 +102,7 @@ private:
     SynthVoice *voice;
     
     double delayInMilis;
+    double reverbAmt;
     
     double lastSampleRate;
     
