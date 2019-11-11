@@ -39,7 +39,7 @@ public:
         delaySamples2 = (int) 233.0*44.1;
         delaySamples3 = (int) 127.0*44.1;
         delaySamples4 = (int) 43.0*44.1;
-        delaySamples5 = (int) 43.0*44.1;
+        delaySamples5 = (int) 31.0*44.1;
         delaySamples6 = (int) 89.0*44.1;
         
         g1 = 0.3;
@@ -115,5 +115,4 @@ private:
     float g3;
     float g4;
     float wet;
-    maxiFilter filter;
 };

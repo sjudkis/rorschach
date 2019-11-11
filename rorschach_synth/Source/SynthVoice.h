@@ -91,9 +91,9 @@ public:
                 outputBuffer.addSample(channel, startSample, envelope.getNextSample() * wave);
             }
             
-            delayFx.effect(outputBuffer, startSample);
-            
             if (reverbAmt > 0.5) reverbFx.effect(outputBuffer, startSample);
+            
+            delayFx.effect(outputBuffer, startSample);
             
             ++startSample;
         }
