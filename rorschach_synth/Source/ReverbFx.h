@@ -65,10 +65,10 @@ public:
         float dn3 = outputBuffer.getSample(0, sample)*0.3 + (g3*wn3);
         float dn4 = outputBuffer.getSample(0, sample)*0.3 + (g4*wn4);
         
-        combBuffer1.writeBuffer(dn1);
-        combBuffer2.writeBuffer(dn2);
-        combBuffer3.writeBuffer(dn3);
-        combBuffer4.writeBuffer(dn4);
+        combBuffer1.writeBuffer(dn4);
+        combBuffer2.writeBuffer(dn3);
+        combBuffer3.writeBuffer(dn2);
+        combBuffer4.writeBuffer(dn1);
         
         float combMix = (dn1 + dn2 + dn3 + dn4) / 8;
         
@@ -77,7 +77,7 @@ public:
         allBuffer1.writeBuffer(combMix);
         
         yn1 = (-0.5*combMix) + vn1 + (wet*yn1);
-        
+
         
         float vn2 = allBuffer2.readBuffer(delaySamples6);
         
