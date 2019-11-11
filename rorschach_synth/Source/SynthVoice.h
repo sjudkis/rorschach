@@ -13,6 +13,7 @@
 #include "SynthSound.h"
 #include "../Maximilian/maximilian.h"
 #include "DelayFx.h"
+#include "ReverbFx.h"
 
 
 #define NUM_OSCILLATORS 3
@@ -76,8 +77,7 @@ public:
     
     void getGainParam(float *g)
     {
-//        gain = pow(10, (*g / 20.0));
-        gain = *g;
+        gain = pow(10, (*g / 20.0));
     }
     
     void renderNextBlock (AudioBuffer <float> & outputBuffer, int startSample, int numSamples) override
@@ -96,15 +96,26 @@ public:
                 outputBuffer.addSample(channel, startSample, envelope.getNextSample() * wave);
             }
             
-            delayFx.effect(outputBuffer, startSample);
+            delayFx.effect(outputBuffer, startSample, gain);
             
+            if (reverbAmt > 0.5) reverbFx.effect(outputBuffer, startSample, gain);
+            
+
             ++startSample;
         }
+    
+        
     }
     
     void setDelaySamples(int delaySamples)
     {
         delayFx.setDelaySamples(delaySamples);
+    }
+    
+    void setReverbAmt(double reverbAmt)
+    {
+        this->reverbAmt = reverbAmt;
+        reverbFx.setWetMix(reverbAmt);
     }
     
 private:
@@ -119,6 +130,9 @@ private:
     maxiOsc osc3;
     
     DelayFx delayFx;
+    ReverbFx reverbFx;
+    
+    double reverbAmt;
     
     ADSR envelope;
     ADSR::Parameters envelopeParams;

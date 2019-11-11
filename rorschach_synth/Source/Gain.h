@@ -34,6 +34,7 @@ public:
 
     ~Gain()
     {
+        gainSlider.setLookAndFeel(nullptr);
     }
 
     void paint (Graphics& g) override
@@ -51,13 +52,15 @@ public:
         gainSlider.setBounds(sliderArea);
     }
 
+
 private:
     Rorschach_synthAudioProcessor& processor;
     
     Slider gainSlider;
+    VertSliderLookAndFeel vertSliderLookAndFeel;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> gainVal;
     
-    VertSliderLookAndFeel vertSliderLookAndFeel;
+    
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Gain)
 };

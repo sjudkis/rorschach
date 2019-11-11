@@ -72,8 +72,11 @@ AudioProcessorValueTreeState::ParameterLayout Rorschach_synthAudioProcessor::cre
     parameters.push_back(std::move(delayTime));
     
     // gain parameter
-    auto gain = std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, 0.0f, 1.0f, 0.8f);//-48.0f, 0.0f, -1.0f);
+    auto gain = std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, -48.0f, 0.0f, -5.0f);
     parameters.push_back(std::move(gain));
+    
+    auto reverbAmt = std::make_unique<AudioParameterFloat>(REVERB_AMT, REVERB_NAME, NormalisableRange<float>(0.5, 0.8), 0.0);
+    parameters.push_back(std::move(reverbAmt));
     
     return { parameters.begin(), parameters.end() };
 }
@@ -209,7 +212,7 @@ void Rorschach_synthAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
             
             int samplesToDelay = *parameterState.getRawParameterValue(DELAY_TIME) * lastSampleRate * 0.001;
             voice->setDelaySamples(samplesToDelay);
-            
+            voice->setReverbAmt(*parameterState.getRawParameterValue(REVERB_AMT));
         }
     }
     
@@ -275,4 +278,14 @@ double Rorschach_synthAudioProcessor::getDelayInMilis ()
 void Rorschach_synthAudioProcessor::setDelayInMilis (double delayInMilis)
 {
     this->delayInMilis = delayInMilis;
+}
+
+double Rorschach_synthAudioProcessor::getReverbAmt ()
+{
+    return this->reverbAmt;
+}
+
+void Rorschach_synthAudioProcessor::setReverbAmt (double reverbAmt)
+{
+    this->reverbAmt = reverbAmt;
 }

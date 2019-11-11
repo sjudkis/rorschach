@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="PB4Q2N" name="rorschach_synth" projectType="audioplug" jucerVersion="5.4.4"
+<JUCERPROJECT id="PB4Q2N" name="rorschach_synth" projectType="audioplug" jucerVersion="5.4.5"
               pluginFormats="buildAU,buildStandalone,buildVST3" pluginCharacteristicsValue="pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
               companyName="anderson-judkis-lee">
   <MAINGROUP id="dYYPxU" name="rorschach_synth">
     <GROUP id="{54299D7D-8F12-6D72-15A9-ECC3E0EF2FEE}" name="Source">
+      <FILE id="nXTlaG" name="SmallRotaryLookAndFeel.cpp" compile="1" resource="0"
+            file="Source/SmallRotaryLookAndFeel.cpp"/>
+      <FILE id="TUyE2a" name="SmallRotaryLookAndFeel.h" compile="0" resource="0"
+            file="Source/SmallRotaryLookAndFeel.h"/>
+      <FILE id="LxjiXs" name="ReverbFx.h" compile="1" resource="0" file="Source/ReverbFx.h"/>
       <FILE id="NWLKbb" name="CircularBuffer.h" compile="1" resource="0"
             file="Source/CircularBuffer.h"/>
       <FILE id="SGXCO6" name="EnvelopeGraph.h" compile="0" resource="0" file="Source/EnvelopeGraph.h"/>

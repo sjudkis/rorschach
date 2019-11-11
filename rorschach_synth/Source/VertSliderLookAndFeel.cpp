@@ -24,7 +24,8 @@ void VertSliderLookAndFeel::drawLinearSlider(Graphics& g,
 )
 {
 	g.setColour(Constants::brown);
-	g.drawLine((float)x + (width / 2), (float)y, (float)x + (width / 2), (float)maxSliderPos, 4.0);
+    g.drawLine((float)x + (width / 2), (float)y, (float)x + (width / 2), (float)height + (float)y, 4.0);
+//	g.drawLine((float)x + (width / 2), (float)y, (float)x + (width / 2), (float)maxSliderPos, 4.0);
 
 	g.setColour(Constants::brown);
 	Rectangle< float > rectangle((width / 2) - 10, sliderPos, 20, 5);

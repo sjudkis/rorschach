@@ -27,7 +27,7 @@ public:
         delaySamples = 0;
     }
     
-    void effect (AudioBuffer<float> &outputBuffer, int sample)
+    void effect (AudioBuffer<float> &outputBuffer, int sample, float gain)
     {
         if (delaySamples == 0) return;
         
@@ -48,11 +48,11 @@ public:
         outputBuffer.addSample(0,
                                sample,
                                (outputBuffer.getSample(0, sample)*0.5
-                                + (ynL + y1L + y2L)*0.5) * 0.125);
+                                + (ynL + y1L + y2L)*0.5) * 0.125 * gain);
         outputBuffer.addSample(1,
                                sample,
                                (outputBuffer.getSample(1, sample)*0.5
-                                + (ynR + y1R + y2R)*0.5) * 0.125);
+                                + (ynR + y1R + y2R)*0.5) * 0.125 * gain);
     }
     
     void setDelaySamples (int delaySamples)
