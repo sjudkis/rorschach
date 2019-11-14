@@ -86,14 +86,14 @@ public:
         
         for (int sample = 0; sample < numSamples; ++sample)
         {
-            double freqMod = 0.0;
-            if (lfoFreq > 0.0)
+            double freqMod = frequency;
+            if (lfoFreq > 0.1)
             {
-                freqMod = (lfo.sinewave(lfoFreq) * 12);
+                freqMod += (lfo.sinewave(lfoFreq) * 6.0);
             }
-            double wave = osc1.sinewave(frequency + freqMod) * oscVols[0];
-            wave += osc2.square(frequency + freqMod) * oscVols[1];
-            wave += osc3.saw(frequency + freqMod) * oscVols[2];
+            double wave = osc1.sinewave(freqMod) * oscVols[0];
+            wave += osc2.square(freqMod) * oscVols[1];
+            wave += osc3.saw(freqMod) * oscVols[2];
             wave *= level;
             wave *= gain;
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
