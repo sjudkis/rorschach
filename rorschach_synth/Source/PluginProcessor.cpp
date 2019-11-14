@@ -75,6 +75,11 @@ AudioProcessorValueTreeState::ParameterLayout Rorschach_synthAudioProcessor::cre
     auto gain = std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, -48.0f, 0.0f, -5.0f);
     parameters.push_back(std::move(gain));
     
+    // lfo parameter
+    auto lfo = std::make_unique<AudioParameterFloat>(LFO_ID, LFO_NAME, 0.0f, 20.0f, 0.1f);
+    parameters.push_back(std::move(lfo));
+    
+    // reverb parameter
     auto reverbAmt = std::make_unique<AudioParameterFloat>(REVERB_AMT, REVERB_NAME, NormalisableRange<float>(0.5, 0.8), 0.0);
     parameters.push_back(std::move(reverbAmt));
     
@@ -213,6 +218,7 @@ void Rorschach_synthAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
             int samplesToDelay = *parameterState.getRawParameterValue(DELAY_TIME) * lastSampleRate * 0.001;
             voice->setDelaySamples(samplesToDelay);
             voice->setReverbAmt(*parameterState.getRawParameterValue(REVERB_AMT));
+            voice->setLfoFreq(*parameterState.getRawParameterValue(LFO_ID));
         }
     }
     

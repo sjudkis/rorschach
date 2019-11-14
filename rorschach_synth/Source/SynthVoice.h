@@ -86,9 +86,14 @@ public:
         
         for (int sample = 0; sample < numSamples; ++sample)
         {
-            double wave = osc1.sinewave(frequency) * oscVols[0];
-            wave += osc2.square(frequency) * oscVols[1];
-            wave += osc3.saw(frequency) * oscVols[2];
+            double freqMod = 0.0;
+            if (lfoFreq > 0.0)
+            {
+                freqMod = (lfo.sinewave(lfoFreq) * 12);
+            }
+            double wave = osc1.sinewave(frequency + freqMod) * oscVols[0];
+            wave += osc2.square(frequency + freqMod) * oscVols[1];
+            wave += osc3.saw(frequency + freqMod) * oscVols[2];
             wave *= level;
             wave *= gain;
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
@@ -117,6 +122,11 @@ public:
         reverbFx.setWetMix(reverbAmt);
     }
     
+    void setLfoFreq(double lfoFreq)
+    {
+        this->lfoFreq = lfoFreq;
+    }
+    
 private:
     double frequency;
     double level;
@@ -127,11 +137,13 @@ private:
     maxiOsc osc1;
     maxiOsc osc2;
     maxiOsc osc3;
+    maxiOsc lfo;
     
     DelayFx delayFx;
     ReverbFx reverbFx;
     
     double reverbAmt;
+    double lfoFreq;
     
     ADSR envelope;
     ADSR::Parameters envelopeParams;
