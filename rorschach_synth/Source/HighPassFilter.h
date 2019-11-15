@@ -25,6 +25,7 @@ public:
         hiPassSlider.setLookAndFeel(&vertSliderLookAndFeel);
         hiPassSlider.setSliderStyle(Slider::SliderStyle::LinearVertical);
         hiPassSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+        hiPassSlider.setSkewFactor(0.08);
         
         addAndMakeVisible(&hiPassSlider);
         

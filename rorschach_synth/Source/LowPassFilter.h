@@ -25,6 +25,7 @@ public:
         loPassSlider.setLookAndFeel(&vertSliderLookAndFeel);
         loPassSlider.setSliderStyle(Slider::SliderStyle::LinearVertical);
         loPassSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
+        loPassSlider.setSkewFactor(0.08);
         
         addAndMakeVisible(&loPassSlider);
         
