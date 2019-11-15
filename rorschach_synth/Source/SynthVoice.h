@@ -96,8 +96,8 @@ public:
             wave += osc3.saw(freqMod) * oscVols[2];
             wave *= level;
             wave *= gain;
-            wave = loPassFilter.lopass(wave, loPassCutoff);
-            wave = highPassFilter.hipass(wave, hiPassCutoff);
+            wave = loPassFilter.lores(wave, loPassCutoff, 1.0);
+            wave = highPassFilter.hires(wave, hiPassCutoff, 1.0);
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
                 outputBuffer.addSample(channel, startSample, envelope.getNextSample() * wave);

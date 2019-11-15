@@ -60,10 +60,10 @@ public:
         float wn3 = combBuffer3.readBuffer(delaySamples3);
         float wn4 = combBuffer4.readBuffer(delaySamples4);
         
-        float dn1 = outputBuffer.getSample(0, sample)*0.3 + filter.lopass(g1*wn1, 0.3);
-        float dn2 = outputBuffer.getSample(0, sample)*0.3 + filter.lopass(g2*wn2, 0.3);
-        float dn3 = outputBuffer.getSample(0, sample)*0.3 + filter.lopass(g3*wn3, 0.3);
-        float dn4 = outputBuffer.getSample(0, sample)*0.3 + filter.lopass(g4*wn4, 0.3);
+        float dn1 = outputBuffer.getSample(0, sample)*0.3 + filter.lores(g1*wn1, 440, 1.0);
+        float dn2 = outputBuffer.getSample(0, sample)*0.3 + filter.lores(g2*wn2, 440, 1.0);
+        float dn3 = outputBuffer.getSample(0, sample)*0.3 + filter.lores(g3*wn3, 440, 1.0);
+        float dn4 = outputBuffer.getSample(0, sample)*0.3 + filter.lores(g4*wn4, 440, 1.0);
         
         combBuffer1.writeBuffer(dn4);
         combBuffer2.writeBuffer(dn3);

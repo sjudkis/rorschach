@@ -80,11 +80,11 @@ AudioProcessorValueTreeState::ParameterLayout Rorschach_synthAudioProcessor::cre
     parameters.push_back(std::move(lfo));
     
     // lopass parameter
-    auto loPassCutoff = std::make_unique<AudioParameterFloat>(LOW_PASS_ID, LOW_PASS_NAME, 0.0f, 1.0f, 1.0f);
+    auto loPassCutoff = std::make_unique<AudioParameterFloat>(LOW_PASS_ID, LOW_PASS_NAME, 0.0f, 7000.0f, 7000.0f);
     parameters.push_back(std::move(loPassCutoff));
     
     // hipass parameter
-    auto hiPassCutoff = std::make_unique<AudioParameterFloat>(HIGH_PASS_ID, HIGH_PASS_NAME, 0.0f, 1.0f, 0.0f);
+    auto hiPassCutoff = std::make_unique<AudioParameterFloat>(HIGH_PASS_ID, HIGH_PASS_NAME, 0.0f, 7000.0f, 0.0f);
     parameters.push_back(std::move(hiPassCutoff));
     
     // reverb parameter
