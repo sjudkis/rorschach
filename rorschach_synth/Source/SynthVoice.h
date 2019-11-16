@@ -87,29 +87,54 @@ public:
     
     void renderNextBlock (AudioBuffer <float> & outputBuffer, int startSample, int numSamples) override
     {
+        deArtifacting(numSamples);
+        
         envelope.setParameters(envelopeParams);
         
         for (int sample = 0; sample < numSamples; ++sample)
         {
-            double wave = osc1.sinewave(frequency) * oscVols[0];
-            wave += osc2.square(frequency) * oscVols[1];
-            wave += osc3.saw(frequency) * oscVols[2];
+            if (sample > 0) incRampParams();
+            
+            double freqMod = frequency;
+            if (lfoFreq > 0.0)
+            {
+                freqMod += (lfo.sinewave(lfoFreq) * 6.0);
+            }
+            double wave = osc1.sinewave(freqMod) * oscVols[0];
+            wave += osc2.square(freqMod) * oscVols[1];
+            wave += osc3.saw(freqMod) * oscVols[2];
             wave *= level;
-            wave *= gain;
+            wave *= gainRamp;
+            wave = loPassFilter.lores(wave, loPassCutoffRamp, 1.0);
+            wave = highPassFilter.hires(wave, hiPassCutoffRamp, 1.0);
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
                 outputBuffer.addSample(channel, startSample, envelope.getNextSample() * wave);
             }
             
-            if (reverbAmt > 0.5) reverbFx.effect(outputBuffer, startSample, gain);
+            if (reverbAmt > 0.5) reverbFx.effect(outputBuffer, startSample, gainRamp);
             
-            delayFx.effect(outputBuffer, startSample, gain);
-
+            delayFx.effect(outputBuffer, startSample, gainRamp);
+            
             ++startSample;
         }
     
         if (glitchState)
             glitchFx.effect(outputBuffer, numSamples);
+    }
+    
+    void deArtifacting(int numSamples)
+    {
+        gainInc = (gain - gainRamp) / numSamples;
+        loPassCutoffInc = (loPassCutoff - loPassCutoffRamp) / numSamples;
+        hiPassCutoffInc = (hiPassCutoff - hiPassCutoffRamp) / numSamples;
+    }
+    
+    void incRampParams()
+    {
+        gainRamp += gainInc;
+        loPassCutoffRamp += loPassCutoffInc;
+        hiPassCutoffRamp += hiPassCutoffInc;
     }
     
     void setDelaySamples(int delaySamples)
@@ -123,16 +148,37 @@ public:
         reverbFx.setWetMix(reverbAmt);
     }
     
+    void setLfoFreq(double lfoFreq)
+    {
+        this->lfoFreq = lfoFreq;
+    }
+    
+    void setLoPassCutoff(double loPassCutoff)
+    {
+        this->loPassCutoff = loPassCutoff;
+    }
+    
+    void setHiPassCutoff(double hiPassCutoff)
+    {
+        this->hiPassCutoff = hiPassCutoff;
+    }
+    
 private:
     double frequency;
     double level;
     
     float oscVols[3];
     float gain;
+    float gainRamp = 0.562f;
+    float gainInc = 0.0f;
     
     maxiOsc osc1;
     maxiOsc osc2;
     maxiOsc osc3;
+    maxiOsc lfo;
+    
+    maxiFilter loPassFilter;
+    maxiFilter highPassFilter;
     
     DelayFx delayFx;
     ReverbFx reverbFx;
@@ -141,6 +187,13 @@ private:
     bool glitchState;
     
     double reverbAmt;
+    double lfoFreq;
+    double loPassCutoff;
+    double loPassCutoffRamp = 7000.0f;
+    double loPassCutoffInc = 0.0f;
+    double hiPassCutoff;
+    double hiPassCutoffRamp = 0.0f;
+    double hiPassCutoffInc = 0.0f;
     
     ADSR envelope;
     ADSR::Parameters envelopeParams;

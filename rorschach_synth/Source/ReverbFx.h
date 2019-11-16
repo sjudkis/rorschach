@@ -60,10 +60,10 @@ public:
         float wn3 = combBuffer3.readBuffer(delaySamples3);
         float wn4 = combBuffer4.readBuffer(delaySamples4);
         
-        float dn1 = outputBuffer.getSample(0, sample)*0.3 + (g1*wn1);
-        float dn2 = outputBuffer.getSample(0, sample)*0.3 + (g2*wn2);
-        float dn3 = outputBuffer.getSample(0, sample)*0.3 + (g3*wn3);
-        float dn4 = outputBuffer.getSample(0, sample)*0.3 + (g4*wn4);
+        float dn1 = outputBuffer.getSample(0, sample)*0.3 + filter.lores(g1*wn1, 440, 1.0);
+        float dn2 = outputBuffer.getSample(0, sample)*0.3 + filter.lores(g2*wn2, 440, 1.0);
+        float dn3 = outputBuffer.getSample(0, sample)*0.3 + filter.lores(g3*wn3, 440, 1.0);
+        float dn4 = outputBuffer.getSample(0, sample)*0.3 + filter.lores(g4*wn4, 440, 1.0);
         
         combBuffer1.writeBuffer(dn4);
         combBuffer2.writeBuffer(dn3);
@@ -102,6 +102,7 @@ private:
     CircularBuffer<float> combBuffer4;
     CircularBuffer<float> allBuffer1;
     CircularBuffer<float> allBuffer2;
+    maxiFilter filter;
     int delaySamples1;
     int delaySamples2;
     int delaySamples3;

@@ -34,6 +34,8 @@ Rorschach_synthAudioProcessor::Rorschach_synthAudioProcessor()
     
     synth.clearSounds();
     synth.addSound(new SynthSound());
+    
+    glitchState = false;
 }
 
 Rorschach_synthAudioProcessor::~Rorschach_synthAudioProcessor()
@@ -75,6 +77,19 @@ AudioProcessorValueTreeState::ParameterLayout Rorschach_synthAudioProcessor::cre
     auto gain = std::make_unique<AudioParameterFloat>(GAIN_ID, GAIN_NAME, -48.0f, 0.0f, -5.0f);
     parameters.push_back(std::move(gain));
     
+    // lfo parameter
+    auto lfo = std::make_unique<AudioParameterFloat>(LFO_ID, LFO_NAME, 0.0f, 20.0f, 0.0f);
+    parameters.push_back(std::move(lfo));
+    
+    // lopass parameter
+    auto loPassCutoff = std::make_unique<AudioParameterFloat>(LOW_PASS_ID, LOW_PASS_NAME, 0.0f, 7000.0f, 7000.0f);
+    parameters.push_back(std::move(loPassCutoff));
+    
+    // hipass parameter
+    auto hiPassCutoff = std::make_unique<AudioParameterFloat>(HIGH_PASS_ID, HIGH_PASS_NAME, 0.0f, 7000.0f, 0.0f);
+    parameters.push_back(std::move(hiPassCutoff));
+    
+    // reverb parameter
     auto reverbAmt = std::make_unique<AudioParameterFloat>(REVERB_AMT, REVERB_NAME, NormalisableRange<float>(0.5, 0.8), 0.0);
     parameters.push_back(std::move(reverbAmt));
     
@@ -215,6 +230,10 @@ void Rorschach_synthAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
             voice->setReverbAmt(*parameterState.getRawParameterValue(REVERB_AMT));
             
             voice->setGlitch(glitchState);
+            
+            voice->setLfoFreq(*parameterState.getRawParameterValue(LFO_ID));
+            voice->setLoPassCutoff(*parameterState.getRawParameterValue(LOW_PASS_ID));
+            voice->setHiPassCutoff(*parameterState.getRawParameterValue(HIGH_PASS_ID));
         }
     }
     
