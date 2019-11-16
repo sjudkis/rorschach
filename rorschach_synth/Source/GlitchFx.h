@@ -19,13 +19,13 @@ public:
         {
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
-                if (start % 2 == 0)
-                {
-                    outputBuffer.setSample(channel, start, outputBuffer.getSample(channel, end));
-                }
-                else if (start % 3 == 0)
+                if (start % 3 == 0)
                 {
                     outputBuffer.setSample(channel, start, 0);
+                }
+                else if (start % 5 == 0)
+                {
+                    outputBuffer.setSample(channel, start, outputBuffer.getSample(channel, end));
                 }
             }
         }
