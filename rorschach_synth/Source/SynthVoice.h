@@ -82,10 +82,14 @@ public:
     
     void renderNextBlock (AudioBuffer <float> & outputBuffer, int startSample, int numSamples) override
     {
+        deArtifacting(numSamples);
+        
         envelope.setParameters(envelopeParams);
         
         for (int sample = 0; sample < numSamples; ++sample)
         {
+            if (sample > 0) incRampParams();
+            
             double freqMod = frequency;
             if (lfoFreq > 0.0)
             {
@@ -95,22 +99,36 @@ public:
             wave += osc2.square(freqMod) * oscVols[1];
             wave += osc3.saw(freqMod) * oscVols[2];
             wave *= level;
-            wave *= gain;
-            wave = loPassFilter.lores(wave, loPassCutoff, 1.0);
-            wave = highPassFilter.hires(wave, hiPassCutoff, 1.0);
+            wave *= gainRamp;
+            wave = loPassFilter.lores(wave, loPassCutoffRamp, 1.0);
+            wave = highPassFilter.hires(wave, hiPassCutoffRamp, 1.0);
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
                 outputBuffer.addSample(channel, startSample, envelope.getNextSample() * wave);
             }
             
-            if (reverbAmt > 0.5) reverbFx.effect(outputBuffer, startSample, gain);
+            if (reverbAmt > 0.5) reverbFx.effect(outputBuffer, startSample, gainRamp);
             
-            delayFx.effect(outputBuffer, startSample, gain);
+            delayFx.effect(outputBuffer, startSample, gainRamp);
             
             ++startSample;
         }
     
         
+    }
+    
+    void deArtifacting(int numSamples)
+    {
+        gainInc = (gain - gainRamp) / numSamples;
+        loPassCutoffInc = (loPassCutoff - loPassCutoffRamp) / numSamples;
+        hiPassCutoffInc = (hiPassCutoff - hiPassCutoffRamp) / numSamples;
+    }
+    
+    void incRampParams()
+    {
+        gainRamp += gainInc;
+        loPassCutoffRamp += loPassCutoffInc;
+        hiPassCutoffRamp += hiPassCutoffInc;
     }
     
     void setDelaySamples(int delaySamples)
@@ -145,6 +163,8 @@ private:
     
     float oscVols[3];
     float gain;
+    float gainRamp = 0.562f;
+    float gainInc = 0.0f;
     
     maxiOsc osc1;
     maxiOsc osc2;
@@ -160,7 +180,11 @@ private:
     double reverbAmt;
     double lfoFreq;
     double loPassCutoff;
+    double loPassCutoffRamp = 7000.0f;
+    double loPassCutoffInc = 0.0f;
     double hiPassCutoff;
+    double hiPassCutoffRamp = 0.0f;
+    double hiPassCutoffInc = 0.0f;
     
     ADSR envelope;
     ADSR::Parameters envelopeParams;
