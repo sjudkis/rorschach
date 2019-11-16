@@ -33,8 +33,14 @@
 #define DELAY_NAME "delay_time"
 #define GAIN_ID "gain"
 #define GAIN_NAME "Gain"
+#define LFO_ID "lfo"
+#define LFO_NAME "LFO"
 #define REVERB_AMT "reverb_amt"
 #define REVERB_NAME "reverb_amt"
+#define LOW_PASS_ID "lopass"
+#define LOW_PASS_NAME "Lopass"
+#define HIGH_PASS_ID "highpass"
+#define HIGH_PASS_NAME "Highpass"
 
 //==============================================================================
 /**

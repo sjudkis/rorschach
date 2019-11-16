@@ -86,11 +86,18 @@ public:
         
         for (int sample = 0; sample < numSamples; ++sample)
         {
-            double wave = osc1.sinewave(frequency) * oscVols[0];
-            wave += osc2.square(frequency) * oscVols[1];
-            wave += osc3.saw(frequency) * oscVols[2];
+            double freqMod = frequency;
+            if (lfoFreq > 0.0)
+            {
+                freqMod += (lfo.sinewave(lfoFreq) * 6.0);
+            }
+            double wave = osc1.sinewave(freqMod) * oscVols[0];
+            wave += osc2.square(freqMod) * oscVols[1];
+            wave += osc3.saw(freqMod) * oscVols[2];
             wave *= level;
             wave *= gain;
+            wave = loPassFilter.lores(wave, loPassCutoff, 1.0);
+            wave = highPassFilter.hires(wave, hiPassCutoff, 1.0);
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
                 outputBuffer.addSample(channel, startSample, envelope.getNextSample() * wave);
@@ -99,7 +106,7 @@ public:
             if (reverbAmt > 0.5) reverbFx.effect(outputBuffer, startSample, gain);
             
             delayFx.effect(outputBuffer, startSample, gain);
-
+            
             ++startSample;
         }
     
@@ -117,6 +124,21 @@ public:
         reverbFx.setWetMix(reverbAmt);
     }
     
+    void setLfoFreq(double lfoFreq)
+    {
+        this->lfoFreq = lfoFreq;
+    }
+    
+    void setLoPassCutoff(double loPassCutoff)
+    {
+        this->loPassCutoff = loPassCutoff;
+    }
+    
+    void setHiPassCutoff(double hiPassCutoff)
+    {
+        this->hiPassCutoff = hiPassCutoff;
+    }
+    
 private:
     double frequency;
     double level;
@@ -127,11 +149,18 @@ private:
     maxiOsc osc1;
     maxiOsc osc2;
     maxiOsc osc3;
+    maxiOsc lfo;
+    
+    maxiFilter loPassFilter;
+    maxiFilter highPassFilter;
     
     DelayFx delayFx;
     ReverbFx reverbFx;
     
     double reverbAmt;
+    double lfoFreq;
+    double loPassCutoff;
+    double hiPassCutoff;
     
     ADSR envelope;
     ADSR::Parameters envelopeParams;

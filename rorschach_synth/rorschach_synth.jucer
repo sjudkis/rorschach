@@ -5,6 +5,10 @@
               companyName="anderson-judkis-lee">
   <MAINGROUP id="dYYPxU" name="rorschach_synth">
     <GROUP id="{54299D7D-8F12-6D72-15A9-ECC3E0EF2FEE}" name="Source">
+      <FILE id="lVgjT0" name="HighPassFilter.h" compile="0" resource="0"
+            file="Source/HighPassFilter.h"/>
+      <FILE id="RmVFoq" name="LowPassFilter.h" compile="0" resource="0" file="Source/LowPassFilter.h"/>
+      <FILE id="svoLkl" name="LFO.h" compile="0" resource="0" file="Source/LFO.h"/>
       <FILE id="nXTlaG" name="SmallRotaryLookAndFeel.cpp" compile="1" resource="0"
             file="Source/SmallRotaryLookAndFeel.cpp"/>
       <FILE id="TUyE2a" name="SmallRotaryLookAndFeel.h" compile="0" resource="0"
