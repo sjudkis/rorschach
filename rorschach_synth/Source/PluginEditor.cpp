@@ -56,6 +56,18 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     rotaryReverb = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.parameterState,
                                                                                     "reverb_amt",
                                                                                     reverbDial);
+    
+    // glitch button
+    addAndMakeVisible(&glitchButton);
+    glitchButton.addListener(this);
+    glitchButton.setButtonText("Glitch Off");
+    
+    glitchButton.setColour(TextButton::ColourIds::buttonColourId, Constants::brown);
+    glitchButton.setColour(TextButton::ColourIds::textColourOffId, Constants::tan);
+    
+    glitchButton.setColour(TextButton::ColourIds::buttonOnColourId, Colours::darkred); //Constants::tan);
+    glitchButton.setColour(TextButton::ColourIds::textColourOnId, Colours::white); //Constants::brown);
+    
 }
 Rorschach_synthAudioProcessorEditor::~Rorschach_synthAudioProcessorEditor()
 {
@@ -88,6 +100,8 @@ void Rorschach_synthAudioProcessorEditor::resized()
 	mainDial.setBounds(115, 115, 200, 200);
     
     reverbDial.setBounds(600, 325, 100, 100);
+    
+    glitchButton.setBounds(10, visualizerHeight - 70, 60, 60);
 }
 
 
@@ -118,5 +132,27 @@ void Rorschach_synthAudioProcessorEditor::sliderValueChanged(Slider* slider)
     {
         processor.setReverbAmt(reverbDial.getValue());
         
+    }
+}
+
+void Rorschach_synthAudioProcessorEditor::buttonClicked(Button *button)
+{
+    keyboard.grabKeyboardFocus();
+    if (button == &glitchButton)
+    {
+        bool glitchOn = glitchButton.getToggleState();
+        processor.toggleGlitch(!glitchOn);
+        glitchButton.setToggleState(!glitchOn, NotificationType::dontSendNotification);
+        // check if button is on
+        if (glitchOn)
+        {
+            glitchButton.setButtonText("Glitch Off");
+        }
+        else
+        {
+            glitchButton.setButtonText("Glitch On");
+        }
+        
+    
     }
 }

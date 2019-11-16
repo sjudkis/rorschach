@@ -35,6 +35,8 @@
 #define GAIN_NAME "Gain"
 #define REVERB_AMT "reverb_amt"
 #define REVERB_NAME "reverb_amt"
+#define GLITCH_ID "glitch"
+#define GLITCH_NAME "Glitch"
 
 //==============================================================================
 /**
@@ -94,6 +96,8 @@ public:
     double getReverbAmt();
     void setReverbAmt(double);
     
+    void toggleGlitch(bool);
+    
     // tree state holds values from UI controls
     AudioProcessorValueTreeState parameterState;
     AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
@@ -108,7 +112,7 @@ private:
     
     double lastSampleRate;
     
-    
+    bool glitchState;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Rorschach_synthAudioProcessor)
 };
