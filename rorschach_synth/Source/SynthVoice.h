@@ -164,7 +164,7 @@ private:
     
     float oscVols[3];
     float gain;
-    float gainRamp;
+    float gainRamp = 0.562f;
     float gainInc = 0.0f;
     
     maxiOsc osc1;
@@ -181,10 +181,10 @@ private:
     double reverbAmt;
     double lfoFreq;
     double loPassCutoff;
-    double loPassCutoffRamp;
+    double loPassCutoffRamp = 7000.0f;
     double loPassCutoffInc = 0.0f;
     double hiPassCutoff;
-    double hiPassCutoffRamp;
+    double hiPassCutoffRamp = 0.0f;
     double hiPassCutoffInc = 0.0f;
     
     ADSR envelope;
