@@ -122,7 +122,6 @@ public:
         gainInc = (gain - gainRamp) / numSamples;
         loPassCutoffInc = (loPassCutoff - loPassCutoffRamp) / numSamples;
         hiPassCutoffInc = (hiPassCutoff - hiPassCutoffRamp) / numSamples;
-        
     }
     
     void incRampParams()
