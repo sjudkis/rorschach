@@ -5,6 +5,10 @@
               companyName="anderson-judkis-lee">
   <MAINGROUP id="dYYPxU" name="rorschach_synth">
     <GROUP id="{54299D7D-8F12-6D72-15A9-ECC3E0EF2FEE}" name="Source">
+      <FILE id="VYpN0k" name="SmallButtonLookAndFeel.h" compile="0" resource="0"
+            file="Source/SmallButtonLookAndFeel.h"/>
+      <FILE id="EritH3" name="SmallButtonLookAndFeel.cpp" compile="1" resource="0"
+            file="Source/SmallButtonLookAndFeel.cpp"/>
       <FILE id="iZ3O9E" name="GlitchFx.h" compile="0" resource="0" file="Source/GlitchFx.h"/>
       <FILE id="lVgjT0" name="HighPassFilter.h" compile="0" resource="0"
             file="Source/HighPassFilter.h"/>

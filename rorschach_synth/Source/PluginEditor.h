@@ -17,6 +17,7 @@
 #include "SideBar.h"
 #include "LargeRotaryLookAndFeel.h"
 #include "SmallRotaryLookAndFeel.h"
+#include "SmallButtonLookAndFeel.h"
 
 
 //==============================================================================
@@ -58,6 +59,7 @@ private:
     
     //Glitch button
     TextButton glitchButton;
+    SmallButtonLookAndFeel smallButtonLookAndFeel;
 //    GlitchButton glitchButton;
 
 	// Sidebar with synth controls
