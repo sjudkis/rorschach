@@ -101,7 +101,7 @@ void Rorschach_synthAudioProcessorEditor::resized()
     
     reverbDial.setBounds(600, 325, 100, 100);
     
-    glitchButton.setBounds(500, 200, 60, 60);
+    glitchButton.setBounds(500, 250, 60, 60);
 }
 
 
