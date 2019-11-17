@@ -61,6 +61,7 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     addAndMakeVisible(&glitchButton);
     glitchButton.addListener(this);
     glitchButton.setButtonText("Glitch Off");
+    glitchButton.setWantsKeyboardFocus(false);
     
     glitchButton.setColour(TextButton::ColourIds::buttonColourId, Constants::brown);
     glitchButton.setColour(TextButton::ColourIds::textColourOffId, Constants::tan);
