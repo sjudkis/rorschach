@@ -8,14 +8,14 @@
   ==============================================================================
 */
 
-#include "SmallButtonLookAndFeel.h"
+#include "ButtonLookAndFeel.h"
 #include "Constants.h"
 
-void SmallButtonLookAndFeel::drawButtonBackground (Graphics& g,
-                                                   Button& button,
-                                                   const Colour& backgroundColour,
-                                                   bool isMouseOverButton,
-                                                   bool isButtonDown)
+void ButtonLookAndFeel::drawButtonBackground (Graphics& g,
+                                              Button& button,
+                                              const Colour& backgroundColour,
+                                              bool isMouseOverButton,
+                                              bool isButtonDown)
 {
     auto area = button.getLocalBounds();
     auto width = area.getWidth();

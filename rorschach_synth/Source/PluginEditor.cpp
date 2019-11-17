@@ -60,7 +60,7 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     // glitch button
     glitchButton.addListener(this);
     
-    glitchButton.setLookAndFeel(&smallButtonLookAndFeel);
+    glitchButton.setLookAndFeel(&buttonLookAndFeel);
     addAndMakeVisible(&glitchButton);
     
     glitchButton.setColour(TextButton::ColourIds::buttonColourId, Colours::whitesmoke);

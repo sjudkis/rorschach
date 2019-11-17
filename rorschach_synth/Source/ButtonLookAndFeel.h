@@ -11,10 +11,10 @@
 #pragma once
 #include "../JuceLibraryCode/JuceHeader.h"
 
-class SmallButtonLookAndFeel : public LookAndFeel_V4
+class ButtonLookAndFeel : public LookAndFeel_V4
 {
 public:
-    SmallButtonLookAndFeel() {};
+    ButtonLookAndFeel() {};
     void drawButtonBackground (Graphics& g, Button& button, const Colour& backgroundColour,
                                bool isMouseOverButton, bool isButtonDown) override;
 };
