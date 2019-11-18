@@ -14,7 +14,7 @@
 #include "../Maximilian/maximilian.h"
 #include "DelayFx.h"
 #include "ReverbFx.h"
-
+#include "GlitchFx.h"
 
 #define NUM_OSCILLATORS 3
 
@@ -80,6 +80,11 @@ public:
         gain = pow(10, (*g / 20.0));
     }
     
+    void setGlitch(bool val)
+    {
+        glitchState = val;
+    }
+    
     void renderNextBlock (AudioBuffer <float> & outputBuffer, int startSample, int numSamples) override
     {
         deArtifacting(numSamples);
@@ -114,7 +119,8 @@ public:
             ++startSample;
         }
     
-        
+        if (glitchState)
+            glitchFx.effect(outputBuffer, numSamples);
     }
     
     void deArtifacting(int numSamples)
@@ -176,6 +182,9 @@ private:
     
     DelayFx delayFx;
     ReverbFx reverbFx;
+    
+    GlitchFx glitchFx;
+    bool glitchState;
     
     double reverbAmt;
     double lfoFreq;

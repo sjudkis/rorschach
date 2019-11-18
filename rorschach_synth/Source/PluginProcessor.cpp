@@ -34,6 +34,8 @@ Rorschach_synthAudioProcessor::Rorschach_synthAudioProcessor()
     
     synth.clearSounds();
     synth.addSound(new SynthSound());
+    
+    glitchState = false;
 }
 
 Rorschach_synthAudioProcessor::~Rorschach_synthAudioProcessor()
@@ -226,6 +228,9 @@ void Rorschach_synthAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
             int samplesToDelay = *parameterState.getRawParameterValue(DELAY_TIME) * lastSampleRate * 0.001;
             voice->setDelaySamples(samplesToDelay);
             voice->setReverbAmt(*parameterState.getRawParameterValue(REVERB_AMT));
+            
+            voice->setGlitch(glitchState);
+            
             voice->setLfoFreq(*parameterState.getRawParameterValue(LFO_ID));
             voice->setLoPassCutoff(*parameterState.getRawParameterValue(LOW_PASS_ID));
             voice->setHiPassCutoff(*parameterState.getRawParameterValue(HIGH_PASS_ID));
@@ -304,4 +309,10 @@ double Rorschach_synthAudioProcessor::getReverbAmt ()
 void Rorschach_synthAudioProcessor::setReverbAmt (double reverbAmt)
 {
     this->reverbAmt = reverbAmt;
+}
+
+//==============================================================================
+void Rorschach_synthAudioProcessor::toggleGlitch(bool state)
+{
+    glitchState = state;
 }

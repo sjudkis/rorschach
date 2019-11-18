@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    SmallRotaryLookAndFeel.h
-    Created: 10 Nov 2019 12:00:23pm
+    smallButtonOff.h
+    Created: 16 Nov 2019 11:55:29pm
     Author:  Zachary Anderson
 
   ==============================================================================
@@ -13,7 +13,6 @@
 class SmallRotaryLookAndFeel : public LookAndFeel_V4
 {
 public:
-	SmallRotaryLookAndFeel() {};
-	void drawRotarySlider(Graphics& g, int x, int y, int width, int height, float sliderPos,
-		const float rotaryStartAngle, const float rotaryEndAngle, Slider&) override;
+    SmallRotaryLookAndFeel() {};
+    
 };

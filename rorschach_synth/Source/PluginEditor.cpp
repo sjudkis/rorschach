@@ -56,11 +56,24 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     rotaryReverb = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(processor.parameterState,
                                                                                     "reverb_amt",
                                                                                     reverbDial);
+    
+    // glitch button
+    glitchButton.addListener(this);
+    glitchButton.setWantsKeyboardFocus(false);
+    
+    glitchButton.setLookAndFeel(&buttonLookAndFeel);
+    addAndMakeVisible(&glitchButton);
+    
+    glitchButton.setColour(TextButton::ColourIds::buttonColourId, Colours::whitesmoke);
+    
+    glitchButton.setColour(TextButton::ColourIds::buttonOnColourId, Constants::tan);
+    
 }
 Rorschach_synthAudioProcessorEditor::~Rorschach_synthAudioProcessorEditor()
 {
 	mainDial.setLookAndFeel(nullptr);
     reverbDial.setLookAndFeel(nullptr);
+    glitchButton.setLookAndFeel(nullptr);
     processor.keyboardState.removeListener(this);
 }
 
@@ -88,6 +101,9 @@ void Rorschach_synthAudioProcessorEditor::resized()
 	mainDial.setBounds(115, 115, 200, 200);
     
     reverbDial.setBounds(600, 325, 100, 100);
+    
+    glitchButton.setBounds(500, 250, 60, 60);
+//    glitchButton.setBounds(300, 50, 60, 60);
 }
 
 
@@ -118,5 +134,16 @@ void Rorschach_synthAudioProcessorEditor::sliderValueChanged(Slider* slider)
     {
         processor.setReverbAmt(reverbDial.getValue());
         
+    }
+}
+
+void Rorschach_synthAudioProcessorEditor::buttonClicked(Button *button)
+{
+    keyboard.grabKeyboardFocus();
+    if (button == &glitchButton)
+    {
+        auto glitchState = glitchButton.getToggleState();
+        glitchButton.setToggleState(!glitchState, NotificationType::dontSendNotification);
+        processor.toggleGlitch(!glitchState);
     }
 }

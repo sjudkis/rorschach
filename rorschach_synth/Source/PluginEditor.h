@@ -17,6 +17,8 @@
 #include "SideBar.h"
 #include "LargeRotaryLookAndFeel.h"
 #include "SmallRotaryLookAndFeel.h"
+#include "ButtonLookAndFeel.h"
+
 
 //==============================================================================
 /**
@@ -24,7 +26,8 @@
 class Rorschach_synthAudioProcessorEditor  :    public AudioProcessorEditor,
                                                 public Timer,
                                                 private MidiKeyboardStateListener,
-                                                public Slider::Listener
+                                                public Slider::Listener,
+                                                public Button::Listener
 {
 public:
     Rorschach_synthAudioProcessorEditor (Rorschach_synthAudioProcessor& p);
@@ -34,7 +37,7 @@ public:
     void paint (Graphics&) override;
     void resized() override;
     void sliderValueChanged (Slider* slider) override;
-
+    void buttonClicked(Button *button) override;
 private:
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
@@ -54,6 +57,9 @@ private:
     SmallRotaryLookAndFeel smallRotaryLookAndFeel;
     unique_ptr<AudioProcessorValueTreeState::SliderAttachment> rotaryReverb;
     
+    //Glitch button
+    TextButton glitchButton;
+    ButtonLookAndFeel buttonLookAndFeel;
 
 	// Sidebar with synth controls
     SideBar sidebar;
