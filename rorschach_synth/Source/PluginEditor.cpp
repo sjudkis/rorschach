@@ -58,22 +58,22 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
                                                                                     reverbDial);
     
     // glitch button
-    addAndMakeVisible(&glitchButton);
     glitchButton.addListener(this);
-    glitchButton.setButtonText("Glitch Off");
     glitchButton.setWantsKeyboardFocus(false);
     
-    glitchButton.setColour(TextButton::ColourIds::buttonColourId, Constants::brown);
-    glitchButton.setColour(TextButton::ColourIds::textColourOffId, Constants::tan);
+    glitchButton.setLookAndFeel(&buttonLookAndFeel);
+    addAndMakeVisible(&glitchButton);
     
-    glitchButton.setColour(TextButton::ColourIds::buttonOnColourId, Colours::darkred); //Constants::tan);
-    glitchButton.setColour(TextButton::ColourIds::textColourOnId, Colours::white); //Constants::brown);
+    glitchButton.setColour(TextButton::ColourIds::buttonColourId, Colours::whitesmoke);
+    
+    glitchButton.setColour(TextButton::ColourIds::buttonOnColourId, Constants::tan);
     
 }
 Rorschach_synthAudioProcessorEditor::~Rorschach_synthAudioProcessorEditor()
 {
 	mainDial.setLookAndFeel(nullptr);
     reverbDial.setLookAndFeel(nullptr);
+    glitchButton.setLookAndFeel(nullptr);
     processor.keyboardState.removeListener(this);
 }
 
@@ -102,7 +102,8 @@ void Rorschach_synthAudioProcessorEditor::resized()
     
     reverbDial.setBounds(600, 325, 100, 100);
     
-    glitchButton.setBounds(10, visualizerHeight - 70, 60, 60);
+    glitchButton.setBounds(500, 250, 60, 60);
+//    glitchButton.setBounds(300, 50, 60, 60);
 }
 
 
@@ -141,19 +142,8 @@ void Rorschach_synthAudioProcessorEditor::buttonClicked(Button *button)
     keyboard.grabKeyboardFocus();
     if (button == &glitchButton)
     {
-        bool glitchOn = glitchButton.getToggleState();
-        processor.toggleGlitch(!glitchOn);
-        glitchButton.setToggleState(!glitchOn, NotificationType::dontSendNotification);
-        // check if button is on
-        if (glitchOn)
-        {
-            glitchButton.setButtonText("Glitch Off");
-        }
-        else
-        {
-            glitchButton.setButtonText("Glitch On");
-        }
-        
-    
+        auto glitchState = glitchButton.getToggleState();
+        glitchButton.setToggleState(!glitchState, NotificationType::dontSendNotification);
+        processor.toggleGlitch(!glitchState);
     }
 }
