@@ -102,7 +102,9 @@ public:
     double getReverbAmt();
     void setReverbAmt(double);
     
+    // toggle button functions
     void toggleGlitch(bool);
+    void toggleArp(bool);
     
     // tree state holds values from UI controls
     AudioProcessorValueTreeState parameterState;
@@ -119,6 +121,7 @@ private:
     double lastSampleRate;
     
     bool glitchState;
+    bool arpState;
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Rorschach_synthAudioProcessor)
 };

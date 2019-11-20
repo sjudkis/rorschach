@@ -57,10 +57,14 @@ private:
     SmallRotaryLookAndFeel smallRotaryLookAndFeel;
     unique_ptr<AudioProcessorValueTreeState::SliderAttachment> rotaryReverb;
     
+    // Arpeggiator button
+    TextButton arpButton;
+    
     //Glitch button
     TextButton glitchButton;
     ButtonLookAndFeel buttonLookAndFeel;
 
+    
 	// Sidebar with synth controls
     SideBar sidebar;
 	const int sidebarWidth = 200;

@@ -316,3 +316,9 @@ void Rorschach_synthAudioProcessor::toggleGlitch(bool state)
 {
     glitchState = state;
 }
+
+//==============================================================================
+void Rorschach_synthAudioProcessor::toggleArp(bool state)
+{
+    arpState = state;
+}

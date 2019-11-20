@@ -65,15 +65,29 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     addAndMakeVisible(&glitchButton);
     
     glitchButton.setColour(TextButton::ColourIds::buttonColourId, Colours::whitesmoke);
-    
     glitchButton.setColour(TextButton::ColourIds::buttonOnColourId, Constants::tan);
     
+    // Arpeggiator button
+    arpButton.addListener(this);
+    arpButton.setWantsKeyboardFocus(false);
+    
+    arpButton.setLookAndFeel(&buttonLookAndFeel);
+    addAndMakeVisible(&arpButton);
+    
+    arpButton.setColour(TextButton::ColourIds::buttonColourId, Colours::whitesmoke);
+    arpButton.setColour(TextButton::ColourIds::buttonOnColourId, Constants::tan);
 }
 Rorschach_synthAudioProcessorEditor::~Rorschach_synthAudioProcessorEditor()
 {
 	mainDial.setLookAndFeel(nullptr);
     reverbDial.setLookAndFeel(nullptr);
+    
     glitchButton.setLookAndFeel(nullptr);
+    glitchButton.removeListener(this);
+    
+    arpButton.setLookAndFeel(nullptr);
+    arpButton.removeListener(this);
+    
     processor.keyboardState.removeListener(this);
 }
 
@@ -103,7 +117,8 @@ void Rorschach_synthAudioProcessorEditor::resized()
     reverbDial.setBounds(600, 325, 100, 100);
     
     glitchButton.setBounds(500, 250, 60, 60);
-//    glitchButton.setBounds(300, 50, 60, 60);
+    
+    arpButton.setBounds(325, 325, 70, 70);
 }
 
 
@@ -137,6 +152,7 @@ void Rorschach_synthAudioProcessorEditor::sliderValueChanged(Slider* slider)
     }
 }
 
+// listener function for glitch button
 void Rorschach_synthAudioProcessorEditor::buttonClicked(Button *button)
 {
     keyboard.grabKeyboardFocus();
@@ -145,5 +161,12 @@ void Rorschach_synthAudioProcessorEditor::buttonClicked(Button *button)
         auto glitchState = glitchButton.getToggleState();
         glitchButton.setToggleState(!glitchState, NotificationType::dontSendNotification);
         processor.toggleGlitch(!glitchState);
+    }
+    
+    else if (button == &arpButton)
+    {
+        auto arpState = arpButton.getToggleState();
+        arpButton.setToggleState(!arpState, NotificationType::dontSendNotification);
+        processor.toggleArp(!arpState);
     }
 }
