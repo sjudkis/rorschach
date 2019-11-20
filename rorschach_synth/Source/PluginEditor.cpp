@@ -7,6 +7,7 @@
 
   ==============================================================================
 */
+#include <OpenGL/gl.h>
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
@@ -68,6 +69,25 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     
     glitchButton.setColour(TextButton::ColourIds::buttonOnColourId, Constants::tan);
     
+    // Initialize blot background values
+    r = Random();
+    
+    // Fills arrays of blobs
+    for (auto i = 0; i < blobCount; ++i)
+    {
+        blobState.push_back(std::make_pair(std::vector<float>{0.0, 0.0, 0.0, 0.0}, std::vector<float>{0.0, 0.0, 0.0, 0.0}));
+        curState.push_back(std::vector<float>{0.0,0.0,0.0,0.0});
+    }
+    
+    // Creates first blob state
+    createNextState();
+    copyNextToCurState();
+    translate(0);
+        
+    // openGLContext.setComponentPaintingEnabled(true);
+    openGLContext.setRenderer(this);
+    openGLContext.setContinuousRepainting(true);
+    openGLContext.attachTo(*this);
 }
 Rorschach_synthAudioProcessorEditor::~Rorschach_synthAudioProcessorEditor()
 {
@@ -80,19 +100,13 @@ Rorschach_synthAudioProcessorEditor::~Rorschach_synthAudioProcessorEditor()
 //==============================================================================
 void Rorschach_synthAudioProcessorEditor::paint (Graphics& g)
 {
-	// Set base background colour
-    g.fillAll(Constants::tan);
-
-	// visualizer static placeholder image
-	Image visualizer = ImageCache::getFromMemory(BinaryData::static_blot_jpg, BinaryData::static_blot_jpgSize);
-	g.drawImageAt(visualizer, 0, 0);
 }
 
 void Rorschach_synthAudioProcessorEditor::resized()
 {
     
     juce::Rectangle<int> area = getLocalBounds();
-
+    
     sidebar.setBounds(area.removeFromRight(sidebarWidth));
 
     keyboard.setBounds(area.removeFromBottom(keyboardHeight));
@@ -120,8 +134,28 @@ void Rorschach_synthAudioProcessorEditor::handleNoteOff(MidiKeyboardState *, int
 
 void Rorschach_synthAudioProcessorEditor::timerCallback()
 {
-    keyboard.grabKeyboardFocus();
-    stopTimer();
+    if (isInitialRun)
+    {
+        keyboard.grabKeyboardFocus();
+        stopTimer();
+        isInitialRun = false;
+        startTimer(1000 / updatePerSecond); // Start background renderer
+    }
+    else
+    {
+        // Used for drawing openGL background
+        if (transitionCounter++ > translateTimeHz + pauseTimeHz)
+        {
+            copyNextToCurState();
+            createNextState();
+            transitionCounter = 0;
+        }
+        else if (transitionCounter > translateTimeHz)
+        {
+            return;
+        }
+        translate((transitionCounter/(float)translateTimeHz));
+    }
 }
 
 void Rorschach_synthAudioProcessorEditor::sliderValueChanged(Slider* slider)
@@ -133,7 +167,6 @@ void Rorschach_synthAudioProcessorEditor::sliderValueChanged(Slider* slider)
     else if (slider == &reverbDial)
     {
         processor.setReverbAmt(reverbDial.getValue());
-        
     }
 }
 
@@ -145,5 +178,123 @@ void Rorschach_synthAudioProcessorEditor::buttonClicked(Button *button)
         auto glitchState = glitchButton.getToggleState();
         glitchButton.setToggleState(!glitchState, NotificationType::dontSendNotification);
         processor.toggleGlitch(!glitchState);
+    }
+}
+
+//==============================================================================
+// Background rendering code
+/**
+createNextState creates a next state for a blob to travel to.
+*/
+void Rorschach_synthAudioProcessorEditor::createNextState()
+{
+    for (int i = 0; i < blobState.size(); i+=2)
+    {
+        auto x = r.nextFloat() * visWidth;
+        auto y = r.nextFloat() * (visHeight - padding);
+        auto dim = (r.nextFloat() * (circleMaxDim - circleMinDim)) + circleMinDim;
+
+        auto& left = blobState[i].second;
+        auto& right = blobState[(int64)i + (int64)1].second;
+
+        // set centers of circles
+        left[0] = x + dim / 2 - xOffset;
+        left[1] = y  - (visHeight / 2) + yOffset;
+
+        right[0] = -x + dim / 2 - xOffset;
+        right[1] = y - (visHeight / 2) + yOffset;
+    
+        left[2] = dim * visWidth;
+        right[2] = dim * visWidth;
+        left[3] = dim;
+        right[3] = dim;
+    }
+}
+
+/**
+ copyNextToCurState is called when the transition period is over, and before a new state is made, the old state is copied into the old state
+ */
+void Rorschach_synthAudioProcessorEditor::copyNextToCurState()
+{
+    for (int i = 0; i < blobState.size(); ++i)
+    {
+        auto& oldState = blobState[i].first;
+        auto& newState = blobState[i].second;
+
+        for (int j = 0; j < oldState.size(); j++)
+        {
+            oldState[j] = newState[j];
+        }
+    }
+}
+
+/**
+ Translate updates curState with information needed for OpenGL to draw each circle,
+ based on a progress value, which is 0-1, where 1 is reached nextState
+ */
+void Rorschach_synthAudioProcessorEditor::translate(float progress)
+{
+    for (int i = 0; i < blobState.size(); i++)
+    {
+        auto from = blobState[i].first;
+        auto to = blobState[i].second;
+        
+        curState[i][0] = from[0] +  progress * (float)((double)to[0] - from[0]);
+        
+        curState[i][1] = from[1] +  progress * (float)((double)to[1] - from[1]);
+        curState[i][2] = progress * (to[2] - from[2]) + from[2];
+        curState[i][3] = progress * (to[3] - from[3]) + from[3];
+    }
+}
+
+//==============================================================================
+// We handle openGL with OpenGL 1 specs, without using JUCE
+void Rorschach_synthAudioProcessorEditor::newOpenGLContextCreated() {}
+void Rorschach_synthAudioProcessorEditor::openGLContextClosing() {}
+
+void Rorschach_synthAudioProcessorEditor::renderOpenGL()
+{
+    // Sets background colour
+    OpenGLHelpers::clear(Constants::tan);
+    
+    // Draw each blob
+    for (int i = 0; i < curState.size(); i++)
+    {
+        // Experimental for glitch effect
+        float cA = r.nextFloat() * .2 - .1;
+        float cB = r.nextFloat() * .2 - .1;
+        float cC = r.nextFloat() * .2 - .1;
+        glPushMatrix(); // Saves center point
+        glTranslatef(curState[i][0], curState[i][1], 0.f);  // Translate to (xPos, yPos)
+        glBegin(GL_TRIANGLE_FAN);
+           glColor3f(0.3868+cA, 0.29+cB, 0.243+cC);
+           glVertex2f(0.0f, 0.0f);       // Center of circle
+           GLfloat angle;
+        
+        // Values need to be saved
+        auto x = curState[i][2];
+        auto y = curState[i][3];
+        // draw circle
+        for (int i = 0; i <= circleSegments; i++) {
+           angle = i * 2.0f * PI / circleSegments;
+           glVertex2f(cos(angle) *  x, sin(angle) *  y);
+        }
+        glEnd();
+        glPopMatrix(); // Returns center point
+    }
+    glFlush();
+}
+
+/**
+ handleRetina may be called in the class' constructor if the background has issues
+ rendering the image.
+ */
+void Rorschach_synthAudioProcessorEditor::handleRetina()
+{
+    double scaleFactor;
+    scaleFactor = juce::Desktop::getInstance().getDisplays().getMainDisplay().scale;
+    if (scaleFactor > 1)
+    {
+        setTransform(juce::AffineTransform::scale(scaleFactor, scaleFactor));
     }
 }

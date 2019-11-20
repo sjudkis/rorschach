@@ -23,8 +23,8 @@ void LargeRotaryLookAndFeel::drawRotarySlider(Graphics& g, int x, int y, int wid
 	auto angle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
 
 	// set a static image background
-	Image background = ImageCache::getFromMemory(BinaryData::static_dial_png, BinaryData::static_dial_pngSize);
-	g.drawImageTransformed(background, AffineTransform::rotation(angle - rotaryStartAngle, centreX, centreY), 0);
+//	Image background = ImageCache::getFromMemory(BinaryData::static_dial_png, BinaryData::static_dial_pngSize);
+//	g.drawImageTransformed(background, AffineTransform::rotation(angle - rotaryStartAngle, centreX, centreY), 0);
 
 	// outline background
 	g.setColour(Colours::whitesmoke);
