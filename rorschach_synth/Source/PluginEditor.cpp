@@ -304,7 +304,7 @@ void Rorschach_synthAudioProcessorEditor::renderOpenGL()
         glPushMatrix(); // Saves center point
         glTranslatef(curState[i][0], curState[i][1], 0.f);  // Translate to (xPos, yPos)
         glBegin(GL_TRIANGLE_FAN);
-           glColor4b(0.01, 0.01, 0.01, 70.0);
+           glColor4b(0.01, 0.01, 0.01, 75.0);
            glVertex2f(0.0f, 0.0f);       // Center of circle
            GLfloat angle;
         
