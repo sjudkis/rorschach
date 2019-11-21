@@ -106,7 +106,7 @@ private:
     int transitionCounter = 0;
     
     // ball sizes
-    float circleMaxDim = .025;
+    float circleMaxDim = .05;
     float circleMinDim = .01;
     int circleSegments = 20;
     float padding = circleMaxDim + .01;
