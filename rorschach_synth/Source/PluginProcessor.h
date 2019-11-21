@@ -43,7 +43,8 @@
 #define LOW_PASS_NAME "Lopass"
 #define HIGH_PASS_ID "highpass"
 #define HIGH_PASS_NAME "Highpass"
-
+#define ARP_SPEED_ID "arp_speed"
+#define ARP_SPEED_NAME "Arp_Speed"
 //==============================================================================
 /**
 */
@@ -106,6 +107,9 @@ public:
     void toggleGlitch(bool);
     void toggleArp(bool);
     
+    
+    void arpeggiate(AudioBuffer<float>& buffer, MidiBuffer& midiMessages);
+    
     // tree state holds values from UI controls
     AudioProcessorValueTreeState parameterState;
     AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
@@ -122,6 +126,15 @@ private:
     
     bool glitchState;
     bool arpState;
+    
+    // arpeggiator variables
+//    float speed;
+    int currentNote, lastNoteValue;
+    int time;
+    float rate;
+    SortedSet<int> notes;
+    
+    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Rorschach_synthAudioProcessor)
 };

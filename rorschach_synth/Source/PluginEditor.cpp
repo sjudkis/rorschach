@@ -17,7 +17,8 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     :   AudioProcessorEditor (&p),
         processor (p),
         keyboard(p.keyboardState, MidiKeyboardComponent::horizontalKeyboard),
-        sidebar(p)
+        sidebar(p),
+        arpControl(p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -76,6 +77,7 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     
     arpButton.setColour(TextButton::ColourIds::buttonColourId, Colours::whitesmoke);
     arpButton.setColour(TextButton::ColourIds::buttonOnColourId, Constants::tan);
+    
 }
 Rorschach_synthAudioProcessorEditor::~Rorschach_synthAudioProcessorEditor()
 {
@@ -119,6 +121,8 @@ void Rorschach_synthAudioProcessorEditor::resized()
     glitchButton.setBounds(500, 250, 60, 60);
     
     arpButton.setBounds(325, 325, 70, 70);
+    
+    arpControl.setBounds(10, visualizerHeight - 150, 70, 150);
 }
 
 
@@ -168,5 +172,11 @@ void Rorschach_synthAudioProcessorEditor::buttonClicked(Button *button)
         auto arpState = arpButton.getToggleState();
         arpButton.setToggleState(!arpState, NotificationType::dontSendNotification);
         processor.toggleArp(!arpState);
+        
+        // add arp controls from UI
+        if (!arpState)
+            addAndMakeVisible(&arpControl);
+        else
+            removeChildComponent(&arpControl);
     }
 }

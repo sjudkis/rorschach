@@ -18,7 +18,7 @@
 #include "LargeRotaryLookAndFeel.h"
 #include "SmallRotaryLookAndFeel.h"
 #include "ButtonLookAndFeel.h"
-
+#include "Arpeggiator.h"
 
 //==============================================================================
 /**
@@ -59,6 +59,7 @@ private:
     
     // Arpeggiator button
     TextButton arpButton;
+    Arpeggiator arpControl;
     
     //Glitch button
     TextButton glitchButton;
