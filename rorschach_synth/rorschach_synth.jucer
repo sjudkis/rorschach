@@ -14,15 +14,10 @@
             file="Source/HighPassFilter.h"/>
       <FILE id="RmVFoq" name="LowPassFilter.h" compile="0" resource="0" file="Source/LowPassFilter.h"/>
       <FILE id="svoLkl" name="LFO.h" compile="0" resource="0" file="Source/LFO.h"/>
-      <FILE id="nXTlaG" name="SmallRotaryLookAndFeel.cpp" compile="1" resource="0"
-            file="Source/SmallRotaryLookAndFeel.cpp"/>
-      <FILE id="TUyE2a" name="SmallRotaryLookAndFeel.h" compile="0" resource="0"
-            file="Source/SmallRotaryLookAndFeel.h"/>
       <FILE id="LxjiXs" name="ReverbFx.h" compile="1" resource="0" file="Source/ReverbFx.h"/>
       <FILE id="NWLKbb" name="CircularBuffer.h" compile="1" resource="0"
             file="Source/CircularBuffer.h"/>
       <FILE id="SGXCO6" name="EnvelopeGraph.h" compile="0" resource="0" file="Source/EnvelopeGraph.h"/>
-      <FILE id="KSTKRc" name="static_dial.png" compile="0" resource="1" file="imgs/static_dial.png"/>
       <FILE id="GDS7su" name="DelayFx.h" compile="1" resource="0" file="Source/DelayFx.h"/>
       <FILE id="ZW296P" name="LargeRotaryLookAndFeel.cpp" compile="1" resource="0"
             file="Source/LargeRotaryLookAndFeel.cpp"/>
@@ -33,7 +28,6 @@
       <FILE id="w8evxC" name="VertSliderLookAndFeel.h" compile="0" resource="0"
             file="Source/VertSliderLookAndFeel.h"/>
       <FILE id="p7ib8y" name="Constants.h" compile="0" resource="0" file="Source/Constants.h"/>
-      <FILE id="W86rYp" name="static_blot.jpg" compile="0" resource="1" file="imgs/static_blot.jpg"/>
       <FILE id="vmzVjh" name="RotaryLookAndFeel.cpp" compile="1" resource="0"
             file="Source/RotaryLookAndFeel.cpp"/>
       <FILE id="IHv6Zh" name="RotaryLookAndFeel.h" compile="0" resource="0"

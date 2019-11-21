@@ -23,11 +23,11 @@ void LargeRotaryLookAndFeel::drawRotarySlider(Graphics& g, int x, int y, int wid
 	auto angle = rotaryStartAngle + sliderPos * (rotaryEndAngle - rotaryStartAngle);
 
 	// set a static image background
-	Image background = ImageCache::getFromMemory(BinaryData::static_dial_png, BinaryData::static_dial_pngSize);
-	g.drawImageTransformed(background, AffineTransform::rotation(angle - rotaryStartAngle, centreX, centreY), 0);
+//	Image background = ImageCache::getFromMemory(BinaryData::static_dial_png, BinaryData::static_dial_pngSize);
+//	g.drawImageTransformed(background, AffineTransform::rotation(angle - rotaryStartAngle, centreX, centreY), 0);
 
 	// outline background
-	g.setColour(Colours::whitesmoke);
+	g.setColour(Constants::tan);
 	g.drawEllipse(rx, ry, rw, rw, 10.0f);
 
 	// progress online indicator
@@ -40,7 +40,7 @@ void LargeRotaryLookAndFeel::drawRotarySlider(Graphics& g, int x, int y, int wid
 	pointer.applyTransform(AffineTransform::rotation(angle).translated(centreX, centreY));
 
 	// pointer
-	g.setColour(Constants::tan);
-	g.strokePath(pointer, PathStrokeType(10.0f, PathStrokeType::JointStyle::curved));
+	g.setColour(Constants::brown);
+	//g.strokePath(pointer, PathStrokeType(10.0f, PathStrokeType::JointStyle::curved));
 	g.strokePath(progress, PathStrokeType(10.0f, PathStrokeType::JointStyle::curved));
 }
