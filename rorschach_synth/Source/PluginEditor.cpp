@@ -191,10 +191,12 @@ void Rorschach_synthAudioProcessorEditor::createNextState()
     float x, y;
     float prevX, prevY;
     float nextCircleMaxDistance = circleMaxDim;
+    float closenessFactor = .03; // 0 < x < 1, where 1 is abosolutely random values, while 0 creates one large blob
+    
     for (int i = 0; i < blobState.size(); i+=2)
     {
         // Decides wether a blot is placed in an absolute random location, or next to the old value.
-        if (i > 0 && r.nextFloat() > .05)
+        if (i > 0 && r.nextFloat() > closenessFactor)
         {
             // spawns new blot close to old one
             x = prevX;
