@@ -7,7 +7,12 @@
 
   ==============================================================================
 */
+#if __APPLE__
 #include <OpenGL/gl.h>
+#elif _WIN32
+#include <windows.h>
+#include <gl/gl.h>
+#endif
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
