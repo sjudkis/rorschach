@@ -29,6 +29,7 @@ public:
         lfoSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
         
         lfoButton.addListener(this);
+        lfoButton.setWantsKeyboardFocus(false);
         lfoButton.setColour(TextButton::buttonColourId, Constants::brown);
         lfoButton.setColour(TextButton::textColourOffId, Constants::tan);
         lfoButton.setColour(TextButton::buttonOnColourId, Constants::brown);

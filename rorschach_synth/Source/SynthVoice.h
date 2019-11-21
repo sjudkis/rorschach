@@ -105,7 +105,7 @@ public:
             {
                 if (lfoState)
                 {
-                    gainRamp *= ((lfo.sinewave(lfoFreq) + 1) / 2);
+                    gainRamp *= ((lfo.sinewave(lfoFreq) / 4) + 0.75);
                 }
                 else
                 {
