@@ -41,6 +41,6 @@ void LargeRotaryLookAndFeel::drawRotarySlider(Graphics& g, int x, int y, int wid
 
 	// pointer
 	g.setColour(Constants::brown);
-	g.strokePath(pointer, PathStrokeType(10.0f, PathStrokeType::JointStyle::curved));
+	//g.strokePath(pointer, PathStrokeType(10.0f, PathStrokeType::JointStyle::curved));
 	g.strokePath(progress, PathStrokeType(10.0f, PathStrokeType::JointStyle::curved));
 }
