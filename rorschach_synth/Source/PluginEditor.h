@@ -95,7 +95,7 @@ private:
     
     bool isInitialRun = true; // Used for keyboard run
     Random r;
-    int blobCount = 200; // Has to be divisible by 2
+    int blobCount = 2000; // Has to be divisible by 2
     std::vector<std::pair<std::vector<float>, std::vector<float>>> blobState; // prev, current<x loc, y loc, size, size>
     std::vector<std::vector<float>> curState; // x loc, y loc, size x, size y
     
@@ -106,14 +106,14 @@ private:
     int transitionCounter = 0;
     
     // ball sizes
-    float circleMaxDim = .15;
-    float circleMinDim = .005;
-    int circleSegments = 50;
+    float circleMaxDim = .025;
+    float circleMinDim = .01;
+    int circleSegments = 20;
     float padding = circleMaxDim + .01;
     float visWidth = (float)visualizerHeight / visualizerWidth;
     float visHeight = (float)visualizerWidth / visualizerHeight;
     float difference = visWidth - padding / 2;
-    float xOffset =  sidebarWidth / ((float)sidebarWidth + visualizerWidth) + padding/4;
+    float xOffset =  sidebarWidth / ((float)sidebarWidth + visualizerWidth);
     float yOffset = keyboardHeight/((float)keyboardHeight+visualizerHeight) + padding/2;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Rorschach_synthAudioProcessorEditor)

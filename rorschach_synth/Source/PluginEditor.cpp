@@ -188,10 +188,46 @@ createNextState creates a next state for a blob to travel to.
 */
 void Rorschach_synthAudioProcessorEditor::createNextState()
 {
+    float x, y;
+    float prevX, prevY;
+    float nextCircleMaxDistance = circleMaxDim;
     for (int i = 0; i < blobState.size(); i+=2)
     {
-        auto x = r.nextFloat() * visWidth;
-        auto y = r.nextFloat() * (visHeight - padding);
+        // Decides wether a blot is placed in an absolute random location, or next to the old value.
+        if (i > 0 && r.nextFloat() > .05)
+        {
+            // spawns new blot close to old one
+            x = prevX;
+            y = prevY;
+            
+            // Decide if it is a negative shift or positive
+            if (r.nextFloat() >.5)
+                x+= r.nextFloat() * nextCircleMaxDistance;
+            else
+                x-= r.nextFloat() * nextCircleMaxDistance;
+            
+            if (r.nextFloat() >.5)
+                y+= r.nextFloat() * nextCircleMaxDistance;
+            else
+                y-= r.nextFloat() * nextCircleMaxDistance;
+            
+            // Handle edge cases where new circle goes off screen
+            if (x >= visWidth)
+                x-=nextCircleMaxDistance*2;
+            else if (x < 0)
+                x+=nextCircleMaxDistance*2;
+            if (y >=visHeight-padding)
+                y-=nextCircleMaxDistance*2;
+            else if (y < 0)
+                y+=nextCircleMaxDistance*2;
+        }
+        else
+        {
+            // spawns new blot not based on prev
+            x = r.nextFloat() * visWidth;
+            y = r.nextFloat() * (visHeight - padding);
+        }
+  
         auto dim = (r.nextFloat() * (circleMaxDim - circleMinDim)) + circleMinDim;
 
         auto& left = blobState[i].second;
@@ -201,13 +237,16 @@ void Rorschach_synthAudioProcessorEditor::createNextState()
         left[0] = x + dim / 2 - xOffset;
         left[1] = y  - (visHeight / 2) + yOffset;
 
-        right[0] = -x + dim / 2 - xOffset;
+        right[0] = -x - dim / 2 - xOffset;
         right[1] = y - (visHeight / 2) + yOffset;
     
         left[2] = dim * visWidth;
         right[2] = dim * visWidth;
         left[3] = dim;
         right[3] = dim;
+        
+        prevX = x;
+        prevY = y;
     }
 }
 
@@ -260,14 +299,10 @@ void Rorschach_synthAudioProcessorEditor::renderOpenGL()
     // Draw each blob
     for (int i = 0; i < curState.size(); i++)
     {
-        // Experimental for glitch effect
-        float cA = r.nextFloat() * .2 - .1;
-        float cB = r.nextFloat() * .2 - .1;
-        float cC = r.nextFloat() * .2 - .1;
         glPushMatrix(); // Saves center point
         glTranslatef(curState[i][0], curState[i][1], 0.f);  // Translate to (xPos, yPos)
         glBegin(GL_TRIANGLE_FAN);
-           glColor3f(0.3868+cA, 0.29+cB, 0.243+cC);
+           glColor3f(0.01, 0.01, 0.01);
            glVertex2f(0.0f, 0.0f);       // Center of circle
            GLfloat angle;
         
