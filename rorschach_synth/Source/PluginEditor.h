@@ -16,7 +16,6 @@
 #include "OscillatorGroup.h"
 #include "SideBar.h"
 #include "LargeRotaryLookAndFeel.h"
-#include "SmallRotaryLookAndFeel.h"
 #include "ButtonLookAndFeel.h"
 // #include "BlotBackground.h"
 
@@ -68,7 +67,7 @@ private:
     
     //Reverb Rotary
     Slider reverbDial;
-    SmallRotaryLookAndFeel smallRotaryLookAndFeel;
+    LargeRotaryLookAndFeel smallRotaryLookAndFeel;
     unique_ptr<AudioProcessorValueTreeState::SliderAttachment> rotaryReverb;
     
     //Glitch button

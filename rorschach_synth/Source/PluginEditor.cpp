@@ -65,9 +65,9 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     glitchButton.setLookAndFeel(&buttonLookAndFeel);
     addAndMakeVisible(&glitchButton);
     
-    glitchButton.setColour(TextButton::ColourIds::buttonColourId, Colours::whitesmoke);
+    glitchButton.setColour(TextButton::ColourIds::buttonColourId, Constants::tan);
     
-    glitchButton.setColour(TextButton::ColourIds::buttonOnColourId, Constants::tan);
+    glitchButton.setColour(TextButton::ColourIds::buttonOnColourId, Constants::brown);
     
     // Initialize blot background values
     r = Random();
@@ -114,9 +114,9 @@ void Rorschach_synthAudioProcessorEditor::resized()
 	// set main dial position
 	mainDial.setBounds(115, 115, 200, 200);
     
-    reverbDial.setBounds(600, 325, 100, 100);
+    reverbDial.setBounds(500, 300, 100, 100);
     
-    glitchButton.setBounds(500, 250, 60, 60);
+    glitchButton.setBounds(400, 225, 60, 60);
 //    glitchButton.setBounds(300, 50, 60, 60);
 }
 
