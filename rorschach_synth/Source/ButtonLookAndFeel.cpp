@@ -22,7 +22,7 @@ void ButtonLookAndFeel::drawButtonBackground (Graphics& g,
     auto height = area.getHeight();
     auto x = area.getX();
     auto y = area.getY();
-    auto radius = jmin(width / 2, height / 2) - 4.0f;
+    auto radius = jmin(width / 2, height / 2) - 8.0f;
     auto centreX = x + width * 0.5f;
     auto centreY = y + height * 0.5f;
     auto rx = centreX - radius;
