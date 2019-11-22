@@ -8,7 +8,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-[JUCE](https://juce.com/) must be used to create the necessary enviroment files.
+[JUCE](https://juce.com/) must be used to create the necessary environment files.
 
 The synth has been tested on Windows 10, Visual Studios 2019 and macOS Catalina, XCode, however it might run on any OS/IDE JUCE supports.
 
@@ -23,7 +23,7 @@ Installation on both Windows/MacOS is basically the same.
 
 ## Features
 
-TODO: add description to each feature, maybe with a 
+TODO: add description to each feature, maybe with a picture
 ### Delay
 ### Envelope
 ### Gain
