@@ -100,12 +100,14 @@ public:
         {
             if (sample > 0) incRampParams();
             
+            effectGain = gainRamp;
+            
             double freqMod = frequency;
             if (lfoFreq > 0.0)
             {
                 if (lfoState)
                 {
-                    gainRamp *= ((lfo.sinewave(lfoFreq) / 4) + 0.75);
+                    gainRamp *= ((lfo.sinewave(lfoFreq) / 16) + 0.9375);
                 }
                 else
                 {
@@ -124,9 +126,9 @@ public:
                 outputBuffer.addSample(channel, startSample, envelope.getNextSample() * wave);
             }
             
-            if (reverbAmt > 0.5) reverbFx.effect(outputBuffer, startSample, gainRamp);
+            if (reverbAmt > 0.5) reverbFx.effect(outputBuffer, startSample, effectGain);
             
-            delayFx.effect(outputBuffer, startSample, gainRamp);
+            delayFx.effect(outputBuffer, startSample, effectGain);
             
             ++startSample;
         }
@@ -183,6 +185,7 @@ private:
     float gain;
     float gainRamp = 0.562f;
     float gainInc = 0.0f;
+    float effectGain;
     
     maxiOsc osc1;
     maxiOsc osc2;
