@@ -85,6 +85,11 @@ public:
         glitchState = val;
     }
     
+    void setLfoState(bool state)
+    {
+        lfoState = state;
+    }
+    
     void renderNextBlock (AudioBuffer <float> & outputBuffer, int startSample, int numSamples) override
     {
         deArtifacting(numSamples);
@@ -95,10 +100,19 @@ public:
         {
             if (sample > 0) incRampParams();
             
+            effectGain = gainRamp;
+            
             double freqMod = frequency;
             if (lfoFreq > 0.0)
             {
-                freqMod += (lfo.sinewave(lfoFreq) * 6.0);
+                if (lfoState)
+                {
+                    gainRamp *= ((lfo.sinewave(lfoFreq) / 16) + 0.9375);
+                }
+                else
+                {
+                    freqMod += (lfo.sinewave(lfoFreq) * 6.0);
+                }
             }
             double wave = osc1.sinewave(freqMod) * oscVols[0];
             wave += osc2.square(freqMod) * oscVols[1];
@@ -112,9 +126,9 @@ public:
                 outputBuffer.addSample(channel, startSample, envelope.getNextSample() * wave);
             }
             
-            if (reverbAmt > 0.5) reverbFx.effect(outputBuffer, startSample, gainRamp);
+            if (reverbAmt > 0.5) reverbFx.effect(outputBuffer, startSample, effectGain);
             
-            delayFx.effect(outputBuffer, startSample, gainRamp);
+            delayFx.effect(outputBuffer, startSample, effectGain);
             
             ++startSample;
         }
@@ -171,6 +185,7 @@ private:
     float gain;
     float gainRamp = 0.562f;
     float gainInc = 0.0f;
+    float effectGain;
     
     maxiOsc osc1;
     maxiOsc osc2;
@@ -185,6 +200,8 @@ private:
     
     GlitchFx glitchFx;
     bool glitchState;
+    
+    bool lfoState;
     
     double reverbAmt;
     double lfoFreq;

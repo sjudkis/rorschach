@@ -105,11 +105,15 @@ public:
     
     // toggle button functions
     void toggleGlitch(bool);
+
     void toggleArpOnOff(bool);
     void toggleArpMode(bool);
     
     
     void arpeggiate(AudioBuffer<float>& buffer, MidiBuffer& origMidiMessages, MidiBuffer& arpMidiMessages);
+
+    void toggleLfoButton(bool);
+
     
     // tree state holds values from UI controls
     AudioProcessorValueTreeState parameterState;
@@ -126,6 +130,7 @@ private:
     double lastSampleRate;
     
     bool glitchState;
+    bool lfoButtonState;
     bool arpState;
     bool arpMode;
     
@@ -135,8 +140,7 @@ private:
     int time;
     float rate;
     SortedSet<int> notes;
-    
-    
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Rorschach_synthAudioProcessor)
 };
