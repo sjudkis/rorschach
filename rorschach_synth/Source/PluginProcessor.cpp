@@ -94,7 +94,7 @@ AudioProcessorValueTreeState::ParameterLayout Rorschach_synthAudioProcessor::cre
     parameters.push_back(std::move(reverbAmt));
     
     // arp speed parameter
-    auto arpSpeed = std::make_unique<AudioParameterFloat>(ARP_SPEED_ID, ARP_SPEED_NAME, 0.0f, 1.0f, 0.9f);
+    auto arpSpeed = std::make_unique<AudioParameterFloat>(ARP_SPEED_ID, ARP_SPEED_NAME, 0.0f, 1.0f, 0.5f);
     parameters.push_back(std::move(arpSpeed));
     
     return { parameters.begin(), parameters.end() };
@@ -249,56 +249,65 @@ void Rorschach_synthAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
         }
     }
     
+    // create and fill midi buffer for arpeggiator midi data
+    MidiBuffer arpMidiMessages;
+    arpeggiate(buffer, midiMessages, arpMidiMessages);
     
-    // arpeggiator on
-    if (arpState)
-    {
-        float speed = *parameterState.getRawParameterValue(ARP_SPEED_ID);
-        
-        auto numSamples = buffer.getNumSamples();
-        auto noteDuration = static_cast<int>(std::ceil(rate * 0.25f * (0.1f + (1.0f - speed))));
-        
-        MidiMessage msg;
-        int ignore;
-        
-        for (MidiBuffer::Iterator it (midiMessages); it.getNextEvent (msg, ignore);)
-        {
-            if (msg.isNoteOn())
-                notes.add(msg.getNoteNumber());
-                
-            else if (msg.isNoteOff())
-                notes.removeValue(msg.getNoteNumber());
-        }
-        
-        midiMessages.clear();
-        
-        if ((time + numSamples) >= noteDuration)
-        {
-            auto offset = jmax(0, jmin((int)(noteDuration - time), numSamples - 1));
-            
-            if (lastNoteValue > 0)
-            {
-                midiMessages.addEvent(MidiMessage::noteOff(1, lastNoteValue), offset);
-                lastNoteValue = -1;
-            }
-            if (notes.size() > 0)
-            {
-                currentNote = (currentNote + 1) % notes.size();
-                lastNoteValue = notes[currentNote];
-                midiMessages.addEvent(MidiMessage::noteOn(1, lastNoteValue, (uint8) 127), offset);
-            }
-        }
-        
-        time = (time + numSamples) % noteDuration;
-    }
-    
-    synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+    // render original or arp buffer depending on arpState
+    if (!arpState)
+        synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+    else
+        synth.renderNextBlock(buffer, arpMidiMessages, 0, buffer.getNumSamples());
     
 }
     
-void Rorschach_synthAudioProcessor::arpeggiate(AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
+void Rorschach_synthAudioProcessor::arpeggiate(AudioBuffer<float>& buffer, MidiBuffer& origMidiMessages, MidiBuffer& arpMidiMessages)
 {
     
+    // process midi messages for arpeggiator
+    float speed = *parameterState.getRawParameterValue(ARP_SPEED_ID);
+        
+    auto numSamples = buffer.getNumSamples();
+    auto noteDuration = static_cast<int>(std::ceil(rate * 0.25f * (0.1f + (1.0f - speed))));
+        
+    MidiMessage msg;
+    int ignore;
+        
+    for (MidiBuffer::Iterator it (origMidiMessages); it.getNextEvent (msg, ignore);)
+    {
+        if (msg.isNoteOn())
+            notes.add(msg.getNoteNumber());
+                
+        else if (msg.isNoteOff())
+            notes.removeValue(msg.getNoteNumber());
+    }
+
+    
+    if ((time + numSamples) >= noteDuration)
+    {
+        auto offset = jmax(0, jmin((int)(noteDuration - time), numSamples - 1));
+        
+        if (lastNoteValue > 0)
+        {
+            arpMidiMessages.addEvent(MidiMessage::noteOff(1, lastNoteValue), offset);
+            lastNoteValue = -1;
+        }
+        if (notes.size() > 0)
+        {
+            if (!arpMode) // linear mode
+                currentNote = (currentNote + 1) % notes.size();
+            else
+            {
+                // random mode
+                Random randInt;
+                currentNote = randInt.nextInt(notes.size());
+            }
+            lastNoteValue = notes[currentNote];
+            arpMidiMessages.addEvent(MidiMessage::noteOn(1, lastNoteValue, (uint8) 127), offset);
+        }
+    }
+        
+    time = (time + numSamples) % noteDuration;
 }
 
 //==============================================================================
@@ -376,9 +385,12 @@ void Rorschach_synthAudioProcessor::toggleGlitch(bool state)
 }
 
 //==============================================================================
-void Rorschach_synthAudioProcessor::toggleArp(bool state)
+void Rorschach_synthAudioProcessor::toggleArpOnOff(bool state)
 {
     arpState = state;
 }
 
-
+void Rorschach_synthAudioProcessor::toggleArpMode(bool state)
+{
+    arpMode = state;
+}

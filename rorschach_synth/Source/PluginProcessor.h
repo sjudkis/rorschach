@@ -105,10 +105,11 @@ public:
     
     // toggle button functions
     void toggleGlitch(bool);
-    void toggleArp(bool);
+    void toggleArpOnOff(bool);
+    void toggleArpMode(bool);
     
     
-    void arpeggiate(AudioBuffer<float>& buffer, MidiBuffer& midiMessages);
+    void arpeggiate(AudioBuffer<float>& buffer, MidiBuffer& origMidiMessages, MidiBuffer& arpMidiMessages);
     
     // tree state holds values from UI controls
     AudioProcessorValueTreeState parameterState;
@@ -126,6 +127,7 @@ private:
     
     bool glitchState;
     bool arpState;
+    bool arpMode;
     
     // arpeggiator variables
 //    float speed;
