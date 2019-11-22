@@ -242,6 +242,7 @@ void Rorschach_synthAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
             voice->setReverbAmt(*parameterState.getRawParameterValue(REVERB_AMT));
             
             voice->setGlitch(glitchState);
+            voice->setLfoState(lfoButtonState);
             
             voice->setLfoFreq(*parameterState.getRawParameterValue(LFO_ID));
             voice->setLoPassCutoff(*parameterState.getRawParameterValue(LOW_PASS_ID));
@@ -384,6 +385,7 @@ void Rorschach_synthAudioProcessor::toggleGlitch(bool state)
     glitchState = state;
 }
 
+
 //==============================================================================
 void Rorschach_synthAudioProcessor::toggleArpOnOff(bool state)
 {
@@ -393,4 +395,10 @@ void Rorschach_synthAudioProcessor::toggleArpOnOff(bool state)
 void Rorschach_synthAudioProcessor::toggleArpMode(bool state)
 {
     arpMode = state;
+}
+
+void Rorschach_synthAudioProcessor::toggleLfoButton(bool state)
+{
+    lfoButtonState = state;
+
 }
