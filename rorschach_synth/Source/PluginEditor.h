@@ -17,7 +17,10 @@
 #include "SideBar.h"
 #include "LargeRotaryLookAndFeel.h"
 #include "ButtonLookAndFeel.h"
+#include "Arpeggiator.h"
+
 // #include "BlotBackground.h"
+
 
 
 //==============================================================================
@@ -70,10 +73,15 @@ private:
     LargeRotaryLookAndFeel smallRotaryLookAndFeel;
     unique_ptr<AudioProcessorValueTreeState::SliderAttachment> rotaryReverb;
     
+    // Arpeggiator button
+    TextButton arpButton;
+    Arpeggiator arpControl;
+    
     //Glitch button
     TextButton glitchButton;
     ButtonLookAndFeel buttonLookAndFeel;
 
+    
 	// Sidebar with synth controls
     SideBar sidebar;
 	const int sidebarWidth = 200;

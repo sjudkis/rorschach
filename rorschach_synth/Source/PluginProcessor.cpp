@@ -93,6 +93,10 @@ AudioProcessorValueTreeState::ParameterLayout Rorschach_synthAudioProcessor::cre
     auto reverbAmt = std::make_unique<AudioParameterFloat>(REVERB_AMT, REVERB_NAME, NormalisableRange<float>(0.5, 0.8), 0.0);
     parameters.push_back(std::move(reverbAmt));
     
+    // arp speed parameter
+    auto arpSpeed = std::make_unique<AudioParameterFloat>(ARP_SPEED_ID, ARP_SPEED_NAME, 0.0f, 1.0f, 0.5f);
+    parameters.push_back(std::move(arpSpeed));
+    
     return { parameters.begin(), parameters.end() };
 }
 
@@ -165,6 +169,13 @@ void Rorschach_synthAudioProcessor::prepareToPlay (double sampleRate, int sample
     ignoreUnused(samplesPerBlock);
     lastSampleRate = sampleRate;
     synth.setCurrentPlaybackSampleRate(lastSampleRate);
+    
+    // set up arpeggiator
+    notes.clear();
+    currentNote = 0;
+    lastNoteValue = -1;
+    time = 0.0;
+    rate = static_cast<float>(sampleRate);
 }
 
 void Rorschach_synthAudioProcessor::releaseResources()
@@ -203,6 +214,7 @@ void Rorschach_synthAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
     
     buffer.clear();
     
+    // update voices with current parameter values
     for (int i = 0; i < synth.getNumVoices(); i++)
     {
         if ((voice = dynamic_cast<SynthVoice*>(synth.getVoice(i))))
@@ -238,9 +250,65 @@ void Rorschach_synthAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
         }
     }
     
-    synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+    // create and fill midi buffer for arpeggiator midi data
+    MidiBuffer arpMidiMessages;
+    arpeggiate(buffer, midiMessages, arpMidiMessages);
     
+    // render original or arp buffer depending on arpState
+    if (!arpState)
+        synth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
+    else
+        synth.renderNextBlock(buffer, arpMidiMessages, 0, buffer.getNumSamples());
     
+}
+    
+void Rorschach_synthAudioProcessor::arpeggiate(AudioBuffer<float>& buffer, MidiBuffer& origMidiMessages, MidiBuffer& arpMidiMessages)
+{
+    
+    // process midi messages for arpeggiator
+    float speed = *parameterState.getRawParameterValue(ARP_SPEED_ID);
+        
+    auto numSamples = buffer.getNumSamples();
+    auto noteDuration = static_cast<int>(std::ceil(rate * 0.25f * (0.1f + (1.0f - speed))));
+        
+    MidiMessage msg;
+    int ignore;
+        
+    for (MidiBuffer::Iterator it (origMidiMessages); it.getNextEvent (msg, ignore);)
+    {
+        if (msg.isNoteOn())
+            notes.add(msg.getNoteNumber());
+                
+        else if (msg.isNoteOff())
+            notes.removeValue(msg.getNoteNumber());
+    }
+
+    
+    if ((time + numSamples) >= noteDuration)
+    {
+        auto offset = jmax(0, jmin((int)(noteDuration - time), numSamples - 1));
+        
+        if (lastNoteValue > 0)
+        {
+            arpMidiMessages.addEvent(MidiMessage::noteOff(1, lastNoteValue), offset);
+            lastNoteValue = -1;
+        }
+        if (notes.size() > 0)
+        {
+            if (!arpMode) // linear mode
+                currentNote = (currentNote + 1) % notes.size();
+            else
+            {
+                // random mode
+                Random randInt;
+                currentNote = randInt.nextInt(notes.size());
+            }
+            lastNoteValue = notes[currentNote];
+            arpMidiMessages.addEvent(MidiMessage::noteOn(1, lastNoteValue, (uint8) 127), offset);
+        }
+    }
+        
+    time = (time + numSamples) % noteDuration;
 }
 
 //==============================================================================
@@ -276,19 +344,18 @@ AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 }
 
 
-//void Rorschach_synthAudioProcessor::handleIncomingMidiMessage(MidiInput *source, const MidiMessage &message)
-//{
-//    
-//}
-
 void Rorschach_synthAudioProcessor::keyboardNoteOn(int midiChannel, int midiNoteNumber, float velocity)
 {
-    synth.noteOn(midiChannel, midiNoteNumber, velocity);
+    notes.add(midiNoteNumber);
+    if (!arpState)
+        synth.noteOn(midiChannel, midiNoteNumber, velocity);
 }
 
 void Rorschach_synthAudioProcessor::keyboardNoteOff(int midiChannel, int midiNoteNumber, float velocity)
 {
-    synth.noteOff(midiChannel, midiNoteNumber, velocity, true);
+    notes.removeValue(midiNoteNumber);
+    if (!arpState)
+        synth.noteOff(midiChannel, midiNoteNumber, velocity, true);
 }
 
 //==============================================================================
@@ -316,6 +383,18 @@ void Rorschach_synthAudioProcessor::setReverbAmt (double reverbAmt)
 void Rorschach_synthAudioProcessor::toggleGlitch(bool state)
 {
     glitchState = state;
+}
+
+
+//==============================================================================
+void Rorschach_synthAudioProcessor::toggleArpOnOff(bool state)
+{
+    arpState = state;
+}
+
+void Rorschach_synthAudioProcessor::toggleArpMode(bool state)
+{
+    arpMode = state;
 }
 
 void Rorschach_synthAudioProcessor::toggleLfoButton(bool state)

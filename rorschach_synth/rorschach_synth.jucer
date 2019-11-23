@@ -62,6 +62,7 @@
       <FILE id="qHNKCU" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
       <FILE id="WBhczq" name="Envelope.h" compile="0" resource="0" file="Source/Envelope.h"/>
       <FILE id="FMHrRo" name="Gain.h" compile="0" resource="0" file="Source/Gain.h"/>
+      <FILE id="v0ecPr" name="Arpeggiator.h" compile="0" resource="0" file="Source/Arpeggiator.h"/>
       <FILE id="zeQ3aF" name="SynthSound.h" compile="0" resource="0" file="Source/SynthSound.h"/>
       <FILE id="Dej3d5" name="SynthVoice.h" compile="0" resource="0" file="Source/SynthVoice.h"/>
       <FILE id="wJ76NU" name="PluginProcessor.cpp" compile="1" resource="0"

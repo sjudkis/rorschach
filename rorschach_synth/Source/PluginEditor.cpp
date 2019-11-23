@@ -23,7 +23,8 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     :   AudioProcessorEditor (&p),
         processor (p),
         keyboard(p.keyboardState, MidiKeyboardComponent::horizontalKeyboard),
-        sidebar(p)
+        sidebar(p),
+        arpControl(p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -71,8 +72,19 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     addAndMakeVisible(&glitchButton);
     
     glitchButton.setColour(TextButton::ColourIds::buttonColourId, Constants::tan);
-    
     glitchButton.setColour(TextButton::ColourIds::buttonOnColourId, Constants::brown);
+
+    
+    // Arpeggiator button
+    arpButton.addListener(this);
+    arpButton.setWantsKeyboardFocus(false);
+    
+    arpButton.setLookAndFeel(&buttonLookAndFeel);
+    addAndMakeVisible(&arpButton);
+    
+    arpButton.setColour(TextButton::ColourIds::buttonColourId, Constants::tan);
+    arpButton.setColour(TextButton::ColourIds::buttonOnColourId, Constants::brown);
+    
     
     // Initialize blot background values
     r = Random();
@@ -93,12 +105,19 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     openGLContext.setRenderer(this);
     openGLContext.setContinuousRepainting(true);
     openGLContext.attachTo(*this);
+
 }
 Rorschach_synthAudioProcessorEditor::~Rorschach_synthAudioProcessorEditor()
 {
 	mainDial.setLookAndFeel(nullptr);
     reverbDial.setLookAndFeel(nullptr);
+    
     glitchButton.setLookAndFeel(nullptr);
+    glitchButton.removeListener(this);
+    
+    arpButton.setLookAndFeel(nullptr);
+    arpButton.removeListener(this);
+    
     processor.keyboardState.removeListener(this);
 }
 
@@ -121,8 +140,13 @@ void Rorschach_synthAudioProcessorEditor::resized()
     
     reverbDial.setBounds(500, 300, 100, 100);
     
+//    glitchButton.setBounds(500, 250, 60, 60);
     glitchButton.setBounds(400, 225, 60, 60);
-//    glitchButton.setBounds(300, 50, 60, 60);
+    
+    arpButton.setBounds(280, 330, 70, 70);
+    
+    arpControl.setBounds(450, 75, 150, 100);
+
 }
 
 
@@ -175,6 +199,7 @@ void Rorschach_synthAudioProcessorEditor::sliderValueChanged(Slider* slider)
     }
 }
 
+// listener function for buttons
 void Rorschach_synthAudioProcessorEditor::buttonClicked(Button *button)
 {
     keyboard.grabKeyboardFocus();
@@ -183,6 +208,19 @@ void Rorschach_synthAudioProcessorEditor::buttonClicked(Button *button)
         auto glitchState = glitchButton.getToggleState();
         glitchButton.setToggleState(!glitchState, NotificationType::dontSendNotification);
         processor.toggleGlitch(!glitchState);
+    }
+    
+    else if (button == &arpButton)
+    {
+        auto arpState = arpButton.getToggleState();
+        arpButton.setToggleState(!arpState, NotificationType::dontSendNotification);
+        processor.toggleArpOnOff(!arpState);
+        
+        // add arp controls from UI
+        if (!arpState)
+            addAndMakeVisible(&arpControl);
+        else
+            removeChildComponent(&arpControl);
     }
 }
 

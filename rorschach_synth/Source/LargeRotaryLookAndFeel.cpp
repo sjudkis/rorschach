@@ -14,7 +14,7 @@
 void LargeRotaryLookAndFeel::drawRotarySlider(Graphics& g, int x, int y, int width, int height, float sliderPos,
 	const float rotaryStartAngle, const float rotaryEndAngle, Slider&)
 {
-	auto radius = jmin(width / 2, height / 2) - 4.0f;
+	auto radius = jmin(width / 2, height / 2) - 8.0f;
 	auto centreX = x + width * 0.5f;
 	auto centreY = y + height * 0.5f;
 	auto rx = centreX - radius;
