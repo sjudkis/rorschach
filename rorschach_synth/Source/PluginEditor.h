@@ -17,7 +17,7 @@
 #include "SideBar.h"
 #include "LargeRotaryLookAndFeel.h"
 #include "ButtonLookAndFeel.h"
-#include "InfoButtonLookAndFeel.h"
+#include "InfoLookAndFeel.h"
 #include "Arpeggiator.h"
 
 // #include "BlotBackground.h"
@@ -83,7 +83,8 @@ private:
     ButtonLookAndFeel buttonLookAndFeel;
     
     TextButton infoButton;
-    InfoButtonLookAndFeel infoButtonLookAndFeel;
+    
+    InfoLookAndFeel infoLookAndFeel;
     
     Label delayLabel;
     Label reverbLabel;

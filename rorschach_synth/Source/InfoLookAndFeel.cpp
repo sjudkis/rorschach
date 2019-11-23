@@ -8,10 +8,10 @@
   ==============================================================================
 */
 
-#include "InfoButtonLookAndFeel.h"
+#include "InfoLookAndFeel.h"
 #include "Constants.h"
 
-void InfoButtonLookAndFeel::drawButtonBackground (Graphics& g,
+void InfoLookAndFeel::drawButtonBackground (Graphics& g,
                                                   Button& button,
                                                   const Colour& backgroundColour,
                                                   bool isMouseOverButton,

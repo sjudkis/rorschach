@@ -89,7 +89,7 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     infoButton.addListener(this);
     infoButton.setWantsKeyboardFocus(false);
     
-    infoButton.setLookAndFeel(&infoButtonLookAndFeel);
+    infoButton.setLookAndFeel(&infoLookAndFeel);
     addAndMakeVisible(&infoButton);
     
     infoButton.setColour(TextButton::ColourIds::buttonColourId, Constants::brown);
@@ -252,8 +252,9 @@ void Rorschach_synthAudioProcessorEditor::buttonClicked(Button *button)
             
             if (infoButton.getToggleState())
             {
-                arpControlLabel.setFont(Font("Arial", 17, Font::bold));
+                arpControlLabel.setFont(Font(16, Font::bold));
                 arpControlLabel.setText("arpeggiator speed / random", dontSendNotification);
+                arpControlLabel.setJustificationType(Justification::centred);
                 arpControlLabel.attachToComponent(&arpControl, false);
                 
                 addAndMakeVisible(&arpControlLabel);
@@ -279,20 +280,24 @@ void Rorschach_synthAudioProcessorEditor::buttonClicked(Button *button)
         if (!infoState)
         {
             // Labels
-            delayLabel.setFont(Font("Arial", 20, Font::bold));
+            delayLabel.setFont(Font(20, Font::bold));
             delayLabel.setText("delay", dontSendNotification);
+            delayLabel.setJustificationType(Justification::centred);
             delayLabel.attachToComponent(&mainDial, false);
             
-            reverbLabel.setFont(Font("Arial", 20, Font::bold));
+            reverbLabel.setFont(Font(20, Font::bold));
             reverbLabel.setText("reverb", dontSendNotification);
+            reverbLabel.setJustificationType(Justification::centred);
             reverbLabel.attachToComponent(&reverbDial, false);
             
-            glitchLabel.setFont(Font("Arial", 20, Font::bold));
+            glitchLabel.setFont(Font(20, Font::bold));
             glitchLabel.setText("garble", dontSendNotification);
+            glitchLabel.setJustificationType(Justification::centred);
             glitchLabel.attachToComponent(&glitchButton, false);
             
-            arpLabel.setFont(Font("Arial", 17, Font::bold));
+            arpLabel.setFont(Font(16, Font::bold));
             arpLabel.setText("arpeggiator", dontSendNotification);
+            arpLabel.setJustificationType(Justification::centred);
             arpLabel.attachToComponent(&arpButton, false);
             
             addAndMakeVisible(&delayLabel);
@@ -302,8 +307,9 @@ void Rorschach_synthAudioProcessorEditor::buttonClicked(Button *button)
             
             if (arpButton.getToggleState())
             {
-                arpControlLabel.setFont(Font("Arial", 17, Font::bold));
+                arpControlLabel.setFont(Font(16, Font::bold));
                 arpControlLabel.setText("arpeggiator speed / random", dontSendNotification);
+                arpControlLabel.setJustificationType(Justification::centred);
                 arpControlLabel.attachToComponent(&arpControl, false);
                 
                 addAndMakeVisible(&arpControlLabel);
