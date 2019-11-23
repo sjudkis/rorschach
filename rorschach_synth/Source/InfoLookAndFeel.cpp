@@ -28,10 +28,12 @@ void InfoLookAndFeel::drawButtonBackground (Graphics& g,
     auto rx = centreX - radius;
     auto ry = centreY - radius;
     auto rw = radius * 2.0f;
+    auto thickness = 3.0f;
     
 
     g.setColour(backgroundColour);
-    g.drawEllipse(rx, ry, rw, rw, 3.0f);
+    if (isMouseOverButton) thickness = 5.0f;
+    g.drawEllipse(rx, ry, rw, rw, thickness);
     g.setFont(Font(height/2, Font::bold));
     g.drawText("i", x, y, width, height, Justification::centred);
 }
