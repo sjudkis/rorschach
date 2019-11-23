@@ -23,8 +23,8 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     :   AudioProcessorEditor (&p),
         processor (p),
         keyboard(p.keyboardState, MidiKeyboardComponent::horizontalKeyboard),
-        sidebar(p),
-        arpControl(p)
+        arpControl(p),
+        sidebar(p)
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
@@ -85,6 +85,30 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     arpButton.setColour(TextButton::ColourIds::buttonColourId, Constants::tan);
     arpButton.setColour(TextButton::ColourIds::buttonOnColourId, Constants::brown);
     
+    // Info button
+    infoButton.addListener(this);
+    infoButton.setWantsKeyboardFocus(false);
+    
+    infoButton.setLookAndFeel(&infoButtonLookAndFeel);
+    addAndMakeVisible(&infoButton);
+    
+    infoButton.setColour(TextButton::ColourIds::buttonColourId, Constants::brown);
+    infoButton.setColour(TextButton::ColourIds::buttonOnColourId, Constants::brown);
+    
+    delayLabel.setColour(Label::ColourIds::backgroundColourId, Constants::brown);
+    delayLabel.setColour(Label::ColourIds::textColourId, Constants::tan);
+    
+    reverbLabel.setColour(Label::ColourIds::backgroundColourId, Constants::brown);
+    reverbLabel.setColour(Label::ColourIds::textColourId, Constants::tan);
+    
+    glitchLabel.setColour(Label::ColourIds::backgroundColourId, Constants::brown);
+    glitchLabel.setColour(Label::ColourIds::textColourId, Constants::tan);
+    
+    arpLabel.setColour(Label::ColourIds::backgroundColourId, Constants::brown);
+    arpLabel.setColour(Label::ColourIds::textColourId, Constants::tan);
+    
+    arpControlLabel.setColour(Label::ColourIds::backgroundColourId, Constants::brown);
+    arpControlLabel.setColour(Label::ColourIds::textColourId, Constants::tan);
     
     // Initialize blot background values
     r = Random();
@@ -118,6 +142,9 @@ Rorschach_synthAudioProcessorEditor::~Rorschach_synthAudioProcessorEditor()
     arpButton.setLookAndFeel(nullptr);
     arpButton.removeListener(this);
     
+    infoButton.setLookAndFeel(nullptr);
+    infoButton.removeListener(this);
+    
     processor.keyboardState.removeListener(this);
 }
 
@@ -134,6 +161,8 @@ void Rorschach_synthAudioProcessorEditor::resized()
     sidebar.setBounds(area.removeFromRight(sidebarWidth));
 
     keyboard.setBounds(area.removeFromBottom(keyboardHeight));
+    
+    infoButton.setBounds(5, 5, 40, 40);
 
 	// set main dial position
 	mainDial.setBounds(115, 115, 200, 200);
@@ -218,9 +247,76 @@ void Rorschach_synthAudioProcessorEditor::buttonClicked(Button *button)
         
         // add arp controls from UI
         if (!arpState)
+        {
             addAndMakeVisible(&arpControl);
+            
+            if (infoButton.getToggleState())
+            {
+                arpControlLabel.setFont(Font("Arial", 17, Font::bold));
+                arpControlLabel.setText("arpeggiator speed / random", dontSendNotification);
+                arpControlLabel.attachToComponent(&arpControl, false);
+                
+                addAndMakeVisible(&arpControlLabel);
+            }
+            else
+            {
+                removeChildComponent(&arpControlLabel);
+            }
+        }
         else
+        {
             removeChildComponent(&arpControl);
+            removeChildComponent(&arpControlLabel);
+        }
+        
+    }
+    
+    else if (button == &infoButton)
+    {
+        auto infoState = infoButton.getToggleState();
+        infoButton.setToggleState(!infoState, NotificationType::dontSendNotification);
+        
+        if (!infoState)
+        {
+            // Labels
+            delayLabel.setFont(Font("Arial", 20, Font::bold));
+            delayLabel.setText("delay", dontSendNotification);
+            delayLabel.attachToComponent(&mainDial, false);
+            
+            reverbLabel.setFont(Font("Arial", 20, Font::bold));
+            reverbLabel.setText("reverb", dontSendNotification);
+            reverbLabel.attachToComponent(&reverbDial, false);
+            
+            glitchLabel.setFont(Font("Arial", 20, Font::bold));
+            glitchLabel.setText("garble", dontSendNotification);
+            glitchLabel.attachToComponent(&glitchButton, false);
+            
+            arpLabel.setFont(Font("Arial", 17, Font::bold));
+            arpLabel.setText("arpeggiator", dontSendNotification);
+            arpLabel.attachToComponent(&arpButton, false);
+            
+            addAndMakeVisible(&delayLabel);
+            addAndMakeVisible(&reverbLabel);
+            addAndMakeVisible(&glitchLabel);
+            addAndMakeVisible(&arpLabel);
+            
+            if (arpButton.getToggleState())
+            {
+                arpControlLabel.setFont(Font("Arial", 17, Font::bold));
+                arpControlLabel.setText("arpeggiator speed / random", dontSendNotification);
+                arpControlLabel.attachToComponent(&arpControl, false);
+                
+                addAndMakeVisible(&arpControlLabel);
+            }
+        }
+        else
+        {
+            removeChildComponent(&delayLabel);
+            removeChildComponent(&reverbLabel);
+            removeChildComponent(&glitchLabel);
+            removeChildComponent(&arpLabel);
+            removeChildComponent(&arpControlLabel);
+        }
     }
 }
 

@@ -17,6 +17,7 @@
 #include "SideBar.h"
 #include "LargeRotaryLookAndFeel.h"
 #include "ButtonLookAndFeel.h"
+#include "InfoButtonLookAndFeel.h"
 #include "Arpeggiator.h"
 
 // #include "BlotBackground.h"
@@ -80,7 +81,15 @@ private:
     //Glitch button
     TextButton glitchButton;
     ButtonLookAndFeel buttonLookAndFeel;
-
+    
+    TextButton infoButton;
+    InfoButtonLookAndFeel infoButtonLookAndFeel;
+    
+    Label delayLabel;
+    Label reverbLabel;
+    Label glitchLabel;
+    Label arpLabel;
+    Label arpControlLabel;
     
 	// Sidebar with synth controls
     SideBar sidebar;
