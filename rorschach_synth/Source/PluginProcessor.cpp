@@ -36,6 +36,7 @@ Rorschach_synthAudioProcessor::Rorschach_synthAudioProcessor()
     synth.addSound(new SynthSound());
     
     glitchState = false;
+    arpMode = false;
 }
 
 Rorschach_synthAudioProcessor::~Rorschach_synthAudioProcessor()
