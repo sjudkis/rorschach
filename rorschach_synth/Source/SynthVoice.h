@@ -100,14 +100,14 @@ public:
         {
             if (sample > 0) incRampParams();
             
-            effectGain = gainRamp;
+            effectedGain = gainRamp;
             
             double freqMod = frequency;
             if (lfoFreq > 0.0)
             {
                 if (lfoState)
                 {
-                    gainRamp *= ((lfo.sinewave(lfoFreq) / 16) + 0.9375);
+                    effectedGain *= ((lfo.sinewave(lfoFreq) / 2) + 0.5);
                 }
                 else
                 {
@@ -118,7 +118,7 @@ public:
             wave += osc2.square(freqMod) * oscVols[1];
             wave += osc3.saw(freqMod) * oscVols[2];
             wave *= level;
-            wave *= gainRamp;
+            wave *= effectedGain;
             wave = loPassFilter.lores(wave, loPassCutoffRamp, 1.0);
             wave = highPassFilter.hires(wave, hiPassCutoffRamp, 1.0);
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
@@ -126,9 +126,9 @@ public:
                 outputBuffer.addSample(channel, startSample, envelope.getNextSample() * wave);
             }
             
-            if (reverbAmt > 0.5) reverbFx.effect(outputBuffer, startSample, effectGain);
+            if (reverbAmt > 0.5) reverbFx.effect(outputBuffer, startSample, gainRamp);
             
-            delayFx.effect(outputBuffer, startSample, effectGain);
+            delayFx.effect(outputBuffer, startSample, gainRamp);
             
             ++startSample;
         }
@@ -185,7 +185,7 @@ private:
     float gain;
     float gainRamp = 0.562f;
     float gainInc = 0.0f;
-    float effectGain;
+    float effectedGain;
     
     maxiOsc osc1;
     maxiOsc osc2;
