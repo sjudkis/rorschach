@@ -131,6 +131,8 @@ private:
     
     bool glitchState;
 
+    bool lfoButtonState;
+
     bool arpState;
     bool arpMode;
     
@@ -140,10 +142,7 @@ private:
     int time;
     float rate;
     SortedSet<int> notes;
-    
-    
 
-    bool lfoButtonState;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Rorschach_synthAudioProcessor)

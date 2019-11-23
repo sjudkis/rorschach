@@ -400,5 +400,4 @@ void Rorschach_synthAudioProcessor::toggleArpMode(bool state)
 void Rorschach_synthAudioProcessor::toggleLfoButton(bool state)
 {
     lfoButtonState = state;
-
 }

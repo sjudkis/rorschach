@@ -143,9 +143,9 @@ void Rorschach_synthAudioProcessorEditor::resized()
 //    glitchButton.setBounds(500, 250, 60, 60);
     glitchButton.setBounds(400, 225, 60, 60);
     
-    arpButton.setBounds(300, 325, 70, 70);
+    arpButton.setBounds(280, 330, 70, 70);
     
-    arpControl.setBounds(10, visualizerHeight - 150, 100, 150);
+    arpControl.setBounds(450, 75, 150, 100);
 
 }
 

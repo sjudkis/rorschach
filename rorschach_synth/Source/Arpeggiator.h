@@ -25,9 +25,9 @@ public:
     Arpeggiator(Rorschach_synthAudioProcessor& p) : processor(p)
     {
         addAndMakeVisible(&arpSlider);
-        arpSlider.setSliderStyle(Slider::SliderStyle::LinearVertical);
+        arpSlider.setSliderStyle(Slider::SliderStyle::Rotary);
         arpSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-        arpSlider.setLookAndFeel(&sliderLookAndFeel);
+        arpSlider.setLookAndFeel(&rotaryLookAndFeel);
         arpSpeed = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
         (processor.parameterState, ARP_SPEED_ID, arpSlider);
         
@@ -49,18 +49,15 @@ public:
 
     void paint (Graphics& g) override
     {
-        juce::Rectangle<int> title(0, 0, getWidth(), 15);
-//        g.setColour(Colour((uint8)94, (uint8)74, (uint8)62, (uint8)255));
-        g.setColour(Constants::brown);
-//        g.drawText("Arp. Controls", title, Justification::centred);
+
     }
 
     void resized() override
     {
         
-        juce::Rectangle<int> area = getLocalBounds().removeFromBottom(getHeight()  - 15);
-        juce::Rectangle<int> sliderArea = area.removeFromLeft(getWidth() / 2);
-        arpSlider.setBounds(sliderArea);
+        juce::Rectangle<int> area = getLocalBounds().removeFromBottom(getHeight() );
+        juce::Rectangle<int> rotaryArea = area.removeFromLeft(2 * (getWidth() / 3)).reduced(5);
+        arpSlider.setBounds(rotaryArea);
         arpModeButton.setBounds(area);
         
     }
@@ -85,7 +82,7 @@ private:
     
     Slider arpSlider;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> arpSpeed;
-    VertSliderLookAndFeel sliderLookAndFeel;
+    LargeRotaryLookAndFeel rotaryLookAndFeel;
     
     TextButton arpModeButton;
     ButtonLookAndFeel buttonLookAndFeel;
