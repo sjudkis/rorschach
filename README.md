@@ -23,14 +23,40 @@ Installation on both Windows/MacOS is basically the same.
 
 ## Features
 
-TODO: add description to each feature, maybe with a picture
-### Delay
+Press info key at the top left of the synth to see labels of buttons and sliders in the blot region.
+
+This section gives a brief, high level description of each effect.
+
+### Arpeggiator
+
+When clicked, spawns a slider and a button that plays an arpeggio from one note to another. Try swiping through all the keys or holding multiple keys together.
+
+### Drop-shot Delay
+
+Adds a delay that successively plays note at lower and lower volume. The greater the slider has traveled, the longer the delay.
+
 ### Envelope
+
+Modulates sound. Controlled by the A/S/D/R rotary dials, and the modulation is represented in the graph below.
+
 ### Gain
-### Glitch
+
+Changes sound level by input.
+
+### Garble
+
+Adds a TV-static-like effect to the sound.
+
 ### High/Low Pass Filters
+
+
+
 ### LFO
+
+
 ### Oscillators
+
+
 ### Reverb
 
 ## Built With
