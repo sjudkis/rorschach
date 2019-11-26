@@ -169,17 +169,17 @@ void Rorschach_synthAudioProcessorEditor::resized()
     
     reverbDial.setBounds(500, 300, 100, 100);
     
-//    glitchButton.setBounds(500, 250, 60, 60);
     glitchButton.setBounds(400, 225, 60, 60);
     
+    // arp toggle button
     arpButton.setBounds(280, 330, 70, 70);
     
+    // arp speed slider and mode button
     arpControl.setBounds(450, 75, 150, 100);
 
 }
 
-
-
+// played notes from on-screen keyboard
 void Rorschach_synthAudioProcessorEditor::handleNoteOn(MidiKeyboardState *, int midiChannel, int midiNoteNumber, float velocity)
 {
     processor.keyboardNoteOn(midiChannel, midiNoteNumber, velocity);
@@ -189,6 +189,7 @@ void Rorschach_synthAudioProcessorEditor::handleNoteOff(MidiKeyboardState *, int
 {
     processor.keyboardNoteOff(midiChannel, midiNoteNumber, velocity);
 }
+
 
 void Rorschach_synthAudioProcessorEditor::timerCallback()
 {
@@ -250,6 +251,7 @@ void Rorschach_synthAudioProcessorEditor::buttonClicked(Button *button)
         {
             addAndMakeVisible(&arpControl);
             
+            // add info if info button is on
             if (infoButton.getToggleState())
             {
                 arpControlLabel.setFont(Font(11, Font::bold));

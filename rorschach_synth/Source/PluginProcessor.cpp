@@ -262,7 +262,10 @@ void Rorschach_synthAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
         synth.renderNextBlock(buffer, arpMidiMessages, 0, buffer.getNumSamples());
     
 }
-    
+
+
+// based on tutorial from official JUCE documentation:
+// https://docs.juce.com/master/tutorial_plugin_examples.html
 void Rorschach_synthAudioProcessor::arpeggiate(AudioBuffer<float>& buffer, MidiBuffer& origMidiMessages, MidiBuffer& arpMidiMessages)
 {
     
@@ -270,37 +273,44 @@ void Rorschach_synthAudioProcessor::arpeggiate(AudioBuffer<float>& buffer, MidiB
     float speed = *parameterState.getRawParameterValue(ARP_SPEED_ID);
         
     auto numSamples = buffer.getNumSamples();
+    
+    // length that each note is played
     auto noteDuration = static_cast<int>(std::ceil(rate * 0.25f * (0.1f + (1.0f - speed))));
         
     MidiMessage msg;
     int ignore;
         
+    // loop through midi messages currently being received
     for (MidiBuffer::Iterator it (origMidiMessages); it.getNextEvent (msg, ignore);)
     {
+        // add newly started notes to the notes set
         if (msg.isNoteOn())
             notes.add(msg.getNoteNumber());
-                
+        // remove any notes from the set that have stopped being played
         else if (msg.isNoteOff())
             notes.removeValue(msg.getNoteNumber());
     }
 
-    
+    // check if note should switch
     if ((time + numSamples) >= noteDuration)
     {
         auto offset = jmax(0, jmin((int)(noteDuration - time), numSamples - 1));
         
         if (lastNoteValue > 0)
         {
+            // turn off previous note
             arpMidiMessages.addEvent(MidiMessage::noteOff(1, lastNoteValue), offset);
             lastNoteValue = -1;
         }
+        // if any keys are currently being held, next note in arpeggiator is chosen according to arp mode
         if (notes.size() > 0)
         {
-            if (!arpMode) // linear mode
+            if (!arpMode)
+                // linear mode, next note in order ascending order is selected
                 currentNote = (currentNote + 1) % notes.size();
             else
             {
-                // random mode
+                // random mode, any random note is chosen from the notes set
                 Random randInt;
                 currentNote = randInt.nextInt(notes.size());
             }
@@ -308,7 +318,8 @@ void Rorschach_synthAudioProcessor::arpeggiate(AudioBuffer<float>& buffer, MidiB
             arpMidiMessages.addEvent(MidiMessage::noteOn(1, lastNoteValue, (uint8) 127), offset);
         }
     }
-        
+    
+    // advance time counter
     time = (time + numSamples) % noteDuration;
 }
 

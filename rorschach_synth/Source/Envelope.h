@@ -137,9 +137,7 @@ public:
         release.setBounds(area);
 
         juce::Rectangle<int> graphArea = getLocalBounds().removeFromBottom(getHeight()/3);
-        
-//		envelopeGraph.setBounds(getWidth() / 2 - 80, getHeight() - 100, 160, 80); //orig
-//        envelopeGraph.setBounds(getWidth() / 2 - 80, getHeight() - 80, 160, 70); //2nd
+
         envelopeGraph.setBounds(graphArea.reduced(10));
     }
 

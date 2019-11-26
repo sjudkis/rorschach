@@ -99,7 +99,7 @@ private:
 	const int visualizerWidth = 736;
 	const int visualizerHeight = 479;
 	
-    // virtual functions
+    // virtual functions, trigger synth to play notes from on-screen keyboard
     void handleNoteOn(MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity) override;
     void handleNoteOff(MidiKeyboardState*, int midiChannel, int midiNoteNumber, float velocity) override;
 
