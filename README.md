@@ -29,7 +29,7 @@ This section gives a brief, high level description of each effect.
 
 ### Arpeggiator
 
-When clicked, spawns a slider and a button that plays an arpeggio from one note to another. Try swiping through all the keys or holding multiple keys together.
+When clicked, spawns a slider and a button that control the tempo and note pattern of the arpeggiator. Hold down multiple notes and the synth will cycle through them. The cycle can be from low to high, or randomly selected.
 
 ### Drop-shot Delay
 
@@ -37,25 +37,25 @@ Adds a delay that successively plays note at lower and lower volume. The greater
 
 ### Envelope
 
-Modulates sound. Controlled by the A/S/D/R rotary dials, and the modulation is represented in the graph below.
+Modulates attack, decay, sustain, and release of the sound. Controlled by the A/D/S/R rotary dials, and the modulation is represented in the graph below.
 
 ### Gain
 
-Changes sound level by input.
+Sets the overall output level of the synth.
 
 ### Garble
 
 Adds a TV-static-like effect to the sound.
 
 ### High/Low Pass Filters
-
+The high pass filter allows only frequencies above the chosen threshold to be heard. Low pass allows only frequencies below the threshold.
 
 
 ### LFO
 
 
 ### Oscillators
-
+The synth contains three oscillators to generate the sound: sine wave, square wave, and saw wave. Each oscillator volume can be adjusted independently to create unique waveforms.
 
 ### Reverb
 
