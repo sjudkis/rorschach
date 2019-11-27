@@ -37,7 +37,6 @@ public:
     {
         envelope.noteOff();
         allowTailOff = true;
-//        level = 0;
         if (velocity == 0)
             clearCurrentNote();
     }
@@ -98,10 +97,11 @@ public:
         
         for (int sample = 0; sample < numSamples; ++sample)
         {
-            if (sample > 0) incRampParams();
+            if (sample > 0) incRampParams(); // Increment ramped parameters
             
             effectedGain = gainRamp;
             
+            // Alter params based on LFO
             double freqMod = frequency;
             if (lfoFreq > 0.0)
             {
@@ -114,25 +114,36 @@ public:
                     freqMod += (lfo.sinewave(lfoFreq) * 6.0);
                 }
             }
+            
+            // Mix Oscillators
             double wave = osc1.sinewave(freqMod) * oscVols[0];
             wave += osc2.square(freqMod) * oscVols[1];
             wave += osc3.saw(freqMod) * oscVols[2];
             wave *= level;
+            
+            // Process main gain
             wave *= effectedGain;
+            
+            // Process filters
             wave = loPassFilter.lores(wave, loPassCutoffRamp, 1.0);
             wave = highPassFilter.hires(wave, hiPassCutoffRamp, 1.0);
+            
+            // Process Envelope
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
                 outputBuffer.addSample(channel, startSample, envelope.getNextSample() * wave);
             }
             
+            // Process Reverb Effect
             if (reverbAmt > 0.5) reverbFx.effect(outputBuffer, startSample, gainRamp);
             
+            // Process Delay Effect
             delayFx.effect(outputBuffer, startSample, gainRamp);
             
             ++startSample;
         }
     
+        // Process Garble Effect
         if (glitchState)
             glitchFx.effect(outputBuffer, numSamples);
     }

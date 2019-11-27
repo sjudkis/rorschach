@@ -105,14 +105,13 @@ public:
     
     // toggle button functions
     void toggleGlitch(bool);
-
     void toggleArpOnOff(bool);
     void toggleArpMode(bool);
-    
+    void toggleLfoButton(bool);
     
     void arpeggiate(AudioBuffer<float>& buffer, MidiBuffer& origMidiMessages, MidiBuffer& arpMidiMessages);
 
-    void toggleLfoButton(bool);
+    
 
     
     // tree state holds values from UI controls
@@ -126,21 +125,18 @@ private:
     
     double delayInMilis;
     double reverbAmt;
-    
     double lastSampleRate;
     
     bool glitchState;
-
     bool lfoButtonState;
-
     bool arpState;
     bool arpMode;
     
-    // arpeggiator variables
-//    float speed;
     int currentNote, lastNoteValue;
     int time;
+    
     float rate;
+    
     SortedSet<int> notes;
 
 

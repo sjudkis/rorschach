@@ -31,6 +31,8 @@ public:
     {
         if (delaySamples == 0) return;
         
+        // Ping pong tap delays for left and right outputs.
+        
         float ynL = delayBufferL.readBuffer(delaySamples);
         float y1L = delayBufferL.readBuffer(8000)*0.5;
         float y2L = delayBufferL.readBuffer(2000)*0.5;
@@ -59,6 +61,7 @@ public:
     {
         if (delaySamples != this->delaySamples)
         {
+            // Flush buffer on parameter change to remove crackling noises.
             delayBufferL.flushBuffer();
             delayBufferR.flushBuffer();
         }

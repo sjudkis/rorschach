@@ -60,6 +60,7 @@ public:
         float wn3 = combBuffer3.readBuffer(delaySamples3);
         float wn4 = combBuffer4.readBuffer(delaySamples4);
         
+        // Process Low-Pass Comb Filters
         float dn1 = outputBuffer.getSample(0, sample)*0.3 + filter.lores(g1*wn1, 440, 1.0);
         float dn2 = outputBuffer.getSample(0, sample)*0.3 + filter.lores(g2*wn2, 440, 1.0);
         float dn3 = outputBuffer.getSample(0, sample)*0.3 + filter.lores(g3*wn3, 440, 1.0);
@@ -71,6 +72,8 @@ public:
         combBuffer4.writeBuffer(dn1);
         
         float combMix = (dn1 + dn2 + dn3 + dn4) / 8;
+        
+        // Process All-Pass Filters
         
         float vn1 = allBuffer1.readBuffer(delaySamples5);
         
@@ -85,6 +88,7 @@ public:
 
         yn2 = (-0.5*yn1) + vn2 + (wet*yn2);
         
+        // Output
         outputBuffer.addSample(0, sample, yn2 * 0.05 * gain);
         outputBuffer.addSample(1, sample, yn2 * 0.05 * gain);
     }
