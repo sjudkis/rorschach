@@ -15,13 +15,9 @@
 #include "Oscillator.h"
 #include "OscillatorGroup.h"
 #include "SideBar.h"
-#include "LargeRotaryLookAndFeel.h"
-#include "ButtonLookAndFeel.h"
+#include "VisualAreaLookAndFeel.h"
 #include "InfoLookAndFeel.h"
 #include "Arpeggiator.h"
-
-// #include "BlotBackground.h"
-
 
 
 //==============================================================================
@@ -66,12 +62,10 @@ private:
 
 	// Main Rotary
 	Slider mainDial;
-	LargeRotaryLookAndFeel largeRotaryLookAndFeel;
     unique_ptr<AudioProcessorValueTreeState::SliderAttachment> rotaryDelay;
     
     //Reverb Rotary
     Slider reverbDial;
-    LargeRotaryLookAndFeel smallRotaryLookAndFeel;
     unique_ptr<AudioProcessorValueTreeState::SliderAttachment> rotaryReverb;
     
     // Arpeggiator button
@@ -80,10 +74,10 @@ private:
     
     //Glitch button
     TextButton glitchButton;
-    ButtonLookAndFeel buttonLookAndFeel;
     
     TextButton infoButton;
     
+    VisualAreaLookAndFeel visualAreaLookAndFeel;
     InfoLookAndFeel infoLookAndFeel;
     
     Label delayLabel;

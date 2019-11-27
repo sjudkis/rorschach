@@ -12,7 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
-#include "VertSliderLookAndFeel.h"
+#include "SideBarLookAndFeel.h"
 
 //==============================================================================
 /*
@@ -22,7 +22,7 @@ class Gain    : public Component
 public:
     Gain(Rorschach_synthAudioProcessor& p) : processor(p)
     {
-        gainSlider.setLookAndFeel(&vertSliderLookAndFeel);
+        gainSlider.setLookAndFeel(&sideBarLookAndFeel);
         gainSlider.setSliderStyle(Slider::SliderStyle::LinearVertical);
         gainSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
         
@@ -57,7 +57,7 @@ private:
     Rorschach_synthAudioProcessor& processor;
     
     Slider gainSlider;
-    VertSliderLookAndFeel vertSliderLookAndFeel;
+    SideBarLookAndFeel sideBarLookAndFeel;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> gainVal;
     
     

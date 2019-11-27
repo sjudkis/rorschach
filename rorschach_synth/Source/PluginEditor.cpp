@@ -42,7 +42,7 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
 	// set main dial position
 	mainDial.setSliderStyle(Slider::Rotary);
 	mainDial.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-	mainDial.setLookAndFeel(&largeRotaryLookAndFeel);
+	mainDial.setLookAndFeel(&visualAreaLookAndFeel);
     mainDial.setRange(0.0, 2000.0);
     mainDial.setValue(0.0);
     mainDial.addListener(this);
@@ -51,7 +51,7 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     //reverb button
     reverbDial.setSliderStyle(Slider::Rotary);
     reverbDial.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-    reverbDial.setLookAndFeel(&smallRotaryLookAndFeel);
+    reverbDial.setLookAndFeel(&visualAreaLookAndFeel);
     reverbDial.setRange(0.5, 0.8);
     reverbDial.setValue(0.0);
     reverbDial.addListener(this);
@@ -68,7 +68,7 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     glitchButton.addListener(this);
     glitchButton.setWantsKeyboardFocus(false);
     
-    glitchButton.setLookAndFeel(&buttonLookAndFeel);
+    glitchButton.setLookAndFeel(&visualAreaLookAndFeel);
     addAndMakeVisible(&glitchButton);
     
     glitchButton.setColour(TextButton::ColourIds::buttonColourId, Constants::tan);
@@ -79,7 +79,7 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
     arpButton.addListener(this);
     arpButton.setWantsKeyboardFocus(false);
     
-    arpButton.setLookAndFeel(&buttonLookAndFeel);
+    arpButton.setLookAndFeel(&visualAreaLookAndFeel);
     addAndMakeVisible(&arpButton);
     
     arpButton.setColour(TextButton::ColourIds::buttonColourId, Constants::tan);

@@ -5,14 +5,18 @@
               companyName="anderson-judkis-lee">
   <MAINGROUP id="dYYPxU" name="rorschach_synth">
     <GROUP id="{54299D7D-8F12-6D72-15A9-ECC3E0EF2FEE}" name="Source">
+      <FILE id="tBUi9o" name="VisualAreaLookAndFeel.cpp" compile="1" resource="0"
+            file="Source/VisualAreaLookAndFeel.cpp"/>
+      <FILE id="yxXOxy" name="VisualAreaLookAndFeel.h" compile="0" resource="0"
+            file="Source/VisualAreaLookAndFeel.h"/>
+      <FILE id="m8I36Y" name="SideBarLookAndFeel.cpp" compile="1" resource="0"
+            file="Source/SideBarLookAndFeel.cpp"/>
+      <FILE id="vdBimn" name="SideBarLookAndFeel.h" compile="0" resource="0"
+            file="Source/SideBarLookAndFeel.h"/>
       <FILE id="P0Bpj0" name="InfoLookAndFeel.cpp" compile="1" resource="0"
             file="Source/InfoLookAndFeel.cpp"/>
       <FILE id="R9AoNh" name="InfoLookAndFeel.h" compile="0" resource="0"
             file="Source/InfoLookAndFeel.h"/>
-      <FILE id="VYpN0k" name="ButtonLookAndFeel.h" compile="0" resource="0"
-            file="Source/ButtonLookAndFeel.h"/>
-      <FILE id="EritH3" name="ButtonLookAndFeel.cpp" compile="1" resource="0"
-            file="Source/ButtonLookAndFeel.cpp"/>
       <FILE id="iZ3O9E" name="GlitchFx.h" compile="0" resource="0" file="Source/GlitchFx.h"/>
       <FILE id="lVgjT0" name="HighPassFilter.h" compile="0" resource="0"
             file="Source/HighPassFilter.h"/>
@@ -23,19 +27,7 @@
             file="Source/CircularBuffer.h"/>
       <FILE id="SGXCO6" name="EnvelopeGraph.h" compile="0" resource="0" file="Source/EnvelopeGraph.h"/>
       <FILE id="GDS7su" name="DelayFx.h" compile="1" resource="0" file="Source/DelayFx.h"/>
-      <FILE id="ZW296P" name="LargeRotaryLookAndFeel.cpp" compile="1" resource="0"
-            file="Source/LargeRotaryLookAndFeel.cpp"/>
-      <FILE id="KKWobI" name="LargeRotaryLookAndFeel.h" compile="0" resource="0"
-            file="Source/LargeRotaryLookAndFeel.h"/>
-      <FILE id="Op28hu" name="VertSliderLookAndFeel.cpp" compile="1" resource="0"
-            file="Source/VertSliderLookAndFeel.cpp"/>
-      <FILE id="w8evxC" name="VertSliderLookAndFeel.h" compile="0" resource="0"
-            file="Source/VertSliderLookAndFeel.h"/>
       <FILE id="p7ib8y" name="Constants.h" compile="0" resource="0" file="Source/Constants.h"/>
-      <FILE id="vmzVjh" name="RotaryLookAndFeel.cpp" compile="1" resource="0"
-            file="Source/RotaryLookAndFeel.cpp"/>
-      <FILE id="IHv6Zh" name="RotaryLookAndFeel.h" compile="0" resource="0"
-            file="Source/RotaryLookAndFeel.h"/>
       <GROUP id="{65BF1AD4-E04E-C012-914B-42BF2386A7A1}" name="Maximilian">
         <GROUP id="{AA5115A4-044C-D6BF-8607-010C61A74E7B}" name="libs">
           <FILE id="b6pLOj" name="fft.cpp" compile="1" resource="0" file="Maximilian/libs/fft.cpp"/>

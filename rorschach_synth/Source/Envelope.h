@@ -12,7 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
-#include "RotaryLookAndFeel.h"
+#include "SideBarLookAndFeel.h"
 #include "EnvelopeGraph.h"
 #include "Constants.h"
 
@@ -89,7 +89,7 @@ public:
     {
         s.setSliderStyle(Slider::SliderStyle::RotaryHorizontalVerticalDrag);
         s.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-        s.setLookAndFeel(&rotaryLookAndFeel);
+        s.setLookAndFeel(&sideBarLookAndFeel);
         
     }
     void paint (Graphics& g) override
@@ -157,6 +157,7 @@ private:
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> sustainState;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> releaseState;
     
-    RotaryLookAndFeel rotaryLookAndFeel;
+    SideBarLookAndFeel sideBarLookAndFeel;
+    
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Envelope)
 };

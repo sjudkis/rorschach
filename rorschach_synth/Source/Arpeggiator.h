@@ -13,7 +13,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 #include "Constants.h"
-#include "VertSliderLookAndFeel.h"
+#include "VisualAreaLookAndFeel.h"
 
 //==============================================================================
 /*
@@ -27,12 +27,12 @@ public:
         addAndMakeVisible(&arpSlider);
         arpSlider.setSliderStyle(Slider::SliderStyle::Rotary);
         arpSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
-        arpSlider.setLookAndFeel(&rotaryLookAndFeel);
+        arpSlider.setLookAndFeel(&visualAreaLookAndFeel);
         arpSpeed = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>
         (processor.parameterState, ARP_SPEED_ID, arpSlider);
         
         addAndMakeVisible(&arpModeButton);
-        arpModeButton.setLookAndFeel(&buttonLookAndFeel);
+        arpModeButton.setLookAndFeel(&visualAreaLookAndFeel);
         arpModeButton.addListener(this);
         arpModeButton.setWantsKeyboardFocus(false);
         
@@ -82,10 +82,10 @@ private:
     
     Slider arpSlider;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> arpSpeed;
-    LargeRotaryLookAndFeel rotaryLookAndFeel;
     
     TextButton arpModeButton;
-    ButtonLookAndFeel buttonLookAndFeel;
+    
+    VisualAreaLookAndFeel visualAreaLookAndFeel;
     
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Arpeggiator)
 };
