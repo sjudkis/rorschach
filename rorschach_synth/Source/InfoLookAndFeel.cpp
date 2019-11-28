@@ -11,6 +11,7 @@
 #include "InfoLookAndFeel.h"
 #include "Constants.h"
 
+
 void InfoLookAndFeel::drawButtonBackground (Graphics& g,
                                             Button& button,
                                             const Colour& backgroundColour,
@@ -29,7 +30,6 @@ void InfoLookAndFeel::drawButtonBackground (Graphics& g,
     auto ry = centreY - radius;
     auto rw = radius * 2.0f;
     auto thickness = 3.0f;
-    
 
     g.setColour(backgroundColour);
     if (isMouseOverButton) thickness = 5.0f;
@@ -37,6 +37,7 @@ void InfoLookAndFeel::drawButtonBackground (Graphics& g,
     g.setFont(Font(height/2, Font::bold));
     g.drawText("i", x, y, width, height, Justification::centred);
 }
+
 
 void InfoLookAndFeel::drawLabel (Graphics& g, Label& label)
 {

@@ -12,7 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
-#include "VertSliderLookAndFeel.h"
+#include "SideBarLookAndFeel.h"
 #include "Constants.h"
 
 //==============================================================================
@@ -24,7 +24,7 @@ class LFO    : public Component,
 public:
     LFO(Rorschach_synthAudioProcessor& p) : processor(p)
     {
-        lfoSlider.setLookAndFeel(&vertSliderLookAndFeel);
+        lfoSlider.setLookAndFeel(&sideBarLookAndFeel);
         lfoSlider.setSliderStyle(Slider::SliderStyle::LinearVertical);
         lfoSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
         
@@ -90,7 +90,7 @@ private:
     
     Slider lfoSlider;
     TextButton lfoButton;
-    VertSliderLookAndFeel vertSliderLookAndFeel;
+    SideBarLookAndFeel sideBarLookAndFeel;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> lfoVal;
     
     

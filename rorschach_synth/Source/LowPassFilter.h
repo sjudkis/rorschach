@@ -12,7 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
-#include "VertSliderLookAndFeel.h"
+#include "SideBarLookAndFeel.h"
 
 //==============================================================================
 /*
@@ -22,7 +22,7 @@ class LowPassFilter    : public Component
 public:
     LowPassFilter(Rorschach_synthAudioProcessor& p) : processor(p)
     {
-        loPassSlider.setLookAndFeel(&vertSliderLookAndFeel);
+        loPassSlider.setLookAndFeel(&sideBarLookAndFeel);
         loPassSlider.setSliderStyle(Slider::SliderStyle::LinearVertical);
         loPassSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
         loPassSlider.setSkewFactor(0.08);
@@ -58,7 +58,7 @@ private:
     Rorschach_synthAudioProcessor& processor;
     
     Slider loPassSlider;
-    VertSliderLookAndFeel vertSliderLookAndFeel;
+    SideBarLookAndFeel sideBarLookAndFeel;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> loPassVal;
     
     

@@ -12,7 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
-#include "VertSliderLookAndFeel.h"
+#include "SideBarLookAndFeel.h"
 
 //==============================================================================
 /*
@@ -22,7 +22,7 @@ class HighPassFilter    : public Component
 public:
     HighPassFilter(Rorschach_synthAudioProcessor& p) : processor(p)
     {
-        hiPassSlider.setLookAndFeel(&vertSliderLookAndFeel);
+        hiPassSlider.setLookAndFeel(&sideBarLookAndFeel);
         hiPassSlider.setSliderStyle(Slider::SliderStyle::LinearVertical);
         hiPassSlider.setTextBoxStyle(Slider::NoTextBox, false, 0, 0);
         hiPassSlider.setSkewFactor(0.08);
@@ -58,7 +58,7 @@ private:
     Rorschach_synthAudioProcessor& processor;
     
     Slider hiPassSlider;
-    VertSliderLookAndFeel vertSliderLookAndFeel;
+    SideBarLookAndFeel sideBarLookAndFeel;
     std::unique_ptr <AudioProcessorValueTreeState::SliderAttachment> hiPassVal;
     
     

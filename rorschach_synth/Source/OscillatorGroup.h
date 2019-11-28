@@ -13,7 +13,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
 #include "Oscillator.h"
-#include "VertSliderLookAndFeel.h"
+#include "SideBarLookAndFeel.h"
 //==============================================================================
 /*
 */
@@ -24,9 +24,9 @@ public:
                 osc1(p, 1, "Sine"), osc2(p, 2, "Square"), osc3(p, 3, "Saw"),
                 processor(p)
     {
-		osc1.setLookAndFeel(&vertSliderLookAndFeel);
-		osc2.setLookAndFeel(&vertSliderLookAndFeel);
-		osc3.setLookAndFeel(&vertSliderLookAndFeel);
+		osc1.setLookAndFeel(&sideBarLookAndFeel);
+		osc2.setLookAndFeel(&sideBarLookAndFeel);
+		osc3.setLookAndFeel(&sideBarLookAndFeel);
 
         addAndMakeVisible(&osc1);
         addAndMakeVisible(&osc2);
@@ -67,7 +67,7 @@ private:
 
     Rorschach_synthAudioProcessor& processor;
     
-	VertSliderLookAndFeel vertSliderLookAndFeel;
+	SideBarLookAndFeel sideBarLookAndFeel;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (OscillatorGroup)
 };

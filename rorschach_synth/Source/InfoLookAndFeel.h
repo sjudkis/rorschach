@@ -15,7 +15,9 @@ class InfoLookAndFeel : public LookAndFeel_V4
 {
 public:
     InfoLookAndFeel() {};
+    
     void drawButtonBackground (Graphics& g, Button& button, const Colour& backgroundColour,
                                bool isMouseOverButton, bool isButtonDown) override;
+                               
     void drawLabel (Graphics& g, Label& label) override;
 };
