@@ -56,6 +56,7 @@
       <FILE id="p0IVw4" name="OscillatorGroup.h" compile="0" resource="0"
             file="Source/OscillatorGroup.h"/>
       <FILE id="qHNKCU" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
+      <FILE id="AOGDJG" name="logo.png" compile="0" resource="1" file="Source/logo.png"/>
       <FILE id="WBhczq" name="Envelope.h" compile="0" resource="0" file="Source/Envelope.h"/>
       <FILE id="FMHrRo" name="Gain.h" compile="0" resource="0" file="Source/Gain.h"/>
       <FILE id="v0ecPr" name="Arpeggiator.h" compile="0" resource="0" file="Source/Arpeggiator.h"/>
