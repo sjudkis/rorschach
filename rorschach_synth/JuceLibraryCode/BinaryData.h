@@ -9,7 +9,7 @@
 namespace BinaryData
 {
     extern const char*   README;
-    const int            READMESize = 3115;
+    const int            READMESize = 3042;
 
     extern const char*   logo_png;
     const int            logo_pngSize = 62734;
