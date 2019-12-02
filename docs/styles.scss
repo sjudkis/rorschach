@@ -1,0 +1,143 @@
+/**
+Compilation of this file is done via Live SASS compiler VSCode extension
+Link: https://github.com/ritwickdey/vscode-live-sass-compiler
+
+Usage: 
+1. Install extension
+2. Click "Watch SASS" on the bottom toolbar
+*/
+
+$color-tan: rgb(234, 213, 201);
+$color-brown: rgb(94, 74, 62);
+$color-browner: rgb(75, 59, 50);
+$color-text: black;
+$mobile-breakpoint: 900px;
+$section-height: 300px;
+
+@mixin grid-defaults {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+}
+
+html,
+body {
+  color: $color-text;
+  margin: 0;
+  padding: 0;
+  background-color: $color-tan;
+}
+
+h2 {
+  margin-block-start: 0;
+}
+
+header,
+.description,
+.downloads {
+  @include grid-defaults;
+}
+
+.title,
+.video,
+.info,
+.installers {
+  text-align: center;
+}
+
+.download-btn-container {
+  button {
+    // override styles
+    background: none;
+    color: $color-text;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+    text-decoration: none;
+
+    background-color: $color-brown;
+
+    &:hover {
+      background-color: $color-browner;
+    }
+
+    &:visited,
+    &:hover,
+    &:active {
+      color: $color-text;
+    }
+  }
+}
+
+.fa-windows,
+.fa-apple {
+  font-size: 100px;
+  color: $color-brown;
+}
+
+header,
+.downloads {
+  background-color: $color-tan;
+}
+
+.description {
+  background-color: $color-brown;
+}
+
+@media screen and (max-width: $mobile-breakpoint) {
+  .info,
+  .installers {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .section {
+    height: $section-height * 1.5;
+  }
+
+  .download-btn-container button {
+    width: 150px;
+    height: 50px;
+  }
+}
+
+@media screen and (min-width: $mobile-breakpoint) {
+  header {
+    grid-template-columns: repeat(2, minmax($mobile-breakpoint / 2, 1fr));
+  }
+
+  .section {
+    height: $section-height;
+  }
+
+  .description,
+  .downloads {
+    grid-template-columns: repeat(5, minmax($mobile-breakpoint / 5, 1fr));
+    .info,
+    .installers {
+      grid-column: 2 / 5;
+    }
+  }
+
+  .download-btn-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+
+    & > div:first-child {
+      justify-self: right;
+      padding: 10px;
+    }
+
+    & > div:last-child {
+      justify-self: left;
+      padding: 10px;
+    }
+
+    button {
+      width: 200px;
+      height: 100px;
+    }
+  }
+}
