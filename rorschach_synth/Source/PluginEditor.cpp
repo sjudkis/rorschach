@@ -133,6 +133,7 @@ Rorschach_synthAudioProcessorEditor::Rorschach_synthAudioProcessorEditor (Rorsch
 }
 Rorschach_synthAudioProcessorEditor::~Rorschach_synthAudioProcessorEditor()
 {
+	openGLContext.detach();
 	mainDial.setLookAndFeel(nullptr);
     reverbDial.setLookAndFeel(nullptr);
     
