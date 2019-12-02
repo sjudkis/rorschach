@@ -10,7 +10,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 [JUCE](https://juce.com/) must be used to create the necessary environment files.
 
-The synth has been tested on Windows 10, Visual Studios 2019 and macOS Catalina, XCode, however it might run on any OS/IDE JUCE supports.
+The synth has been tested and runs on Windows 10 and mac OSX 10.11+.
 
 ### Installing
 
@@ -23,15 +23,50 @@ Installation on both Windows/MacOS is basically the same.
 
 ## Features
 
-TODO: add description to each feature, maybe with a picture
-### Delay
+Press info key at the top left of the synth to see labels of buttons and sliders in the blot region.
+
+This section gives a brief, high level description of each effect.
+
+### Arpeggiator
+
+When clicked, spawns a slider and a button that control the tempo and note pattern of the arpeggiator. Hold down multiple notes and the synth will cycle through them. The cycle can be from low to high, or randomly selected.
+
+### Drop-shot Delay
+
+Adds a delay that successively plays note at lower and lower volume. The greater the slider has traveled, the longer the delay. It is a combination of a ping-pong and tap delay.
+
 ### Envelope
+
+Modulates attack, decay, sustain, and release of the sound. Controlled by the A/D/S/R rotary dials, and the modulation is represented in the graph below.
+
 ### Gain
-### Glitch
+
+Sets the overall output level of the synth.
+
+### Garble
+
+Adds a TV-static-like effect to the sound.
+
 ### High/Low Pass Filters
+
+The high pass filter allows only frequencies above the chosen threshold to be heard. Low pass allows only frequencies below the threshold.
+
+
 ### LFO
+
+The Low Frequency Oscillator slider controls the frequency that a parameter changes and has two modes:
+
+Frequency Modulator (FM) - This manipulates the frequency of the Ocillator waveforms.
+Amplitude Modulator (AM) - This manipulates the gain applied to the waveform.
+
+
 ### Oscillators
+
+The synth contains three oscillators to generate the sound: sine wave, square wave, and saw wave. Each oscillator volume can be adjusted independently to create unique waveforms.
+
 ### Reverb
+
+Adds a reverb effect that simulates the sound echoing off the walls of a room. The dial controls how much of the effect is applied.
 
 ## Built With
 
