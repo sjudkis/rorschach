@@ -59,7 +59,7 @@ The high pass filter allows only frequencies above the chosen threshold to be he
 
 The Low Frequency Oscillator slider controls the frequency that a parameter changes and has two modes:
 
-Frequency Modulator (FM) - This manipulates the frequency of the Ocillator waveforms.
+Frequency Modulator (FM) - This manipulates the frequency of the Oscillator waveforms.
 Amplitude Modulator (AM) - This manipulates the gain applied to the waveform.
 
 
