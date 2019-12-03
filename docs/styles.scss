@@ -10,7 +10,7 @@ Usage:
 $color-tan: rgb(234, 213, 201);
 $color-brown: rgb(94, 74, 62);
 $color-browner: rgb(75, 59, 50);
-$color-text: black;
+$color-text: #2a3439;
 $mobile-breakpoint: 900px;
 $section-height: 300px;
 
@@ -22,10 +22,27 @@ $section-height: 300px;
 
 html,
 body {
+  font-family: "Oswald", sans-serif;
   color: $color-text;
   margin: 0;
   padding: 0;
   background-color: $color-tan;
+}
+
+a,
+button {
+  // override styles
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  text-decoration: none;
+  &:visited,
+  &:hover,
+  &:active {
+    color: $color-text;
+  }
 }
 
 h2 {
@@ -49,24 +66,12 @@ header,
   button {
     // override styles
     background: none;
-    color: $color-text;
-    border: none;
-    padding: 0;
-    font: inherit;
-    cursor: pointer;
-    outline: inherit;
-    text-decoration: none;
+    color: #f8f8ff;
 
     background-color: $color-brown;
 
     &:hover {
       background-color: $color-browner;
-    }
-
-    &:visited,
-    &:hover,
-    &:active {
-      color: $color-text;
     }
   }
 }
@@ -84,6 +89,10 @@ header,
 
 .description {
   background-color: $color-brown;
+}
+
+.info {
+  color: #f8f8ff;
 }
 
 @media screen and (max-width: $mobile-breakpoint) {

@@ -8,10 +8,28 @@ Usage:
 */
 html,
 body {
-  color: black;
+  font-family: "Oswald", sans-serif;
+  color: #2a3439;
   margin: 0;
   padding: 0;
   background-color: #ead5c9;
+}
+
+a,
+button {
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  text-decoration: none;
+}
+
+a:visited, a:hover, a:active,
+button:visited,
+button:hover,
+button:active {
+  color: #2a3439;
 }
 
 h2 {
@@ -39,22 +57,12 @@ header,
 
 .download-btn-container button {
   background: none;
-  color: black;
-  border: none;
-  padding: 0;
-  font: inherit;
-  cursor: pointer;
-  outline: inherit;
-  text-decoration: none;
+  color: #f8f8ff;
   background-color: #5e4a3e;
 }
 
 .download-btn-container button:hover {
   background-color: #4b3b32;
-}
-
-.download-btn-container button:visited, .download-btn-container button:hover, .download-btn-container button:active {
-  color: black;
 }
 
 .fa-windows,
@@ -70,6 +78,10 @@ header,
 
 .description {
   background-color: #5e4a3e;
+}
+
+.info {
+  color: #f8f8ff;
 }
 
 @media screen and (max-width: 900px) {
