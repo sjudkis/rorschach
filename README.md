@@ -1,6 +1,6 @@
 # Rorschach Synthesizer
 
-OSU Online CS capstone project. The goal was to build a visually reactive synthesizer application, using the JUCE C++ framework. The synthesizer will consist of multiple oscillators and effects. There will also be a visual display showing images or animations that change in response to audio effects being placed on the synthesized sound. We intend to use the Maximilian C++ library to provide some digital signal processing (DSP) abstractions.
+OSU Online CS capstone project. The goal of our project was to build a digital synthesizer application, with a visually stimulating display and user interface. After a full term of work, our team is ready to present: The Rorschach Synth. Built primarily with the JUCE C++ framework, the application can run on Windows 10 and Mac OS X 10.11+. A user can craft sounds by mixing three oscillator waveforms, adjusting envelope and filter parameters, and applying a variety of effects. The randomly generated, ever-changing display is based on the Rorschach inkblot test and provides some creative inspiration to the player. Notes can be played via the on-screen keyboard, computer keys, or external MIDI device.
 
 ## Getting Started
 
@@ -75,7 +75,7 @@ Adds a reverb effect that simulates the sound echoing off the walls of a room. T
 
 * [JUCE](https://juce.com/) - C++ framework used to build multiplatform audio applications
 * [Maxmillian](https://github.com/micknoise/Maximilian) - Audio synthesis and signal processing library
-
+* [ASPiK](http://www.aspikplugins.com/)
 ## Authors
 
 * **Zachary Anderson** - [zanderson3j](https://https://github.com/zanderson3j)
