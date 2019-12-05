@@ -1,0 +1,144 @@
+/**
+Compilation of this file is done via Live SASS compiler VSCode extension
+Link: https://github.com/ritwickdey/vscode-live-sass-compiler
+
+Usage: 
+1. Install extension
+2. Click "Watch SASS" on the bottom toolbar
+*/
+html,
+body {
+  font-family: "Oswald", sans-serif;
+  color: #2a3439;
+  margin: 0;
+  padding: 0;
+  background-color: #ead5c9;
+}
+
+a,
+button {
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+  text-decoration: none;
+}
+
+a:visited, a:hover, a:active,
+button:visited,
+button:hover,
+button:active {
+  color: #2a3439;
+}
+
+h2 {
+  -webkit-margin-before: 0;
+          margin-block-start: 0;
+}
+
+header,
+.description,
+.downloads {
+  display: -ms-grid;
+  display: grid;
+  justify-items: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.title,
+.video,
+.info,
+.installers {
+  text-align: center;
+}
+
+.download-btn-container button {
+  background: none;
+  color: #f8f8ff;
+  background-color: #5e4a3e;
+}
+
+.download-btn-container button:hover {
+  background-color: #4b3b32;
+}
+
+.fa-windows,
+.fa-apple {
+  font-size: 100px;
+  color: #5e4a3e;
+}
+
+header,
+.downloads {
+  background-color: #ead5c9;
+}
+
+.description {
+  background-color: #5e4a3e;
+}
+
+.info {
+  color: #f8f8ff;
+}
+
+@media screen and (max-width: 900px) {
+  .info,
+  .installers {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .section {
+    height: 450px;
+  }
+  .download-btn-container button {
+    width: 150px;
+    height: 50px;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  header {
+    -ms-grid-columns: (minmax(450px, 1fr))[2];
+        grid-template-columns: repeat(2, minmax(450px, 1fr));
+  }
+  .section {
+    height: 300px;
+  }
+  .description,
+  .downloads {
+    -ms-grid-columns: (minmax(180px, 1fr))[5];
+        grid-template-columns: repeat(5, minmax(180px, 1fr));
+  }
+  .description .info,
+  .description .installers,
+  .downloads .info,
+  .downloads .installers {
+    -ms-grid-column: 2;
+    -ms-grid-column-span: 3;
+    grid-column: 2 / 5;
+  }
+  .download-btn-container {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: (1fr)[2];
+        grid-template-columns: repeat(2, 1fr);
+  }
+  .download-btn-container > div:first-child {
+    -ms-grid-column-align: right;
+        justify-self: right;
+    padding: 10px;
+  }
+  .download-btn-container > div:last-child {
+    -ms-grid-column-align: left;
+        justify-self: left;
+    padding: 10px;
+  }
+  .download-btn-container button {
+    width: 200px;
+    height: 100px;
+  }
+}
+/*# sourceMappingURL=styles.css.map */
