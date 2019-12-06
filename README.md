@@ -5,7 +5,9 @@ OSU Online CS capstone project. The goal of our project was to build a digital s
 ## Getting Started
 
 ### Running Application
-Located in this repository are two files, `rorscharch_synth.pkg` and `rssetup.exe`. `rorscharch_synth.pkg` is an installer for MacOS Catalina, and `rssetup.exe` is for Windows 10. Follow prompts to install application.
+Located in this repository are two files, `rorscharch_synth.pkg` and `rssetup.exe`. `rorscharch_synth.pkg` is an installer for MacOSX 10.11+, and `rssetup.exe` is for Windows 10. Follow prompts to install application.
+
+Alternatively, you can download the app from our landing page: https://sjudkis.github.io/rorschach/ 
 
 ### Installation For Development
 
@@ -15,7 +17,7 @@ Located in this repository are two files, `rorscharch_synth.pkg` and `rssetup.ex
 
 The synth has been tested and runs on Windows 10 and mac OSX 10.11+.
 
-#### Installation
+#### Build It Yourself
 
 Installation on both Windows/MacOS is basically the same.
 
